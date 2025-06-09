@@ -7,7 +7,6 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "prepare": "husky install",
     "test": "vitest",
     "lint": "eslint --fix",
     "format": "prettier --write ."
@@ -30,7 +29,6 @@
     "autoprefixer": "^10.4.17",
     "commitlint": "^18.6.1",
     "eslint-config-prettier": "^9.1.0",
-    "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "postcss": "^8.4.35",
     "prettier": "^3.2.5",
