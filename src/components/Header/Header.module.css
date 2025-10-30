@@ -1,0 +1,12 @@
+.wrapper {
+  grid-column: 1 / -1;
+  position: sticky;
+  width: 100%;
+  height: 65px;
+  top: 0;
+  display: flex;
+  gap: calc(16rem / 16);
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--header-background-color);
+  padding: calc(12rem / 16) calc(24rem / 16);
+}

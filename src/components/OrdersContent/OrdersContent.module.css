@@ -1,0 +1,6 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: calc(24rem / 16);
+  height: 100%;
+}

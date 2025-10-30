@@ -1,0 +1,12 @@
+.wrapper {
+  width: calc(40rem / 16);
+  height: calc(40rem / 16);
+
+  border: 1px solid var(--toggle-menu-button-border-color);
+  border-radius: 0.5rem;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+}

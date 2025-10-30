@@ -30,6 +30,9 @@ body {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+
+  --font-outfit: Outfit, sans-serif;
+  font-family: var(--font-outfit);
 }
 
 /*
@@ -73,4 +76,5 @@ h6 {
 #root,
 #__next {
   isolation: isolate;
+  height: 100%;
 }

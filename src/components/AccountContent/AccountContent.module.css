@@ -1,0 +1,12 @@
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  gap: calc(24rem / 16);
+}
+
+.profileTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1d2939;
+  padding-block-end: 4px;
+}

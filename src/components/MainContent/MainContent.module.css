@@ -1,0 +1,25 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: calc(24rem / 16);
+  height: 100%;
+}
+
+.ordersHeaderTitle {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  gap: calc(16rem / 16);
+  flex: 1;
+  padding: calc(24rem / 16);
+
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+  background-color: #ffffff;
+}

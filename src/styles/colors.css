@@ -1,0 +1,13 @@
+html {
+  --border-color: #e5e7eb;
+  --header-background-color: #ffffff;
+
+  --main-background-color: #f9fafb;
+  --toggle-menu-button-border-color: #e4e7ec;
+  --active-color: #d53f67;
+
+  /* @media (prefers-color-scheme: dark) {
+    --border-color: #1f2937;
+    --background-color: #111827;
+  } */
+}

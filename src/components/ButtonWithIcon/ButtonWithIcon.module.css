@@ -1,0 +1,36 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: inherit;
+  background: none;
+  border: none;
+  height: 40px;
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(8rem / 16);
+}
+
+.iconWrapper {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.textAlign {
+  margin-top: calc(3rem / 16);
+}
+
+/* .wrapper:hover {
+  background: #f2f4f7;
+  border-radius: 100px;
+} */
