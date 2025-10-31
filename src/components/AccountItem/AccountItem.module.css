@@ -26,30 +26,3 @@
   border-radius: 100px;
   margin-left: auto;
 }
-
-.form {
-  display: grid;
-  grid-template-columns: 150px 150px;
-
-  column-gap: calc(150rem / 16);
-  row-gap: calc(25rem / 16);
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: calc(8rem / 16);
-}
-
-.label {
-  font-size: 0.75rem; /* text-xs */
-  line-height: 1.5; /* leading-normal */
-  color: rgb(107 114 128);
-}
-
-.text {
-  font-size: 0.875rem; /* text-sm */
-  font-weight: 500; /* font-medium */
-  color: rgb(31 41 55);
-  white-space: nowrap;
-}

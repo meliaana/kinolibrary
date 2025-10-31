@@ -1,18 +1,9 @@
-import { useState } from 'react';
-import { Header } from '../Header';
-import Main from '../Main/Main';
-import { Tabs } from '../Tabs';
-import styles from './Application.module.css';
+// Application.tsx
+import { RouterProvider } from 'react-router-dom';
+import { router } from '../../routes';
 
-const Application = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
+export default function Application() {
   return (
-    <Tabs initialValue="orders" className={styles.wrapper}>
-      <Header toggleSidebar={() => setIsOpen(!isOpen)} />
-      <Main isOpen={isOpen} />
-    </Tabs>
+    <RouterProvider router={router} future={{ v7_startTransition: true }} />
   );
-};
-
-export default Application;
+}

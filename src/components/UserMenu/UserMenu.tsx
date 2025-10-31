@@ -1,14 +1,14 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AccountIcon } from '../AccountIcon';
 import { ArrowIcon } from '../ArrowIcon';
 import { DarkModeIcon } from '../DarkModeIcon';
 import { SignOutIcon } from '../SignOutIcon';
-import { TabsContext } from '../Tabs/Tabs';
 import styles from './UserMenu.module.css';
 
 const UserMenu = () => {
-  const tabsContext = React.useContext(TabsContext);
+  const navigate = useNavigate();
+
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
@@ -31,7 +31,9 @@ const UserMenu = () => {
           <span className={styles.userInfo}>developer@kinolibrary.com</span>
           <DropdownMenu.Item
             className={styles.dropdownMenuItem}
-            onSelect={() => tabsContext.onChange?.('account')}
+            onSelect={() => {
+              navigate('/client/account');
+            }}
           >
             <AccountIcon />
             <span className={styles.dropdownMenuItemText}>Edit profile</span>

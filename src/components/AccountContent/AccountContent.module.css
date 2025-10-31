@@ -10,3 +10,11 @@
   color: #1d2939;
   padding-block-end: 4px;
 }
+
+.itemContainer {
+  display: grid;
+  grid-template-columns: 150px 150px;
+
+  column-gap: calc(150rem / 16);
+  row-gap: calc(25rem / 16);
+}

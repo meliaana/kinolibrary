@@ -1,0 +1,18 @@
+.propetyItem {
+  display: flex;
+  flex-direction: column;
+  gap: calc(8rem / 16);
+}
+
+.propetyItemKey {
+  font-size: 0.75rem; /* text-xs */
+  line-height: 1.5; /* leading-normal */
+  color: rgb(107 114 128);
+}
+
+.propetyItemValue {
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  color: rgb(31 41 55);
+  white-space: nowrap;
+}
