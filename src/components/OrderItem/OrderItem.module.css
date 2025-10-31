@@ -1,0 +1,46 @@
+.wrapper {
+  height: 71px;
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr 2fr 1fr auto;
+  align-items: center;
+  border-top: 1px solid #f2f4f7;
+  border-color: #f2f4f7;
+  padding: 12px 24px;
+}
+
+.jobNumber {
+  color: var(--active-color);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration: underline;
+}
+
+.salesPerson {
+  display: flex;
+  flex-direction: column;
+}
+
+.surName {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1d2939;
+}
+
+.firstName {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  color: #667085;
+}
+
+.companyName,
+.numberOfClips {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #667085;
+}
