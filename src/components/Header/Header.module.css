@@ -6,7 +6,7 @@
   top: 0;
   display: flex;
   gap: calc(16rem / 16);
-  border-bottom: 1px solid var(var(--gray-7));
+  border-bottom: 1px solid var(--gray-6);
   background-color: var(--header-background-color);
   padding: calc(12rem / 16) calc(24rem / 16);
 }

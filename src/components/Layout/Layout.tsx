@@ -16,10 +16,7 @@ function Layout() {
     <div className={styles.layoutContainer}>
       <Header toggleSidebar={() => setIsOpen(!isOpen)} />
       <div className={styles.mainContainer}>
-        <nav
-          aria-label="Tabs"
-          className={clsx(styles.sidebar, { [styles.open!]: isOpen })}
-        >
+        <nav className={clsx(styles.sidebar, { [styles.open!]: isOpen })}>
           <NavLink
             to="/client/orders"
             data-active={isActive === 'orders'}

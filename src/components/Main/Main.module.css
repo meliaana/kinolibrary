@@ -14,7 +14,7 @@
   width: 90px;
   background-color: #ffffff;
 
-  border-right: 1px solid var(var(--gray-7));
+  border-right: 1px solid var(--gray-6);
 
   display: flex;
   flex-direction: column;
