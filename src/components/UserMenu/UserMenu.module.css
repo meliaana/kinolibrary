@@ -52,7 +52,7 @@
 
 .separator {
   height: 1px;
-  background-color: #e4e7ec;
+  background-color: var(--gray-7);
   margin: 8px 0;
 }
 

@@ -1,10 +1,16 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { PropsWithChildren } from 'react';
+import { Button } from '../Button';
 import { ButtonWithIcon } from '../ButtonWithIcon';
 import { EditIcon } from '../EditIcon';
+import { XIcon } from '../XIcon';
 import styles from './UpdateInfoDialog.module.css';
 
-const UpdateInfoDialog = ({ children }: PropsWithChildren) => (
+const UpdateInfoDialog = ({
+  title,
+  description,
+  children,
+}: PropsWithChildren<{ title: string; description: string }>) => (
   <Dialog.Root>
     <Dialog.Trigger asChild>
       <ButtonWithIcon text="edit">
@@ -14,22 +20,22 @@ const UpdateInfoDialog = ({ children }: PropsWithChildren) => (
     <Dialog.Portal>
       <Dialog.Overlay className={styles.dialogOverlay} />
       <Dialog.Content className={styles.dialogContent}>
-        <Dialog.Title className={styles.dialogTitle}>
-          Edit Personal Information
-        </Dialog.Title>
+        <Dialog.Title className={styles.dialogTitle}>{title}</Dialog.Title>
         <Dialog.Description className={styles.dialogDescription}>
-          Update your details to keep your profile up-to-date.
+          {description}
         </Dialog.Description>
         {children}
         <div
           style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}
         >
           <Dialog.Close asChild>
-            <button className={styles.button}>Save changes</button>
+            <Button className={styles.button}>Save changes</Button>
           </Dialog.Close>
         </div>
         <Dialog.Close asChild>
-          <button className={styles.iconButton} aria-label="Close"></button>
+          <Button className={styles.closeButton} aria-label="Close">
+            <XIcon />
+          </Button>
         </Dialog.Close>
       </Dialog.Content>
     </Dialog.Portal>

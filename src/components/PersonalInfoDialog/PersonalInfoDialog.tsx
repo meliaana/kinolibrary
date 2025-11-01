@@ -1,45 +1,28 @@
+import { Fieldset } from '../Fieldset';
 import { UpdateInfoDialog } from '../UpdateInfoDialog';
 import styles from './PersonalInfoDialog.module.css';
 
 const PersonalInfoDialog = () => (
-  <UpdateInfoDialog>
-    <fieldset className={styles.fieldset}>
-      <label className={styles.label} htmlFor="name">
-        Name
-      </label>
-      <input
-        className={styles.input}
-        id="name"
-        defaultValue="Musharof Chowdhury"
+  <UpdateInfoDialog
+    title="Edit Personal Information"
+    description="Update your personal details to keep your profile up-to-date."
+  >
+    <div className={styles.wrapper}>
+      <Fieldset label="Name" value="Musharof" onChange={() => {}} />
+      <Fieldset label="Surname" value="Chowdhury" onChange={() => {}} />
+      <Fieldset
+        label="Email Address"
+        value="randomuser@pimjo.com"
+        onChange={() => {}}
       />
-    </fieldset>
-    <fieldset className={styles.fieldset}>
-      <label className={styles.label} htmlFor="email">
-        Email Address
-      </label>
-      <input
-        type="email"
-        className={styles.input}
-        id="email"
-        defaultValue="randomuser@pimjo.com"
+      <Fieldset label="Phone" value="+09 363 398 46" onChange={() => {}} />
+      <Fieldset
+        label="Bio"
+        value="Team Manager"
+        onChange={() => {}}
+        className={styles.bioFieldset}
       />
-    </fieldset>
-    <fieldset className={styles.fieldset}>
-      <label className={styles.label} htmlFor="phone">
-        Phone
-      </label>
-      <input
-        className={styles.input}
-        id="phone"
-        defaultValue="+09 363 398 46"
-      />
-    </fieldset>
-    <fieldset className={styles.fieldset}>
-      <label className={styles.label} htmlFor="bio">
-        Bio
-      </label>
-      <input className={styles.input} id="bio" defaultValue="Team Manager" />
-    </fieldset>
+    </div>
   </UpdateInfoDialog>
 );
 

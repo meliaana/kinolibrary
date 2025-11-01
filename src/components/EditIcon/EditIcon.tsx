@@ -1,4 +1,4 @@
-function BurgerMenuIcon() {
+function EditIcon() {
   return (
     <svg
       width="18"
@@ -17,4 +17,4 @@ function BurgerMenuIcon() {
   );
 }
 
-export default BurgerMenuIcon;
+export default EditIcon;

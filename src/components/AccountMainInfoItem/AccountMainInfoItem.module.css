@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: calc(8rem / 16);
   padding: calc(24rem / 16);
-  border: 1px solid #e4e7ec;
+  border: 1px solid var(--gray-7);
   border-radius: 1rem;
 }
 

@@ -1,13 +1,21 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AccountIcon } from '../AccountIcon';
 import { ArrowIcon } from '../ArrowIcon';
 import { DarkModeIcon } from '../DarkModeIcon';
+import { LightModeIcon } from '../LightModeIcon';
 import { SignOutIcon } from '../SignOutIcon';
 import styles from './UserMenu.module.css';
 
 const UserMenu = () => {
   const navigate = useNavigate();
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.classList.toggle('dark');
+  };
 
   return (
     <DropdownMenu.Root>
@@ -38,8 +46,13 @@ const UserMenu = () => {
             <AccountIcon />
             <span className={styles.dropdownMenuItemText}>Edit profile</span>
           </DropdownMenu.Item>
-          <DropdownMenu.Item className={styles.dropdownMenuItem}>
-            <DarkModeIcon />
+          <DropdownMenu.Item
+            className={styles.dropdownMenuItem}
+            onSelect={() => {
+              toggleDarkMode();
+            }}
+          >
+            {isDarkMode ? <DarkModeIcon /> : <LightModeIcon />}
             <span className={styles.dropdownMenuItemText}>Dark mode</span>
           </DropdownMenu.Item>
 
