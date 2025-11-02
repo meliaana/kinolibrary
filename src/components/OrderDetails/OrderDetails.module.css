@@ -1,0 +1,14 @@
+.orderDetailsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.profileTitle {
+  margin-block-end: 26px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.tabsList {
+  border-bottom: 1px solid var(--gray-7);
+}

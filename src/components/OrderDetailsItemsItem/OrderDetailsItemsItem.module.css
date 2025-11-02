@@ -1,0 +1,18 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: calc(16rem / 16);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: calc(16rem / 16);
+  padding: calc(24rem / 16);
+  border: 1px solid var(--gray-7);
+  border-radius: 1rem;
+
+  @media (width >= 1280px) {
+    flex-direction: row;
+  }
+}

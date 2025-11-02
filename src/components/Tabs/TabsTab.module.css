@@ -1,0 +1,27 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: calc(6rem / 16) calc(16rem / 16);
+
+  border-radius: calc(24rem / 16);
+  background: transparent;
+  border: none;
+  font-size: calc(14rem / 16);
+  font-weight: 500;
+  color: var(--gray-9);
+
+  &:hover {
+    color: var(--gray-12);
+  }
+
+  &[data-selected='true'] {
+    color: var(--accent-10);
+    border-bottom: 2px solid var(--accent-10);
+    border-radius: 0;
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+  }
+}
