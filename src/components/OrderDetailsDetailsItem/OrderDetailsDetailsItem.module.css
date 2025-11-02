@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: calc(16rem / 16);
+  border-radius: 1rem;
+  border: 1px solid var(--gray-7);
+  padding: calc(24rem / 16);
+  width: 100%;
+  background-color: var(--accent-1);
+
+  &[data-readonly='true'] {
+    background-color: var(--gray-1);
+  }
+}
+
+.propertyItems {
+}
+
+.propertyItems {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

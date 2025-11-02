@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import styles from './OrderDetailsItemsItem.module.css';
 
 type OrderDetailsItemsItemProps = {
@@ -7,6 +8,17 @@ type OrderDetailsItemsItemProps = {
   timecodeOut: string;
 };
 
+function formatTimecode(input: string) {
+  const digits = input.replace(/\D/g, '');
+  const timeDigits = digits.slice(-8).padStart(8, '0');
+
+  const hours = timeDigits.slice(0, 2);
+  const minutes = timeDigits.slice(2, 4);
+  const seconds = timeDigits.slice(4, 6);
+  const frames = timeDigits.slice(6, 8);
+
+  return `${hours}:${minutes}:${seconds}:${frames}`;
+}
 const OrderDetailsItemsItem = ({
   orderItems,
 }: {
@@ -16,29 +28,40 @@ const OrderDetailsItemsItem = ({
     <div className={styles.wrapper}>
       {orderItems.map((orderItem) => (
         <div key={orderItem.orderItemId} className={styles.item}>
-          <div className={styles.itemContent}>
+          <div className={clsx(styles.itemContent, styles.clipRefContent)}>
             <span className={styles.clipRef}>Ref no</span>
             <input
               type="text"
-              className={styles.timecodeIn}
-              value={orderItem.timecodeIn}
+              className={clsx(styles.input)}
+              value={orderItem.clipRef}
             />
-            <div className={styles.timecodeContainer}>
-              <span className={styles.timecodeIn}>Timecode In</span>
-              <input
-                type="text"
-                className={styles.timecodeOut}
-                value={orderItem.timecodeOut}
-              />
-            </div>
-            <div className={styles.timecodeContainer}>
-              <span className={styles.timecodeOut}>Timecode Out</span>
-              <input
-                type="text"
-                className={styles.timecodeOut}
-                value={orderItem.timecodeOut}
-              />
-            </div>
+          </div>
+
+          <div className={styles.itemContent}>
+            <span className={styles.timecodeIn}>Timecode In</span>
+            <input
+              type="text"
+              className={styles.input}
+              value={formatTimecode(orderItem.timecodeOut)}
+            />
+          </div>
+          <div className={styles.itemContent}>
+            <span className={styles.timecodeOut}>Timecode Out</span>
+            <input
+              type="text"
+              className={styles.input}
+              value={formatTimecode(orderItem.timecodeOut)}
+            />
+          </div>
+          <div className={styles.itemContent}>
+            <span className={styles.timecodeOut}>Estimated Seconds</span>
+            <input
+              type="text"
+              className={styles.input}
+              value={
+                Number(orderItem.timecodeOut) - Number(orderItem.timecodeIn)
+              }
+            />
           </div>
         </div>
       ))}

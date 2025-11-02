@@ -29,7 +29,10 @@ const UpdateInfoDialog = ({
           style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}
         >
           <Dialog.Close asChild>
-            <Button className={styles.button}>Save changes</Button>
+            <Button className={styles.cancelButton}>Cancel</Button>
+          </Dialog.Close>
+          <Dialog.Close asChild>
+            <Button className={styles.saveButton}>Save changes</Button>
           </Dialog.Close>
         </div>
         <Dialog.Close asChild>

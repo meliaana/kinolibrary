@@ -1,0 +1,36 @@
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: calc(16rem / 16);
+  border-radius: 0.5rem;
+  border: 1px solid var(--gray-7);
+  padding: calc(24rem / 16);
+  width: 100%;
+  background-color: var(--accent-1);
+  color: var(--gray-12);
+
+  height: calc(44rem / 16);
+  padding: calc(10rem / 16) calc(16rem / 16);
+  font-size: calc(14rem / 16);
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px 0 var(--gray-7);
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--accent-8);
+  box-shadow: 0 0 0 2px var(--accent-8);
+}
+
+.durationWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.durationLabel {
+  font-size: calc(14rem / 16);
+  font-weight: 500;
+  color: var(--gray-12);
+}

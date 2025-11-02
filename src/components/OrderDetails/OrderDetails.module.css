@@ -7,8 +7,14 @@
   margin-block-end: 26px;
   font-size: 18px;
   font-weight: 600;
+  color: var(--gray-12);
 }
 
 .tabsList {
   border-bottom: 1px solid var(--gray-7);
+}
+
+.orderDetailsItemsContainer {
+  display: flex;
+  gap: calc(16rem / 16);
 }

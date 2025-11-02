@@ -89,6 +89,36 @@
   background-color: var(--gray-2);
 }
 
+.saveButton {
+  background-color: var(--accent-9);
+  color: var(--gray-1);
+  height: 46px;
+  width: 100%;
+  border-radius: 6px;
+  max-width: 120px;
+}
+
+.saveButton:hover {
+  background-color: var(--accent-10);
+  color: var(--gray-1);
+}
+
+.cancelButton:hover {
+  background-color: var(--gray-9);
+  color: var(--gray-1);
+}
+
+.cancelButton {
+  background-color: var(--gray-8);
+  color: var(--gray-1);
+  height: 46px;
+  margin-left: auto;
+  width: 100%;
+  border-radius: 6px;
+  max-width: 120px;
+  margin-right: 10px;
+}
+
 @keyframes overlayShow {
   from {
     opacity: 0;

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { DetailsContainer } from '../DetailsContainer';
 import { MainContent } from '../MainContent';
+import { OrderDetailsItemsDesc } from '../OrderDetailsItemsDesc';
 import { OrderDetailsItemsItem } from '../OrderDetailsItemsItem';
 import { Tabs, TabsList, TabsPanel, TabsTab } from '../Tabs';
 import styles from './OrderDetails.module.css';
@@ -32,10 +34,13 @@ const OrderDetails = () => {
             </TabsTab>
           </TabsList>
           <TabsPanel value="items">
-            <OrderDetailsItemsItem orderItems={order.orderItems} />
+            <div className={styles.orderDetailsItemsContainer}>
+              <OrderDetailsItemsItem orderItems={order.orderItems} />
+              <OrderDetailsItemsDesc />
+            </div>
           </TabsPanel>
           <TabsPanel value="details">
-            <div>Details</div>
+            <DetailsContainer />
           </TabsPanel>
         </Tabs>
       </div>

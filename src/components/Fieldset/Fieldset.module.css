@@ -34,8 +34,8 @@
 }
 
 .input:focus-visible {
-  outline: 2px solid var(--gray-8);
-  box-shadow: 0 0 0 2px var(--gray-8);
+  outline: 2px solid var(--accent-8);
+  box-shadow: 0 0 0 2px var(--accent-8);
 }
 
 .bioFieldset {

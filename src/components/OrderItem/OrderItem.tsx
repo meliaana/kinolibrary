@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useNavigate } from 'react-router';
 import { Button } from '../Button';
 import { ButtonWithIcon } from '../ButtonWithIcon';
@@ -11,6 +12,19 @@ const OrderItem = ({ order }: { order: any }) => {
     navigate(`/client/orders/${order.id}/details`);
   };
 
+  const handleOrderStatus = (status: number) => {
+    switch (status) {
+      case 0:
+        return 'NotPrepared';
+      case 1:
+        return 'WaitingDetails';
+      case 2:
+        return '2';
+      case 3:
+        return 'Completed';
+    }
+  };
+
   return (
     <li key={order.id} className={styles.wrapper}>
       <Button className={styles.jobNumber} onClick={handleOpenDetails}>
@@ -21,7 +35,14 @@ const OrderItem = ({ order }: { order: any }) => {
         <span className={styles.firstName}>{order.salesPerson.firstName}</span>
       </span>
       <span className={styles.companyName}>{order.company.name}</span>
-      <span>{order.orderStatus}</span>
+      <span
+        className={clsx(
+          styles.orderStatus,
+          // styles[handleOrderStatus(order.orderStatus)
+        )}
+      >
+        {handleOrderStatus(order.orderStatus)}
+      </span>
       <span className={styles.numberOfClips}>{order.numberOfClips}</span>
       <ButtonWithIcon text="Edit" onClick={handleOpenDetails}>
         <EditIcon />

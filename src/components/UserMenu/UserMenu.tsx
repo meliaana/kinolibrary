@@ -53,7 +53,9 @@ const UserMenu = () => {
             }}
           >
             {isDarkMode ? <DarkModeIcon /> : <LightModeIcon />}
-            <span className={styles.dropdownMenuItemText}>Dark mode</span>
+            <span className={styles.dropdownMenuItemText}>
+              {isDarkMode ? 'Light mode' : 'Dark mode'}
+            </span>
           </DropdownMenu.Item>
 
           <DropdownMenu.Separator className={styles.separator} />
