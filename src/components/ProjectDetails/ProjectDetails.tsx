@@ -19,7 +19,6 @@ const ProjectDetails = () => {
         label="Territory"
         value={territory}
         onChange={setTerritory}
-        placeholder="Enter Territory"
         options={[
           'North America',
           'Europe',
@@ -34,7 +33,6 @@ const ProjectDetails = () => {
         label="Platform"
         value={platform}
         onChange={setPlatform}
-        placeholder="Enter Platform"
         options={['Android', 'iOS', 'Windows', 'macOS', 'Linux', 'Chrome OS']}
       />
     </>

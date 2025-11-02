@@ -7,14 +7,12 @@ const Select = ({
   options,
   value,
   onChange,
-  placeholder,
   className,
 }: {
   options: string[];
   label: string;
   value: string;
   onChange: (value: string) => void;
-  placeholder: string;
   className?: string;
 }) => {
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -33,7 +31,6 @@ const Select = ({
         className={clsx(styles.select, className)}
         value={value}
         onChange={handleChange}
-        defaultValue={placeholder}
       >
         {options.map((option) => (
           <option key={option} value={option}>

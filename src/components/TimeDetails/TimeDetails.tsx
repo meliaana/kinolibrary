@@ -5,12 +5,17 @@ import { Select } from '../Select';
 import styles from './TimeDetails.module.css';
 
 const formatYYYYMMDD = (d: Date) => d.toISOString().split('T')[0];
+const DURATION_UNITS = [
+  'Day',
+  'Week',
+  'Month',
+  'Year',
+  'Indefinitely',
+] as const;
 
-const addToDate = (
-  startISO: string,
-  amount: number,
-  unit: 'Day' | 'Week' | 'Month' | 'Year',
-) => {
+type DurationUnit = (typeof DURATION_UNITS)[number];
+
+const addToDate = (startISO: string, amount: number, unit: DurationUnit) => {
   const d = new Date(startISO);
   if (Number.isNaN(d.getTime())) return '';
   switch (unit) {
@@ -34,10 +39,8 @@ const TimeDetails = () => {
   const [startDate, setStartDate] = useState<string>(
     new Date().toISOString().split('T')[0],
   );
-  const [duration, setDuration] = useState<number>(0);
-  const [durationSelector, setDurationSelector] = useState<
-    'Day' | 'Week' | 'Month' | 'Year' | 'Indefinitely'
-  >('Day');
+  const [duration, setDuration] = useState<number>(1);
+  const [durationSelector, setDurationSelector] = useState<DurationUnit>('Day');
 
   const endDate = useMemo(() => {
     if (durationSelector === 'Indefinitely') return '';
