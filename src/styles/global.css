@@ -33,6 +33,7 @@ body {
 
   --font-outfit: Outfit, sans-serif;
   font-family: var(--font-outfit);
+  background-color: var(--color-background);
 }
 
 /*

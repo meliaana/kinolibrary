@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 import { Button } from '../Button';
+import { ButtonWithIcon } from '../ButtonWithIcon';
 import { EditIcon } from '../EditIcon';
 import styles from './OrderItem.module.css';
 
@@ -22,9 +23,9 @@ const OrderItem = ({ order }: { order: any }) => {
       <span className={styles.companyName}>{order.company.name}</span>
       <span>{order.orderStatus}</span>
       <span className={styles.numberOfClips}>{order.numberOfClips}</span>
-      <Button onClick={handleOpenDetails}>
+      <ButtonWithIcon text="Edit" onClick={handleOpenDetails}>
         <EditIcon />
-      </Button>
+      </ButtonWithIcon>
     </li>
   );
 };

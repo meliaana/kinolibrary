@@ -4,6 +4,12 @@
 
   border: 1px solid var(--gray-7);
   border-radius: 0.5rem;
+  color: var(--gray-11);
+}
+
+.wrapper:hover {
+  color: var(--gray-11);
+  border-color: var(--gray-11);
 }
 
 .icon {

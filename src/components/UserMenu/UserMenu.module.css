@@ -7,14 +7,16 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
+  color: var(--gray-10);
+  padding: 0;
 }
 
 .content {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   animation: dropdown 0.15s ease-out forwards;
-  background-color: #ffffff;
+  background-color: var(--gray-2);
   border-radius: 1rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--gray-7);
 
   min-width: 260px;
   margin-top: 17px;
@@ -30,24 +32,24 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #667085;
+  color: var(--gray-10);
   border-radius: 8px;
   padding: calc(8rem / 16) calc(12rem / 16);
 }
 
 .dropdownMenuItem:hover {
-  background-color: #f2f4f7;
+  background-color: var(--gray-3);
 }
 
 .dropdownMenuItemText {
   font-size: calc(14rem / 16);
-  color: rgb(52, 64, 84);
+  color: var(--gray-11);
 }
 
 .userInfo {
   padding-block-end: calc(12rem / 16);
   font-size: calc(12rem / 16);
-  color: #667085;
+  color: var(--gray-10);
 }
 
 .separator {

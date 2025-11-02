@@ -5,11 +5,16 @@
   height: 100%;
 }
 
-.ordersHeaderTitle {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 20px;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--gray-12);
 }
 
 .mainContent {
@@ -20,6 +25,6 @@
   padding: calc(24rem / 16);
 
   border-radius: 1rem;
-  border: 1px solid #e5e7eb;
-  background-color: #ffffff;
+  border: 1px solid var(--gray-7);
+  background-color: var(--accent-1);
 }

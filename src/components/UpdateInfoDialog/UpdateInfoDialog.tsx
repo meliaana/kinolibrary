@@ -1,7 +1,6 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { PropsWithChildren } from 'react';
 import { Button } from '../Button';
-import { ButtonWithIcon } from '../ButtonWithIcon';
 import { EditIcon } from '../EditIcon';
 import { XIcon } from '../XIcon';
 import styles from './UpdateInfoDialog.module.css';
@@ -13,9 +12,10 @@ const UpdateInfoDialog = ({
 }: PropsWithChildren<{ title: string; description: string }>) => (
   <Dialog.Root>
     <Dialog.Trigger asChild>
-      <ButtonWithIcon text="edit">
+      <button className={styles.editButton}>
+        <span className={styles.editIcon}>Edit</span>
         <EditIcon />
-      </ButtonWithIcon>
+      </button>
     </Dialog.Trigger>
     <Dialog.Portal>
       <Dialog.Overlay className={styles.dialogOverlay} />

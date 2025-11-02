@@ -6,8 +6,14 @@
   color: inherit;
   background: none;
   border: none;
-  height: 40px;
+  height: 46px;
+  font-weight: 500;
+  font-size: 14px;
   width: 100%;
+}
+
+.wrapper:hover {
+  color: var(--gray-11);
 }
 
 .content {
@@ -29,8 +35,3 @@
 .textAlign {
   margin-top: calc(3rem / 16);
 }
-
-/* .wrapper:hover {
-  background: #f2f4f7;
-  border-radius: 100px;
-} */

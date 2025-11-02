@@ -10,7 +10,6 @@
   flex-direction: row;
   height: 100%;
   width: 100%;
-  background-color: var(--gray-2);
 }
 
 .sidebar.open {
@@ -19,7 +18,8 @@
 
 .sidebar {
   width: 90px;
-  background-color: var(--gray-1);
+  flex-shrink: 0;
+  background-color: var(--color-background-secondary);
 
   border-right: 1px solid var(--gray-6);
 
@@ -54,16 +54,16 @@
   border: none;
   font-size: calc(14rem / 16);
   font-weight: 500;
-  color: #344054;
+  color: var(--gray-12);
   text-decoration: none;
 
   &:hover {
-    background: #f2f4f7;
+    background: var(--gray-3);
   }
 
   &[data-active='true'] {
     background: #fde6ea;
-    color: #d53f67;
+    color: var(--accent-10);
   }
 
   &[disabled] {

@@ -21,7 +21,7 @@
 }
 
 .wrapper:hover {
-  color: #344054;
+  color: var(--gray-11);
 }
 
 .wrapper.scaleHover:hover * {
@@ -29,9 +29,9 @@
 }
 
 .wrapper.colorHover:hover * {
-  color: var(--active-color);
+  color: var(--accent-9);
 }
 
 .wrapper.active * {
-  color: var(--active-color);
+  color: var(--accent-9);
 }

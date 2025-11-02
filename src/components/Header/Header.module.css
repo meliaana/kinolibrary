@@ -7,6 +7,6 @@
   display: flex;
   gap: calc(16rem / 16);
   border-bottom: 1px solid var(--gray-6);
-  background-color: var(--header-background-color);
+  background-color: var(--color-background-secondary);
   padding: calc(12rem / 16) calc(24rem / 16);
 }

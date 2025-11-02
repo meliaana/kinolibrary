@@ -4,16 +4,46 @@ import { AccountContent } from './components/AccountContent';
 import { Layout } from './components/Layout';
 import { OrderDetails } from './components/OrderDetails';
 import { OrdersContent } from './components/OrdersContent';
+import { OrdersLayout } from './components/OrdersLayout';
 
 export const router = createBrowserRouter([
   {
     path: '/client',
-    element: <Layout />, // renders Header + Main (nav + <Outlet/>)
+    element: <Layout />,
+    handle: {
+      crumb: () => 'Home',
+    },
     children: [
       { index: true, loader: () => redirect('/client/orders') },
-      { path: 'orders', element: <OrdersContent /> },
-      { path: 'account', element: <AccountContent /> },
-      { path: 'orders/:id/details', element: <OrderDetails /> },
+
+      {
+        path: 'orders',
+        element: <OrdersLayout />,
+        handle: { crumb: () => 'Orders' },
+        children: [
+          { index: true, element: <OrdersContent /> },
+          {
+            path: ':id/details',
+            element: <OrderDetails />,
+            handle: { crumb: () => 'Details' },
+          },
+        ],
+      },
+
+      {
+        path: 'account',
+        element: <AccountContent />,
+        handle: {
+          crumb: () => 'Account',
+        },
+      },
+      {
+        path: 'orders/:id/details',
+        element: <OrderDetails />,
+        handle: {
+          crumb: () => 'Orders / Details',
+        },
+      },
     ],
   },
 ]);

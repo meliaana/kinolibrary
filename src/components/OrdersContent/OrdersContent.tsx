@@ -16,8 +16,6 @@ const OrdersContent = () => {
     fetchOrders();
   }, []);
 
-  console.log(orders);
-
   return (
     <MainContent title="Orders">
       <SearchInput />

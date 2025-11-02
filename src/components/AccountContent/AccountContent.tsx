@@ -17,7 +17,8 @@ const AccountContent = () => {
           dialogTrigger={<PersonalInfoDialog />}
         >
           <div className={styles.itemContainer}>
-            <PropetyItem label="Name" value="Musharof Chowdhury" />
+            <PropetyItem label="First Name" value="Musharof" />
+            <PropetyItem label="Last Name" value="Chowdhury" />
             <PropetyItem label="Email Address" value="randomuser@pimjo.com" />
             <PropetyItem label="Phone" value="+09 363 398 46" />
             <PropetyItem label="Bio" value="Team Manager" />

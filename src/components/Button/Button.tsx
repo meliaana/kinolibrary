@@ -14,11 +14,12 @@ function Button({
   ariaLabel,
   children,
   isActive,
+  className,
   ...delegated
 }: PropsWithChildren<ButtonProps>) {
   return (
     <PrimitiveButton
-      className={clsx(styles.wrapper, {
+      className={clsx(styles.wrapper, className, {
         [styles.active!]: isActive,
       })}
       {...delegated}

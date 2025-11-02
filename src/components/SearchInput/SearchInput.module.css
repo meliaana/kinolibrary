@@ -2,9 +2,10 @@
   width: 300px;
   height: 44px;
   padding: 0 16px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--gray-7);
   border-radius: 8px;
-  font-size: 14px;
-  color: #667085;
+  font-size: calc(14rem / 16);
+  color: var(--gray-10);
   margin-left: auto;
+  background-color: var(--gray-1);
 }

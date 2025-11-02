@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react';
+import { Breadcrumbs } from '../Breadcrumbs';
 import styles from './MainContent.module.css';
 
 const MainContent = ({
@@ -7,8 +8,9 @@ const MainContent = ({
 }: PropsWithChildren<{ title: string }>) => {
   return (
     <div className={styles.wrapper}>
-      <div className={styles.ordersHeader}>
-        <h2 className={styles.ordersHeaderTitle}>{title}</h2>
+      <div className={styles.header}>
+        <h2 className={styles.title}>{title}</h2>
+        <Breadcrumbs />
       </div>
       <div className={styles.mainContent}> {children} </div>
     </div>

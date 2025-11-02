@@ -5,14 +5,13 @@
 }
 
 .propetyItemKey {
-  font-size: 0.75rem; /* text-xs */
-  line-height: 1.5; /* leading-normal */
-  color: rgb(107 114 128);
+  font-size: calc(12rem / 16);
+  color: var(--gray-10);
 }
 
 .propetyItemValue {
-  font-size: 0.875rem; /* text-sm */
-  font-weight: 500; /* font-medium */
-  color: rgb(31 41 55);
+  font-size: calc(14rem / 16);
+  font-weight: 500;
+  color: var(--gray-12);
   white-space: nowrap;
 }

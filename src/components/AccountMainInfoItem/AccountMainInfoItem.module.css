@@ -8,14 +8,14 @@
 }
 
 .accountItemTitle {
-  font-size: 1.125rem;
+  font-size: 18px;
   font-weight: 600;
-  color: #1d2939;
+  color: var(--gray-12);
 }
 
 .accountDescription {
   display: flex;
   gap: calc(12rem / 16);
-  color: #667085;
-  font-size: 14px;
+  color: var(--gray-10);
+  font-size: calc(14rem / 16);
 }

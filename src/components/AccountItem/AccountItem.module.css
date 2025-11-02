@@ -16,13 +16,5 @@
 .accountItemTitle {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #1d2939;
-}
-
-.editButton {
-  width: 84px;
-  height: 40px;
-  border: 1px solid var(--gray-7);
-  border-radius: 100px;
-  margin-left: auto;
+  color: var(--gray-12);
 }

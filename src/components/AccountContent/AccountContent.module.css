@@ -5,10 +5,10 @@
 }
 
 .profileTitle {
-  font-size: 1.125rem;
+  font-size: 18px;
   font-weight: 600;
-  color: #1d2939;
-  padding-block-end: 4px;
+  color: var(--gray-12);
+  margin-block-end: 4px;
 }
 
 .itemContainer {
