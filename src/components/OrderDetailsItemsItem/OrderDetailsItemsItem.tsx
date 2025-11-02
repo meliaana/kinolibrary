@@ -55,13 +55,7 @@ const OrderDetailsItemsItem = ({
           </div>
           <div className={styles.itemContent}>
             <span className={styles.timecodeOut}>Estimated Seconds</span>
-            <input
-              type="text"
-              className={styles.input}
-              value={
-                Number(orderItem.timecodeOut) - Number(orderItem.timecodeIn)
-              }
-            />
+            <input type="text" className={styles.input} value={0} />
           </div>
         </div>
       ))}

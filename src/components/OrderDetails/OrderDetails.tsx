@@ -8,10 +8,12 @@ import styles from './OrderDetails.module.css';
 
 const OrderDetails = () => {
   const [order, setOrder] = useState<any>(null);
+  const [jobName, setJobName] = useState<string>('');
 
   const fetchOrders = async () => {
     const ordersData = await import('./orderDetailsexample.json');
     setOrder(ordersData.default);
+    setJobName(ordersData.default.job.jobName);
   };
 
   useEffect(() => {
@@ -23,7 +25,13 @@ const OrderDetails = () => {
   return (
     <MainContent title="Order Details">
       <div className={styles.orderDetailsContainer}>
-        <h3 className={styles.profileTitle}>{order.job.jobName}</h3>
+        <h3
+          contentEditable={true}
+          onBlur={(e) => setJobName(e.target.innerText)}
+          className={styles.profileTitle}
+        >
+          {jobName}
+        </h3>
         <Tabs initialValue="items">
           <TabsList className={styles.tabsList} aria-label="Tabs">
             <TabsTab value="items">

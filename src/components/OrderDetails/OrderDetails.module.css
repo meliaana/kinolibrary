@@ -8,6 +8,8 @@
   font-size: 18px;
   font-weight: 600;
   color: var(--gray-12);
+  max-width: 300px;
+  padding: 10px;
 }
 
 .tabsList {
