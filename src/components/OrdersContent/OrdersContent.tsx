@@ -7,12 +7,19 @@ import styles from './OrdersContent.module.css';
 const OrdersContent = () => {
   const [orders, setOrders] = useState<any[]>([]);
 
-  const fetchOrders = async () => {
-    const ordersData = await import('./ordersexample.json');
-    setOrders(ordersData.default);
-  };
-
   useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch('/api/orders');
+        if (!response.ok) throw new Error('Failed to fetch orders');
+        const data = await response.json();
+        setOrders(data.items);
+        console.log(data.items);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchOrders();
   }, []);
 

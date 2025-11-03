@@ -18,6 +18,24 @@
   justify-content: flex-start;
 }
 
+.orderStatus {
+  font-weight: 500;
+  font-size: 12px;
+  padding: calc(2rem / 16) calc(8rem / 16);
+  border-radius: 1000px;
+  display: inline-block;
+
+  &[data-status='pending'] {
+    background: #fdb022;
+  }
+  &[data-status='success'] {
+    background: #12b76a;
+  }
+  &[data-status='cancel'] {
+    background: #f04438;
+  }
+}
+
 .salesPerson {
   display: flex;
   flex-direction: column;
