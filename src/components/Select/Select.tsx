@@ -22,7 +22,7 @@ const Select = ({
   const id = useId();
 
   return (
-    <div className={styles.wrapper}>
+    <div className={clsx(styles.wrapper, className)}>
       <label className={styles.label} htmlFor={id}>
         {label}
       </label>

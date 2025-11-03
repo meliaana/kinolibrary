@@ -5,13 +5,7 @@ import { Select } from '../Select';
 import styles from './TimeDetails.module.css';
 
 const formatYYYYMMDD = (d: Date) => d.toISOString().split('T')[0];
-const DURATION_UNITS = [
-  'Day',
-  'Week',
-  'Month',
-  'Year',
-  'Indefinitely',
-] as const;
+const DURATION_UNITS = ['Day', 'Week', 'Month', 'Year', 'Perpetuity'] as const;
 
 type DurationUnit = (typeof DURATION_UNITS)[number];
 
@@ -43,7 +37,7 @@ const TimeDetails = () => {
   const [durationSelector, setDurationSelector] = useState<DurationUnit>('Day');
 
   const endDate = useMemo(() => {
-    if (durationSelector === 'Indefinitely') return '';
+    if (durationSelector === 'Perpetuity') return '';
     if (!startDate || isNaN(duration)) return '';
     return addToDate(startDate, duration, durationSelector);
   }, [startDate, duration, durationSelector]);
@@ -59,26 +53,29 @@ const TimeDetails = () => {
         value={startDate}
         onChange={setStartDate}
       />
-      <div className={styles.durationWrapper}>
-        <label className={styles.durationLabel}>Duration</label>
-        <input
-          value={duration}
-          onChange={handleDurationChange}
-          placeholder="Num"
-          className={styles.input}
-          id="duration"
+      <div className={styles.durationContainer}>
+        <div className={styles.durationWrapper}>
+          <label className={styles.durationLabel}>Duration</label>
+          <input
+            value={duration}
+            onChange={handleDurationChange}
+            placeholder="Num"
+            className={styles.input}
+            id="duration"
+          />
+        </div>
+
+        <Select
+          className={styles.durationSelector}
+          label="Duration Selector"
+          value={durationSelector}
+          onChange={setDurationSelector}
+          placeholder="Duration Selector"
+          options={['Day', 'Week', 'Month', 'Year', 'Perpetuity']}
         />
       </div>
 
-      <Select
-        label="Duration Selector"
-        value={durationSelector}
-        onChange={setDurationSelector}
-        placeholder="Duration Selector"
-        options={['Day', 'Week', 'Month', 'Year', 'Indefinitely']}
-      />
-
-      {durationSelector !== 'Indefinitely' && (
+      {durationSelector !== 'Perpetuity' && (
         <LabelInputPair
           label="End date"
           value={endDate}
