@@ -3,10 +3,9 @@
   width: 100%;
 
   display: grid;
-  grid-template-columns: 1fr 2fr 2fr 2fr 1fr auto;
   align-items: center;
   border-top: 1px solid var(--gray-7);
-  padding: 12px 24px;
+  padding: calc(12rem / 16) calc(24rem / 16);
   color: var(--gray-12);
 
   display: grid;
