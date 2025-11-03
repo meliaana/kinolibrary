@@ -31,9 +31,10 @@
     box-shadow: 0 0 0 2px var(--accent-8);
   }
 
-  &:has([disabled]) {
-    opacity: 0.5;
+  &:disabled {
     pointer-events: none;
+    background-color: var(--gray-3);
+    color: var(--gray-10);
   }
 }
 

@@ -1,33 +1,8 @@
 import { useMemo, useState } from 'react';
 import { DatePicker } from '../DatePicker';
-import { LabelInputPair } from '../LabelInputPair';
 import { Select } from '../Select';
+import { addToDate, DurationUnit } from './TimeDetails.helpers';
 import styles from './TimeDetails.module.css';
-
-const formatYYYYMMDD = (d: Date) => d.toISOString().split('T')[0];
-const DURATION_UNITS = ['Day', 'Week', 'Month', 'Year', 'Perpetuity'] as const;
-
-type DurationUnit = (typeof DURATION_UNITS)[number];
-
-const addToDate = (startISO: string, amount: number, unit: DurationUnit) => {
-  const d = new Date(startISO);
-  if (Number.isNaN(d.getTime())) return '';
-  switch (unit) {
-    case 'Day':
-      d.setDate(d.getDate() + amount);
-      break;
-    case 'Week':
-      d.setDate(d.getDate() + amount * 7);
-      break;
-    case 'Month':
-      d.setMonth(d.getMonth() + amount);
-      break;
-    case 'Year':
-      d.setFullYear(d.getFullYear() + amount);
-      break;
-  }
-  return formatYYYYMMDD(d);
-};
 
 const TimeDetails = () => {
   const [startDate, setStartDate] = useState<string>(
@@ -69,19 +44,17 @@ const TimeDetails = () => {
           className={styles.durationSelector}
           label="Duration Selector"
           value={durationSelector}
-          onChange={setDurationSelector}
-          placeholder="Duration Selector"
+          onChange={(value) => setDurationSelector(value as DurationUnit)}
           options={['Day', 'Week', 'Month', 'Year', 'Perpetuity']}
         />
       </div>
 
       {durationSelector !== 'Perpetuity' && (
-        <LabelInputPair
-          label="End date"
+        <DatePicker
+          label="End Date"
           value={endDate}
-          setValue={() => {}}
-          placeholder="End date"
-          isReadOnly={true}
+          onChange={() => {}}
+          disabled={true}
         />
       )}
     </>
