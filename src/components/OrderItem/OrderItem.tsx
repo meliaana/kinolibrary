@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import { useNavigate } from 'react-router';
-import { Button } from '../Button';
 import { ButtonWithIcon } from '../ButtonWithIcon';
 import { EditIcon } from '../EditIcon';
 import { orderStatus } from './OrderItem.helpers';
@@ -15,9 +14,9 @@ const OrderItem = ({ order }: { order: any }) => {
 
   return (
     <li key={order.id} className={styles.wrapper}>
-      <Button className={styles.jobNumber} onClick={handleOpenDetails}>
+      <a className={styles.jobNumber} onClick={handleOpenDetails}>
         #{order.jobRefNo}
-      </Button>
+      </a>
       <span className={styles.salesPerson}>
         <span className={styles.surName}>{order.salesPerson.surName}</span>
         <span className={styles.firstName}>{order.salesPerson.firstName}</span>

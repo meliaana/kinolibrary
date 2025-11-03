@@ -19,8 +19,6 @@ const DetailsContainer = () => {
       </OrderDetailsDetailsItem>
       <OrderDetailsDetailsItem title="Project Details">
         <ProjectDetails />
-      </OrderDetailsDetailsItem>
-      <OrderDetailsDetailsItem title="Time Details">
         <TimeDetails />
       </OrderDetailsDetailsItem>
     </div>
