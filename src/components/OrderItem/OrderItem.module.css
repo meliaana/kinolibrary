@@ -8,6 +8,10 @@
   border-top: 1px solid var(--gray-7);
   padding: 12px 24px;
   color: var(--gray-12);
+
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: span 6;
 }
 
 .jobNumber {
@@ -24,15 +28,19 @@
   padding: calc(2rem / 16) calc(8rem / 16);
   border-radius: 1000px;
   display: inline-block;
+  --color: #fdb022;
+  color: var(--color);
+
+  background: color-mix(in oklab, var(--color) 15%, transparent);
 
   &[data-status='pending'] {
-    background: #fdb022;
+    --color: #fdb022;
   }
   &[data-status='success'] {
-    background: #12b76a;
+    --color: #12b76a;
   }
   &[data-status='cancel'] {
-    background: #f04438;
+    --color: #f04438;
   }
 }
 
@@ -59,4 +67,8 @@
   font-weight: 400;
   font-size: 14px;
   color: var(--gray-10);
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

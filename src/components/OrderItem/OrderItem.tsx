@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { Button } from '../Button';
 import { ButtonWithIcon } from '../ButtonWithIcon';
 import { EditIcon } from '../EditIcon';
+import { orderStatus } from './OrderItem.helpers';
 import styles from './OrderItem.module.css';
 
 const OrderItem = ({ order }: { order: any }) => {
@@ -23,7 +24,10 @@ const OrderItem = ({ order }: { order: any }) => {
       </span>
       <span className={styles.companyName}>{order.company.name}</span>
       <span>
-        <p data-status={order.orderStatus} className={clsx(styles.orderStatus)}>
+        <p
+          data-status={orderStatus(order.orderStatus)}
+          className={clsx(styles.orderStatus)}
+        >
           {order.orderStatus}
         </p>
       </span>

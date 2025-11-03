@@ -4,17 +4,21 @@
   margin: 0;
   list-style: none;
   padding: 0;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr 2fr 1fr auto;
+  gap: calc(12rem / 16);
 }
 
 .ordersListHeader {
-  height: 42px;
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 2fr 2fr 2fr 1fr auto;
-  align-items: center;
   border-bottom: 1px solid var(--gray-7);
   color: var(--gray-11);
   font-weight: 500;
   font-size: calc(12rem / 16);
-  padding: 12px 24px;
+  padding: calc(12rem / 16) calc(24rem / 16);
+  margin-bottom: calc(-12rem / 16);
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: span 6;
 }
