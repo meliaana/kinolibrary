@@ -1,4 +1,6 @@
+import { useSelector } from '@xstate/react';
 import { useEffect, useState } from 'react';
+import { orderDetailsActor } from '../../machines/orders.machine';
 import { DetailsContainer } from '../DetailsContainer';
 import { MainContent } from '../MainContent';
 import { OrderDetailsItemsDesc } from '../OrderDetailsItemsDesc';
@@ -9,6 +11,10 @@ import styles from './OrderDetails.module.css';
 const OrderDetails = () => {
   const [order, setOrder] = useState<any>(null);
   const [jobName, setJobName] = useState<string>('');
+  const projectName = useSelector(
+    orderDetailsActor,
+    (state) => state.context.projectName,
+  );
 
   const fetchOrders = async () => {
     const ordersData = await import('./orderDetailsexample.json');
@@ -26,11 +32,11 @@ const OrderDetails = () => {
     <MainContent title="Order Details">
       <div className={styles.orderDetailsContainer}>
         <h3
-          contentEditable={true}
+          // contentEditable={true}
           onBlur={(e) => setJobName(e.target.innerText)}
           className={styles.profileTitle}
         >
-          {jobName}
+          {projectName}
         </h3>
         <Tabs initialValue="items">
           <TabsList className={styles.tabsList} aria-label="Tabs">

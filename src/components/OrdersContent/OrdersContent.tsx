@@ -45,7 +45,6 @@ const OrdersContent = () => {
 
   useEffect(() => {
     fetchOrders(pageIndex);
-    console.log(pageIndex);
   }, [pageIndex]);
 
   useEffect(() => {
@@ -55,7 +54,6 @@ const OrdersContent = () => {
         if (!response.ok) throw new Error('Failed to fetch orders');
         const data = await response.json();
         setOrders(data.items);
-        console.log(data.items);
       } catch (error) {
         console.error(error);
       }

@@ -2,10 +2,18 @@ import { useState } from 'react';
 import { LabelInputPair } from '../LabelInputPair';
 import { Select } from '../Select';
 
-const ProjectDetails = () => {
-  const [transmission, setTransmission] = useState('');
-  const [territory, setTerritory] = useState('');
-  const [platform, setPlatform] = useState('');
+const ProjectDetails = ({
+  transmissionInital,
+  territoryInitial,
+  platformInitial,
+}: {
+  transmissionInital: string;
+  territoryInitial: string;
+  platformInitial: string;
+}) => {
+  const [transmission, setTransmission] = useState(transmissionInital);
+  const [territory, setTerritory] = useState(territoryInitial);
+  const [platform, setPlatform] = useState(platformInitial);
 
   return (
     <>
