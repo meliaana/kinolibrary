@@ -6,8 +6,6 @@ export function orderStatus(status: string) {
       return 'success';
     case 'Waiting Details':
       return 'pending';
-    case 'Completed':
-      return 'success';
     default:
       return 'Unknown';
   }

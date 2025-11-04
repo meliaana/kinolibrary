@@ -30,6 +30,7 @@
   display: inline-block;
   --color: #fdb022;
   color: var(--color);
+  text-align: center;
 
   background: color-mix(in oklab, var(--color) 15%, transparent);
 
