@@ -19,8 +19,6 @@ const DetailsContainer = () => {
 
   if (!orderDetails) return null;
 
-  console.log(orderDetails);
-
   return (
     <div className={styles.detailsContainer}>
       <OrderDetailsDetailsItem title="Order Information">
@@ -40,8 +38,16 @@ const DetailsContainer = () => {
         />
       </OrderDetailsDetailsItem>
       <OrderDetailsDetailsItem title="Project Details">
-        <ProjectDetails />
-        <TimeDetails />
+        <ProjectDetails
+          transmissionInital={orderDetails.transmission}
+          territoryInitial={orderDetails.territory}
+          platformInitial={orderDetails.platform}
+        />
+        <TimeDetails
+          startDateInitial={orderDetails.startDate}
+          durationInitial={orderDetails.duration}
+          durationSelectorInitial={orderDetails.durationType}
+        />
       </OrderDetailsDetailsItem>
     </div>
   );

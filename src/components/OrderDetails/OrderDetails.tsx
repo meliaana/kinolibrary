@@ -1,10 +1,9 @@
 import { useSelector } from '@xstate/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { orderDetailsActor } from '../../machines/orders.machine';
 import { DetailsContainer } from '../DetailsContainer';
 import { MainContent } from '../MainContent';
 import { OrderDetailsItemsDesc } from '../OrderDetailsItemsDesc';
-import { OrderDetailsItemsItem } from '../OrderDetailsItemsItem';
 import { Tabs, TabsList, TabsPanel, TabsTab } from '../Tabs';
 import styles from './OrderDetails.module.css';
 
@@ -15,18 +14,6 @@ const OrderDetails = () => {
     orderDetailsActor,
     (state) => state.context.projectName,
   );
-
-  const fetchOrders = async () => {
-    const ordersData = await import('./orderDetailsexample.json');
-    setOrder(ordersData.default);
-    setJobName(ordersData.default.job.jobName);
-  };
-
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
-  if (!order) return null;
 
   return (
     <MainContent title="Order Details">
@@ -49,7 +36,7 @@ const OrderDetails = () => {
           </TabsList>
           <TabsPanel value="items">
             <div className={styles.orderDetailsItemsContainer}>
-              <OrderDetailsItemsItem orderItems={order.orderItems} />
+              {/* <OrderDetailsItemsItem orderItems={order.orderItems} /> */}
               <OrderDetailsItemsDesc />
             </div>
           </TabsPanel>
