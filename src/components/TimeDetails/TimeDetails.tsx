@@ -1,51 +1,55 @@
 import dayjs from 'dayjs';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { DatePicker } from '../DatePicker';
 import { Select } from '../Select';
 import { addToDate, DurationUnit } from './TimeDetails.helpers';
 import styles from './TimeDetails.module.css';
 
-const durationMap = {
-  1: 'day',
-  2: 'week',
-  3: 'month',
-  4: 'year',
-  5: 'perpetuity',
-};
-
 const TimeDetails = ({
-  startDateInitial,
-  durationInitial,
-  durationSelectorInitial,
+  timeDetailsState,
+  setTimeDetailsState,
 }: {
-  startDateInitial: string;
-  durationInitial: number;
-  durationSelectorInitial: number;
+  timeDetailsState: {
+    startDate: string;
+    duration: number;
+    durationType: string;
+  };
+  setTimeDetailsState: (state: {
+    startDate: string;
+    duration: number;
+    durationType: string;
+  }) => void;
 }) => {
-  const [startDate, setStartDate] = useState<string>(
-    dayjs(startDateInitial).format('YYYY-MM-DD'),
-  );
-  const [duration, setDuration] = useState<number>(durationInitial);
-  const [durationSelector, setDurationSelector] = useState<string>(
-    durationMap[durationSelectorInitial as keyof typeof durationMap],
-  );
-
   const endDate = useMemo(() => {
-    if (durationSelector === 'Perpetuity') return '';
-    return addToDate(startDate, duration, durationSelector as DurationUnit);
-  }, [startDate, duration, durationSelector]);
+    if (timeDetailsState.durationType === 'perpetuity') return '';
+    return addToDate(
+      timeDetailsState.startDate,
+      timeDetailsState.duration,
+      timeDetailsState.durationType as DurationUnit,
+    );
+  }, [
+    timeDetailsState.startDate,
+    timeDetailsState.duration,
+    timeDetailsState.durationType,
+  ]);
 
   function handleDurationChange(e: React.ChangeEvent<HTMLInputElement>) {
     const n = e.target.value === '' ? NaN : Number(e.target.value);
-    setDuration(n);
+    setTimeDetailsState({
+      ...timeDetailsState,
+      duration: n,
+      durationType: timeDetailsState.durationType,
+    });
   }
 
   return (
     <>
       <DatePicker
         label="Start Date"
-        value={startDate}
-        onChange={setStartDate}
+        value={dayjs(timeDetailsState.startDate).format('YYYY-MM-DD')}
+        onChange={(value) =>
+          setTimeDetailsState({ ...timeDetailsState, startDate: value })
+        }
       />
       <div className={styles.durationContainer}>
         <div className={styles.durationWrapper}>
@@ -54,7 +58,11 @@ const TimeDetails = ({
             type="number"
             inputMode="numeric"
             min="0"
-            value={Number.isFinite(duration) ? duration : ''}
+            value={
+              Number.isFinite(timeDetailsState.duration)
+                ? timeDetailsState.duration
+                : ''
+            }
             onChange={handleDurationChange}
             placeholder="Num"
             className={styles.input}
@@ -65,8 +73,13 @@ const TimeDetails = ({
         <Select
           className={styles.durationSelector}
           label="Duration Selector"
-          value={durationSelector}
-          onChange={(value) => setDurationSelector(value as DurationUnit)}
+          value={timeDetailsState.durationType}
+          onChange={(value) =>
+            setTimeDetailsState({
+              ...timeDetailsState,
+              durationType: value as DurationUnit,
+            })
+          }
           options={[
             { id: 'day', name: 'Day' },
             { id: 'week', name: 'Week' },
@@ -77,7 +90,7 @@ const TimeDetails = ({
         />
       </div>
 
-      {durationSelector !== 'Perpetuity' && (
+      {timeDetailsState.durationType !== 'perpetuity' && (
         <DatePicker
           label="End Date"
           value={endDate}

@@ -4,3 +4,23 @@
   gap: 1.5rem;
   padding: 1rem;
 }
+
+.buttonsContainer {
+  display: flex;
+  gap: 1rem;
+  margin-left: auto;
+  height: 46px;
+  width: 450px;
+}
+
+.saveButton {
+  background-color: var(--accent-9);
+  color: var(--gray-1);
+  border-radius: 6px;
+}
+
+.cancelButton {
+  background-color: var(--gray-10);
+  color: var(--white);
+  border-radius: 6px;
+}

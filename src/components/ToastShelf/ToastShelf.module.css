@@ -1,0 +1,74 @@
+.wrapper {
+  position: absolute;
+  top: 0;
+  height: 46px;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+
+  @media (max-width: 600px) {
+    width: calc(100% - 20px);
+    inset: 0;
+    transform: translate(10px, 40px);
+  }
+}
+
+.toast {
+  background-color: white !important;
+  border-radius: 10px !important;
+  border: 1px solid var(--gray-6) !important;
+  background: linear-gradient(
+    90deg,
+    var(--gray-5) 0%,
+    var(--gray-3) 100%
+  ) !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: 46px !important;
+  --text-color: var(--gray-12) !important;
+  color: var(--text-color) !important;
+}
+
+.content {
+  flex-direction: row !important;
+  width: 100% !important;
+}
+
+.description {
+  border-bottom: 1px dashed var(--gray-6) !important;
+  flex-grow: 1 !important;
+  align-items: center !important;
+  margin-bottom: 5px !important;
+}
+
+.success {
+  --text-color: hsla(141, 33%, 39%, 1) !important;
+}
+
+.success .content::after {
+  content: var(--content);
+  text-wrap: nowrap;
+}
+
+.error {
+  --text-color: hsla(0, 78%, 58%, 1) !important;
+}
+
+.error .content::after {
+  content: var(--content);
+  text-wrap: nowrap;
+}
+
+.button {
+  position: absolute;
+  top: 0;
+  left: -500px;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}

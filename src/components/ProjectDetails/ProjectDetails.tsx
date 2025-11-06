@@ -1,21 +1,23 @@
 import { useSelector } from '@xstate/react';
-import { useState } from 'react';
 import { orderDetailsActor } from '../../machines/orders.machine';
 import { LabelInputPair } from '../LabelInputPair';
 import { Select } from '../Select';
 
 const ProjectDetails = ({
-  transmissionInital,
-  territoryInitial,
-  platformInitial,
+  projectDetailsState,
+  setProjectDetailsState,
 }: {
-  transmissionInital: string;
-  territoryInitial: string;
-  platformInitial: string;
+  projectDetailsState: {
+    transmission: string;
+    territory: string;
+    platform: string;
+  };
+  setProjectDetailsState: (state: {
+    transmission: string;
+    territory: string;
+    platform: string;
+  }) => void;
 }) => {
-  const [transmission, setTransmission] = useState(transmissionInital);
-  const [territory, setTerritory] = useState(territoryInitial);
-  const [platform, setPlatform] = useState(platformInitial);
   const platforms = useSelector(
     orderDetailsActor,
     (state) => state.context.platforms,
@@ -30,14 +32,21 @@ const ProjectDetails = ({
     <>
       <LabelInputPair
         label="Transmission"
-        value={transmission}
-        setValue={setTransmission}
+        value={projectDetailsState.transmission}
+        setValue={(value) =>
+          setProjectDetailsState({
+            ...projectDetailsState,
+            transmission: value,
+          })
+        }
         placeholder="Enter Transmission details"
       />
       <Select
         label="Territory"
-        value={territory}
-        onChange={setTerritory}
+        value={projectDetailsState.territory}
+        onChange={(value) =>
+          setProjectDetailsState({ ...projectDetailsState, territory: value })
+        }
         options={territories.map((territory) => ({
           id: territory.id,
           name: territory.name,
@@ -45,8 +54,10 @@ const ProjectDetails = ({
       />
       <Select
         label="Platform"
-        value={platform}
-        onChange={setPlatform}
+        value={projectDetailsState.platform}
+        onChange={(value) =>
+          setProjectDetailsState({ ...projectDetailsState, platform: value })
+        }
         options={platforms.map((platform) => ({
           id: platform.id,
           name: platform.name,

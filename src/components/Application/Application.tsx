@@ -3,6 +3,7 @@ import { RouterProvider } from 'react-router-dom';
 import { useSingleEffect } from '../../hooks/useSingleEffect';
 import { orderDetailsActor } from '../../machines/orders.machine';
 import { router } from '../../routes';
+import { ToastShelf } from '../ToastShelf';
 
 export default function Application() {
   useSingleEffect(() => {
@@ -24,5 +25,10 @@ export default function Application() {
     fetchOrders();
   }, []);
 
-  return <RouterProvider router={router} fallbackElement={null} />;
+  return (
+    <>
+      <RouterProvider router={router} fallbackElement={null} />
+      <ToastShelf />
+    </>
+  );
 }

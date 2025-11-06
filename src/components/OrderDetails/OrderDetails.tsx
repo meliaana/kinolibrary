@@ -36,7 +36,7 @@ const OrderDetails = () => {
     <MainContent title="Order Details">
       <div className={styles.orderDetailsContainer}>
         <h3
-          contentEditable={true}
+          // contentEditable={true}
           onBlur={(e) => setJobName(e.target.innerText)}
           className={styles.profileTitle}
         >
@@ -60,7 +60,10 @@ const OrderDetails = () => {
             </div>
           </TabsPanel>
           <TabsPanel value="details">
-            <DetailsContainer orderDetails={orderDetails} />
+            <DetailsContainer
+              orderDetails={orderDetails}
+              setOrderDetails={setOrderDetails}
+            />
           </TabsPanel>
         </Tabs>
       </div>
