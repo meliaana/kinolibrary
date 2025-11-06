@@ -3,15 +3,6 @@
   flex-direction: column;
 }
 
-.profileTitle {
-  margin-block-end: 26px;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--gray-12);
-  max-width: 300px;
-  padding: 10px;
-}
-
 .tabsList {
   border-bottom: 1px solid var(--gray-7);
 }

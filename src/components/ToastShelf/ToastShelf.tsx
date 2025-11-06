@@ -3,7 +3,6 @@ import styles from './ToastShelf.module.css';
 
 const ToastShelf = () => {
   const { toasts } = useSonner();
-  console.log(toasts);
   return (
     <div className={styles.wrapper}>
       <Toaster

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { DetailsContainer } from '../DetailsContainer';
+import { JobName } from '../JobName';
 import { MainContent } from '../MainContent';
 import { OrderDetailsItemsDesc } from '../OrderDetailsItemsDesc';
 import { OrderDetailsItemsItem } from '../OrderDetailsItemsItem';
@@ -35,13 +36,11 @@ const OrderDetails = () => {
   return (
     <MainContent title="Order Details">
       <div className={styles.orderDetailsContainer}>
-        <h3
-          // contentEditable={true}
-          onBlur={(e) => setJobName(e.target.innerText)}
-          className={styles.profileTitle}
-        >
-          {jobName}
-        </h3>
+        <JobName
+          orderId={orderId ?? ''}
+          jobName={jobName}
+          setJobName={setJobName}
+        />
         <Tabs initialValue="items">
           <TabsList className={styles.tabsList} aria-label="Tabs">
             <TabsTab value="items">
