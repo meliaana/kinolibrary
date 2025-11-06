@@ -22,6 +22,9 @@
   }
 }
 
+.clipRef {
+}
+
 .itemContent {
   display: flex;
   flex-direction: column;

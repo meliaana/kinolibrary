@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import PrimitiveTooltip from '../PrimitiveTooltip/PrimitiveTooltip';
 import styles from './OrderDetailsItemsItem.module.css';
 
 type OrderDetailsItemsItemProps = {
@@ -20,7 +21,9 @@ const OrderDetailsItemsItem = ({ orderClips }: { orderClips: any }) => {
       {orderClips.map((orderClip: any) => (
         <div key={orderClip.orderItemId} className={styles.item}>
           <div className={clsx(styles.itemContent, styles.clipRefContent)}>
-            <span className={styles.clipRef}>Ref no</span>
+            <PrimitiveTooltip content="Clip Reference">
+              <span className={styles.clipRef}>Clip Reference</span>
+            </PrimitiveTooltip>
             <input
               type="text"
               className={clsx(styles.input)}
@@ -48,7 +51,9 @@ const OrderDetailsItemsItem = ({ orderClips }: { orderClips: any }) => {
             />
           </div>
           <div className={styles.itemContent}>
-            <span className={styles.timecodeOut}>Estimated Seconds</span>
+            <PrimitiveTooltip content="Estimated Seconds">
+              <span className={styles.timecodeOut}>Estimated Seconds</span>
+            </PrimitiveTooltip>
             <input type="text" className={styles.input} value={0} readOnly />
           </div>
         </div>
