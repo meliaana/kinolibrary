@@ -5,6 +5,14 @@ import { Select } from '../Select';
 import { addToDate, DurationUnit } from './TimeDetails.helpers';
 import styles from './TimeDetails.module.css';
 
+const durationMap = {
+  1: 'day',
+  2: 'week',
+  3: 'month',
+  4: 'year',
+  5: 'perpetuity',
+};
+
 const TimeDetails = ({
   startDateInitial,
   durationInitial,
@@ -12,20 +20,19 @@ const TimeDetails = ({
 }: {
   startDateInitial: string;
   durationInitial: number;
-  durationSelectorInitial: DurationUnit;
+  durationSelectorInitial: number;
 }) => {
   const [startDate, setStartDate] = useState<string>(
     dayjs(startDateInitial).format('YYYY-MM-DD'),
   );
   const [duration, setDuration] = useState<number>(durationInitial);
-  const [durationSelector, setDurationSelector] = useState<DurationUnit>(
-    durationSelectorInitial,
+  const [durationSelector, setDurationSelector] = useState<string>(
+    durationMap[durationSelectorInitial as keyof typeof durationMap],
   );
 
   const endDate = useMemo(() => {
     if (durationSelector === 'Perpetuity') return '';
-    if (!startDate || !Number.isFinite(Number(duration))) return '';
-    return addToDate(startDate, Number(duration), durationSelector);
+    return addToDate(startDate, duration, durationSelector as DurationUnit);
   }, [startDate, duration, durationSelector]);
 
   function handleDurationChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -60,7 +67,13 @@ const TimeDetails = ({
           label="Duration Selector"
           value={durationSelector}
           onChange={(value) => setDurationSelector(value as DurationUnit)}
-          options={['Day', 'Week', 'Month', 'Year', 'Perpetuity']}
+          options={[
+            { id: 'day', name: 'Day' },
+            { id: 'week', name: 'Week' },
+            { id: 'month', name: 'Month' },
+            { id: 'year', name: 'Year' },
+            { id: 'perpetuity', name: 'Perpetuity' },
+          ]}
         />
       </div>
 

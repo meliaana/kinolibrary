@@ -9,7 +9,7 @@ const Select = ({
   onChange,
   className,
 }: {
-  options: string[];
+  options: { id: string; name: string }[];
   label: string;
   value: string;
   onChange: (value: string) => void;
@@ -33,8 +33,8 @@ const Select = ({
         onChange={handleChange}
       >
         {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
+          <option key={option.id} value={option.id}>
+            {option.name}
           </option>
         ))}
       </select>

@@ -19,21 +19,20 @@ function formatTimecode(input: string) {
 
   return `${hours}:${minutes}:${seconds}:${frames}`;
 }
-const OrderDetailsItemsItem = ({
-  orderItems,
-}: {
-  orderItems: OrderDetailsItemsItemProps[];
-}) => {
+
+const OrderDetailsItemsItem = ({ orderClips }: { orderClips: any }) => {
+  if (!orderClips) return null;
+
   return (
     <div className={styles.wrapper}>
-      {orderItems.map((orderItem) => (
-        <div key={orderItem.orderItemId} className={styles.item}>
+      {orderClips.map((orderClip: any) => (
+        <div key={orderClip.id} className={styles.item}>
           <div className={clsx(styles.itemContent, styles.clipRefContent)}>
             <span className={styles.clipRef}>Ref no</span>
             <input
               type="text"
               className={clsx(styles.input)}
-              value={orderItem.clipRef}
+              value={orderClip.clipRef}
             />
           </div>
 
@@ -42,7 +41,7 @@ const OrderDetailsItemsItem = ({
             <input
               type="text"
               className={styles.input}
-              value={formatTimecode(orderItem.timecodeOut)}
+              value={formatTimecode(orderClip.timecodeOut)}
             />
           </div>
           <div className={styles.itemContent}>
@@ -50,7 +49,7 @@ const OrderDetailsItemsItem = ({
             <input
               type="text"
               className={styles.input}
-              value={formatTimecode(orderItem.timecodeOut)}
+              value={formatTimecode(orderClip.timecodeOut)}
             />
           </div>
           <div className={styles.itemContent}>

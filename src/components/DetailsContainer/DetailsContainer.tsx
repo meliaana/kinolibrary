@@ -1,22 +1,10 @@
-import { useSelector } from '@xstate/react';
-import { useEffect } from 'react';
-import { orderDetailsActor } from '../../machines/orders.machine';
 import { OrderDetailsDetailsItem } from '../OrderDetailsDetailsItem';
 import { OrderIformation } from '../OrderIformation';
 import { ProjectDetails } from '../ProjectDetails';
 import { TimeDetails } from '../TimeDetails';
 import styles from './DetailsContainer.module.css';
 
-const DetailsContainer = () => {
-  const orderDetails = useSelector(
-    orderDetailsActor,
-    (state) => state.context.orderDetails,
-  );
-
-  useEffect(() => {
-    orderDetailsActor.send({ type: 'order.details.load' });
-  }, []);
-
+const DetailsContainer = ({ orderDetails }: { orderDetails: any }) => {
   if (!orderDetails) return null;
 
   return (

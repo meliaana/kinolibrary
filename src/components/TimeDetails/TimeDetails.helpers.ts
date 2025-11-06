@@ -3,20 +3,31 @@ import dayjs from 'dayjs';
 
 export type DurationUnit = 'Day' | 'Week' | 'Month' | 'Year' | 'Perpetuity';
 
-const unitMap = {
+const unitMap: Record<string, 'day' | 'week' | 'month' | 'year'> = {
+  // Title case (expected by type)
   Day: 'day',
   Week: 'week',
   Month: 'month',
   Year: 'year',
-} as const;
+  // Lowercase ids (coming from <Select />)
+  day: 'day',
+  week: 'week',
+  month: 'month',
+  year: 'year',
+};
 
 export function addToDate(
   startDate: string,
   amount: number,
   unit: DurationUnit,
 ): string {
-  if (unit === 'Perpetuity') return '';
+  // Normalize and handle perpetuity
+  const normalizedUnit = String(unit);
+  if (normalizedUnit.toLowerCase() === 'perpetuity') return '';
+  const mappedUnit = unitMap[normalizedUnit];
+
   const d = dayjs(startDate);
-  if (!d.isValid() || !Number.isFinite(amount)) return '';
-  return d.add(amount, unitMap[unit]).format('YYYY-MM-DD');
+  if (!d.isValid() || !Number.isFinite(amount) || !mappedUnit) return '';
+
+  return d.add(amount, mappedUnit).format('YYYY-MM-DD');
 }

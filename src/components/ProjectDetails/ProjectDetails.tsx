@@ -1,4 +1,6 @@
+import { useSelector } from '@xstate/react';
 import { useState } from 'react';
+import { orderDetailsActor } from '../../machines/orders.machine';
 import { LabelInputPair } from '../LabelInputPair';
 import { Select } from '../Select';
 
@@ -14,6 +16,15 @@ const ProjectDetails = ({
   const [transmission, setTransmission] = useState(transmissionInital);
   const [territory, setTerritory] = useState(territoryInitial);
   const [platform, setPlatform] = useState(platformInitial);
+  const platforms = useSelector(
+    orderDetailsActor,
+    (state) => state.context.platforms,
+  );
+
+  const territories = useSelector(
+    orderDetailsActor,
+    (state) => state.context.territories,
+  );
 
   return (
     <>
@@ -27,21 +38,19 @@ const ProjectDetails = ({
         label="Territory"
         value={territory}
         onChange={setTerritory}
-        options={[
-          'North America',
-          'Europe',
-          'Asia',
-          'South America',
-          'Africa',
-          'Australia',
-          'Antarctica',
-        ]}
+        options={territories.map((territory) => ({
+          id: territory.id,
+          name: territory.name,
+        }))}
       />
       <Select
         label="Platform"
         value={platform}
         onChange={setPlatform}
-        options={['Android', 'iOS', 'Windows', 'macOS', 'Linux', 'Chrome OS']}
+        options={platforms.map((platform) => ({
+          id: platform.id,
+          name: platform.name,
+        }))}
       />
     </>
   );

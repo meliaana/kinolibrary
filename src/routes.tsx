@@ -15,7 +15,6 @@ export const router = createBrowserRouter([
     },
     children: [
       { index: true, loader: () => redirect('/client/orders') },
-
       {
         path: 'orders',
         element: <OrdersLayout />,

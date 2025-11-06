@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import { useNavigate } from 'react-router';
-import { orderDetailsActor } from '../../machines/orders.machine';
 import { ButtonWithIcon } from '../ButtonWithIcon';
 import { EditIcon } from '../EditIcon';
 import { orderStatus } from './OrderItem.helpers';
@@ -11,12 +10,6 @@ const OrderItem = ({ order }: { order: any }) => {
 
   const handleOpenDetails = async () => {
     try {
-      orderDetailsActor.send({
-        type: 'order.details.update.orderId',
-        data: { orderId: order.id },
-      });
-      orderDetailsActor.send({ type: 'order.projectName.load' });
-
       navigate(`/client/orders/${order.id}/details`);
     } catch (error) {
       console.error(error);
