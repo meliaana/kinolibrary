@@ -1,6 +1,6 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useRouteLoaderData } from 'react-router-dom';
 import { AccountIcon } from '../AccountIcon';
 import { ArrowIcon } from '../ArrowIcon';
 import { DarkModeIcon } from '../DarkModeIcon';
@@ -11,6 +11,9 @@ import styles from './UserMenu.module.css';
 const UserMenu = () => {
   const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const data = useRouteLoaderData('client-root') as {
+    user: { firstName: string; lastName: string; email: string };
+  };
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -33,7 +36,7 @@ const UserMenu = () => {
           sideOffset={-8}
           alignOffset={0}
         >
-          <span className={styles.userInfo}>developer@kinolibrary.com</span>
+          <span className={styles.userInfo}>{data.user.email}</span>
           <DropdownMenu.Item
             className={styles.dropdownMenuItem}
             onSelect={() => {

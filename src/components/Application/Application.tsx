@@ -1,12 +1,12 @@
 // Application.tsx
+import { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
-import { useSingleEffect } from '../../hooks/useSingleEffect';
 import { orderDetailsActor } from '../../machines/orders.machine';
 import { router } from '../../routes';
 import { ToastShelf } from '../ToastShelf';
 
 export default function Application() {
-  useSingleEffect(() => {
+  useEffect(() => {
     const fetchOrders = async () => {
       const territoriesResponse = await fetch('/api/Metadata/territories');
       const territoriesData = await territoriesResponse.json();
