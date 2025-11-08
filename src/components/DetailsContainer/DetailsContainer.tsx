@@ -127,12 +127,10 @@ const DetailsContainer = ({
       </OrderDetailsDetailsItem>
 
       <div className={styles.buttonsContainer}>
-        <Button className={styles.saveButton} onClick={handleSave}>
+        <Button variant="colored" onClick={handleSave}>
           Save Changes
         </Button>
-        <Button className={styles.cancelButton} onClick={handleCancel}>
-          Cancel
-        </Button>
+        <Button onClick={handleCancel}>Cancel</Button>
       </div>
     </div>
   );

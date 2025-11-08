@@ -7,20 +7,20 @@ import styles from './Button.module.css';
 interface ButtonProps
   extends React.ComponentPropsWithRef<typeof PrimitiveButton> {
   ariaLabel?: string;
-  isActive?: boolean;
+  variant?: 'colored' | 'outlined';
 }
 
 function Button({
   ariaLabel,
   children,
-  isActive,
   className,
+  variant = 'outlined',
   ...delegated
 }: PropsWithChildren<ButtonProps>) {
   return (
     <PrimitiveButton
       className={clsx(styles.wrapper, className, {
-        [styles.active!]: isActive,
+        [styles.colored!]: variant === 'colored',
       })}
       {...delegated}
     >

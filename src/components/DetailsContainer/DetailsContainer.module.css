@@ -13,15 +13,3 @@
   width: 450px;
   justify-content: end;
 }
-
-.saveButton {
-  background-color: var(--accent-9);
-  color: var(--gray-1);
-  border-radius: 0.5rem;
-}
-
-.cancelButton {
-  background-color: var(--gray-10);
-  color: var(--white);
-  border-radius: 0.5rem;
-}

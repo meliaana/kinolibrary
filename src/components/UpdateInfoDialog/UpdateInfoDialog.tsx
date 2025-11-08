@@ -35,7 +35,7 @@ const UpdateInfoDialog = ({
             <Button className={styles.cancelButton}>Close</Button>
           </Dialog.Close>
           <Dialog.Close asChild>
-            <Button className={styles.saveButton}>Save changes</Button>
+            <Button variant="colored">Save changes</Button>
           </Dialog.Close>
         </div>
         <Dialog.Close asChild>
