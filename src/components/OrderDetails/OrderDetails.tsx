@@ -3,10 +3,9 @@ import { useLocation } from 'react-router-dom';
 import { DetailsContainer } from '../DetailsContainer';
 import { JobName } from '../JobName';
 import { MainContent } from '../MainContent';
-import { OrderDetailsItemsDesc } from '../OrderDetailsItemsDesc';
-import { OrderDetailsItemsItem } from '../OrderDetailsItemsItem';
 import { Tabs, TabsList, TabsPanel, TabsTab } from '../Tabs';
 import styles from './OrderDetails.module.css';
+import OrderDetailsItem from './OrderDetailsItem';
 
 const OrderDetails = () => {
   const [orderClips, setOrderClips] = useState<any>(null);
@@ -51,12 +50,9 @@ const OrderDetails = () => {
             </TabsTab>
           </TabsList>
           <TabsPanel value="items">
-            <div className={styles.orderDetailsItemsContainer}>
-              <OrderDetailsItemsItem
-                orderClips={orderClips ? orderClips.orderItems : []}
-              />
-              <OrderDetailsItemsDesc />
-            </div>
+            <OrderDetailsItem
+              orderClips={orderClips ? orderClips.orderItems : []}
+            />
           </TabsPanel>
           <TabsPanel value="details">
             <DetailsContainer

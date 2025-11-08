@@ -31,24 +31,3 @@
   gap: calc(8rem / 16);
   font-size: calc(14rem / 16);
 }
-
-.input {
-  width: 100%;
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.5rem;
-  font-size: calc(15rem / 16);
-  color: var(--gray-11);
-  height: 44px;
-
-  border: 1px solid var(--gray-7);
-  padding: 0.625rem 1rem;
-  background-color: var(--gray-1);
-}
-
-.input:focus-visible {
-  outline: 2px solid var(--accent-8);
-  box-shadow: 0 0 0 2px var(--accent-8);
-}

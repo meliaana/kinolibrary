@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { PrimitiveButton } from '../PrimitiveButton';
 import { PrimitiveInput } from '../PrimitiveInput';
 import PrimitiveTooltip from '../PrimitiveTooltip/PrimitiveTooltip';
 import styles from './OrderDetailsItemsItem.module.css';
@@ -10,7 +11,15 @@ type OrderDetailsItemsItemProps = {
   timecodeOut: string;
 };
 
-const OrderDetailsItemsItem = ({ orderClips }: { orderClips: any }) => {
+const OrderDetailsItemsItem = ({
+  openedOrderId,
+  setOpenedOrderId,
+  orderClips,
+}: {
+  openedOrderId: any;
+  setOpenedOrderId: (order: any) => void;
+  orderClips: any;
+}) => {
   if (!orderClips) return null;
 
   const updateClipRef = (value: string) => {};
@@ -20,7 +29,12 @@ const OrderDetailsItemsItem = ({ orderClips }: { orderClips: any }) => {
   return (
     <div className={styles.wrapper}>
       {orderClips.map((orderClip: any) => (
-        <div key={orderClip.orderItemId} className={styles.item}>
+        <PrimitiveButton
+          key={orderClip.orderItemId}
+          className={styles.item}
+          onClick={() => setOpenedOrderId(orderClip.orderItemId)}
+          data-active={openedOrderId === orderClip.orderItemId}
+        >
           <div className={clsx(styles.itemContent, styles.clipRefContent)}>
             <PrimitiveTooltip content="Clip Reference">
               <span className={styles.clipRef}>Clip Reference</span>
@@ -54,7 +68,7 @@ const OrderDetailsItemsItem = ({ orderClips }: { orderClips: any }) => {
             </PrimitiveTooltip>
             <PrimitiveInput type="text" value={0} isReadOnly={true} />
           </div>
-        </div>
+        </PrimitiveButton>
       ))}
     </div>
   );
