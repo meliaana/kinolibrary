@@ -29,7 +29,6 @@ const PrimitivePagination = ({
   };
 
   const renderPageItem = (page: number | string, index: number) => {
-    console.log(page);
     if (page === '…') {
       return (
         <span key={`ellipsis-${index}`} className={clsx(ellipsisClassName)}>

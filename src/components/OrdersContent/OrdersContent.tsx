@@ -14,12 +14,14 @@ const OrdersContent = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
 
-  const fetchOrders = useCallback(async (page: number) => {
+  const [search, setSearch] = useState('');
+
+  const fetchOrders = useCallback(async (page: number, keyword?: string) => {
     setLoading(true);
     const ctrl = new AbortController();
     try {
       const res = await fetch(
-        `/api/orders?page=${page}&pageSize=${PAGE_SIZE}`,
+        `/api/orders?page=${page}&pageSize=${PAGE_SIZE}${keyword ? `&keyword=${keyword}` : ''}`,
         {
           signal: ctrl.signal,
         },
@@ -44,11 +46,11 @@ const OrdersContent = () => {
   }, []);
 
   useEffect(() => {
-    fetchOrders(pageIndex);
+    fetchOrders(pageIndex, search);
   }, [pageIndex]);
 
   useEffect(() => {
-    const fetchOrders = async () => {
+    const fetchInitialOrders = async () => {
       try {
         const response = await fetch('/api/orders');
         if (!response.ok) throw new Error('Failed to fetch orders');
@@ -59,12 +61,22 @@ const OrdersContent = () => {
       }
     };
 
-    fetchOrders();
+    fetchInitialOrders();
   }, []);
+
+  function handleSearch(value: string) {
+    setPageIndex(1);
+    setSearch(value);
+    fetchOrders(1, value);
+  }
 
   return (
     <MainContent title="Orders">
-      <SearchInput />
+      <SearchInput
+        value={search}
+        onChange={setSearch}
+        onSubmit={handleSearch}
+      />
       <ul className={styles.ordersList}>
         <li className={styles.ordersListHeader}>
           <span>Job Number</span>
