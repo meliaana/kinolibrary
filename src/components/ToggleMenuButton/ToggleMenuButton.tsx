@@ -1,13 +1,13 @@
 import { BurgerMenuIcon } from '../BurgerMenuIcon';
-import { Button } from '../Button';
+import { PrimitiveButton } from '../PrimitiveButton';
 import styles from './ToggleMenuButton.module.css';
 
 const ToggleMenuButton = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
   return (
     <div className={styles.wrapper}>
-      <Button onClick={toggleSidebar}>
+      <PrimitiveButton className={styles.icon} onClick={toggleSidebar}>
         <BurgerMenuIcon />
-      </Button>
+      </PrimitiveButton>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { PropsWithChildren } from 'react';
 import { Button } from '../Button';
 import { EditIcon } from '../EditIcon';
+import { PrimitiveButton } from '../PrimitiveButton';
 import { XIcon } from '../XIcon';
 import styles from './UpdateInfoDialog.module.css';
 
@@ -13,8 +14,10 @@ const UpdateInfoDialog = ({
   <Dialog.Root>
     <Dialog.Trigger asChild>
       <button className={styles.editButton}>
-        <span className={styles.editIcon}>Edit</span>
-        <EditIcon />
+        <div className={styles.editButtonContent}>
+          <EditIcon />
+          <span className={styles.editIcon}>Edit</span>
+        </div>
       </button>
     </Dialog.Trigger>
     <Dialog.Portal>
@@ -29,16 +32,16 @@ const UpdateInfoDialog = ({
           style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}
         >
           <Dialog.Close asChild>
-            <Button className={styles.cancelButton}>Cancel</Button>
+            <Button className={styles.cancelButton}>Close</Button>
           </Dialog.Close>
           <Dialog.Close asChild>
             <Button className={styles.saveButton}>Save changes</Button>
           </Dialog.Close>
         </div>
         <Dialog.Close asChild>
-          <Button className={styles.closeButton} aria-label="Close">
+          <PrimitiveButton className={styles.closeButton} aria-label="Close">
             <XIcon />
-          </Button>
+          </PrimitiveButton>
         </Dialog.Close>
       </Dialog.Content>
     </Dialog.Portal>

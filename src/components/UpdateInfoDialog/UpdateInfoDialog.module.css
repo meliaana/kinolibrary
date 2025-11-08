@@ -22,6 +22,7 @@
   max-height: 85vh;
   padding: 44px;
   animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
 }
 .dialogContent:focus {
   outline: none;
@@ -51,19 +52,19 @@
   justify-content: center;
   border-radius: 100%;
   background-color: var(--gray-3);
-  color: var(--gray-10);
+  color: var(--gray-8);
   transition:
     color 0.2s ease,
     background-color 0.2s ease;
 }
 
 .closeButton:focus-visible {
-  outline: 2px solid var(--gray-7);
-  outline-offset: 1px;
+  outline: 2px solid var(--gray-12);
 }
 
 .closeButton:hover {
   color: var(--gray-11);
+  background-color: var(--gray-6);
 }
 
 .editButton {
@@ -76,13 +77,19 @@
   font-size: 14px;
   font-weight: 500;
   height: 46px;
-
   width: 84px;
-
   border: 1px solid var(--gray-7);
   background-color: var(--gray-1);
   border-radius: 100px;
   margin-left: auto;
+  padding: calc(12rem / 16) calc(16rem / 16);
+}
+
+.editButtonContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .editButton:hover {
@@ -103,19 +110,12 @@
   color: var(--gray-1);
 }
 
-.cancelButton:hover {
-  background-color: var(--gray-9);
-  color: var(--gray-1);
-}
-
 .cancelButton {
-  background-color: var(--gray-8);
-  color: var(--gray-1);
+  color: var(--gray-12);
+  border: 1px solid var(--gray-7);
   height: 46px;
   margin-left: auto;
-  width: 100%;
   border-radius: 6px;
-  max-width: 120px;
   margin-right: 10px;
 }
 

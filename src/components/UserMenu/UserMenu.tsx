@@ -20,10 +20,7 @@ const UserMenu = () => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button
-          className={styles.triggerButton}
-          aria-label="@TODO: Add aria-label"
-        >
+        <button className={styles.triggerButton} aria-label="Open user menu">
           <ArrowIcon />
         </button>
       </DropdownMenu.Trigger>

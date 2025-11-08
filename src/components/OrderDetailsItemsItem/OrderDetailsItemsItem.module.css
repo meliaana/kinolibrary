@@ -38,10 +38,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: calc(15rem / 16);
   color: var(--gray-11);
-  box-shadow: 0 0 0 1px var(--gray-7);
   height: 44px;
 
   border: 1px solid var(--gray-7);
