@@ -45,7 +45,7 @@
   color: var(--gray-12);
   border: 1px solid var(--gray-6);
   border-radius: 0.5rem;
-  max-height: 300px;
+  max-height: 200px;
   overflow: auto;
   width: var(--radix-select-trigger-width);
 }
