@@ -73,3 +73,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.editButton {
+  justify-content: flex-start;
+}

@@ -35,7 +35,11 @@ const OrderItem = ({ order }: { order: any }) => {
         </p>
       </span>
       <span className={styles.numberOfClips}>{order.numberOfClips}</span>
-      <ButtonWithIcon text="Edit" onClick={handleOpenDetails}>
+      <ButtonWithIcon
+        text="Edit"
+        onClick={handleOpenDetails}
+        className={styles.editButton}
+      >
         <EditIcon />
       </ButtonWithIcon>
     </li>
