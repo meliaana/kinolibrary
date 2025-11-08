@@ -20,6 +20,14 @@
   @media (width >= 1280px) {
     flex-direction: row;
   }
+
+  &:hover {
+    background-color: var(--gray-3);
+  }
+
+  &[data-active='true'] {
+    background-color: var(--accent-5);
+  }
 }
 
 .clipRef {

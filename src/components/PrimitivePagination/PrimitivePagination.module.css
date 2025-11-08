@@ -33,7 +33,7 @@
 
 .pageButton {
   padding: 8px 16px;
-  border: 1px solid var(--gray-7);
+  border: none;
   border-radius: 0.5rem;
   width: 40px;
   height: 40px;
@@ -47,7 +47,7 @@
   &[data-active='true'] {
     background-color: var(--accent-6);
     color: var(--accent-10);
-    border: 1px solid var(--accent-10);
+    border: none;
   }
 }
 

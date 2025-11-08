@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 import PrimitiveButton from '../PrimitiveButton/PrimitiveButton';
+import { getVisiblePages } from './PrimitivePagination.helpers';
 import styles from './PrimitivePagination.module.css';
 
 export interface PrimitivePaginationProps {
@@ -27,33 +28,9 @@ const PrimitivePagination = ({
     onPageChange(page);
   };
 
-  const getVisiblePages = () => {
-    const pages: (number | string)[] = [1];
-
-    if (totalPages <= 5) {
-      for (let i = 2; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else if (currentPage <= 3) {
-      pages.push(2, 3);
-      pages.push('...');
-      pages.push(totalPages);
-    } else if (currentPage >= totalPages - 2) {
-      pages.push('...');
-      pages.push(totalPages - 2, totalPages - 1);
-      pages.push(totalPages);
-    } else {
-      pages.push('...');
-      pages.push(currentPage);
-      pages.push('...');
-      pages.push(totalPages);
-    }
-
-    return pages;
-  };
-
   const renderPageItem = (page: number | string, index: number) => {
-    if (page === '...') {
+    console.log(page);
+    if (page === '…') {
       return (
         <span key={`ellipsis-${index}`} className={clsx(ellipsisClassName)}>
           ...
@@ -87,7 +64,7 @@ const PrimitivePagination = ({
         {prevLabel}
       </PrimitiveButton>
 
-      {getVisiblePages().map(renderPageItem)}
+      {getVisiblePages(currentPage, totalPages).map(renderPageItem)}
 
       <PrimitiveButton
         className={styles.navigationButton}
