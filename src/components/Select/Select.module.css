@@ -30,6 +30,11 @@
   box-shadow: 0 1px 2px 0 var(--gray-7);
 }
 
+.trigger span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .trigger:focus-visible {
   outline: 2px solid var(--accent-8);
   box-shadow: 0 0 0 2px var(--accent-8);
