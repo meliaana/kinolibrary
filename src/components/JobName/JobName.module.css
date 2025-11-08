@@ -27,6 +27,6 @@
 .saveButton {
   background-color: var(--accent-9);
   color: var(--gray-1);
-  border-radius: 6px;
+  border-radius: 0.5rem;
   width: 100px;
 }

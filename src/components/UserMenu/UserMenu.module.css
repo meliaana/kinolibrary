@@ -37,7 +37,7 @@
   align-items: center;
   gap: 12px;
   color: var(--gray-11);
-  border-radius: 8px;
+  border-radius: 0.5rem;
   padding: calc(8rem / 16) calc(12rem / 16);
 }
 

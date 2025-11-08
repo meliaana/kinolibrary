@@ -9,7 +9,7 @@
 .navigationButton {
   padding: 8px 16px;
   border: 1px solid var(--gray-7);
-  border-radius: 4px;
+  border-radius: 0.5rem;
   width: 40px;
   height: 40px;
   background-color: transparent;
@@ -34,7 +34,7 @@
 .pageButton {
   padding: 8px 16px;
   border: 1px solid var(--gray-7);
-  border-radius: 4px;
+  border-radius: 0.5rem;
   width: 40px;
   height: 40px;
   background-color: transparent;

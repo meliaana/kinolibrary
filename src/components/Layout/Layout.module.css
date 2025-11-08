@@ -49,8 +49,7 @@
   gap: calc(12rem / 16);
   height: 40px;
   width: 100%;
-
-  border-radius: calc(8rem / 16);
+  border-radius: 0.5rem;
   background: transparent;
   border: none;
   font-size: calc(14rem / 16);
