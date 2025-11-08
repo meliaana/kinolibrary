@@ -1,0 +1,33 @@
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: calc(16rem / 16);
+}
+
+.rememberMeContainer {
+  padding-inline: calc(16rem / 16);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forgotPasswordButton {
+  font-size: calc(14rem / 16);
+  font-weight: 400;
+  color: var(--accent-9);
+  text-decoration: none;
+}
+
+.submitButton {
+  background-color: var(--accent-9);
+  border-radius: 0.5rem;
+  color: var(--gray-1);
+  font-size: calc(14rem / 16);
+  font-weight: 500;
+  margin-inline: calc(16rem / 16);
+
+  &:hover {
+    background-color: var(--accent-10);
+    color: var(--gray-1);
+  }
+}
