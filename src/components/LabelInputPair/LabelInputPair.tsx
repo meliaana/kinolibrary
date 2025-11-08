@@ -1,3 +1,4 @@
+import { PrimitiveInput } from '../PrimitiveInput';
 import styles from './LabelInputPair.module.css';
 
 const LabelInputPair = ({
@@ -6,27 +7,24 @@ const LabelInputPair = ({
   setValue,
   isReadOnly,
   placeholder,
+  type = 'text',
 }: {
   label: string;
   value: string;
   setValue?: (value: string) => void;
   isReadOnly?: boolean;
   placeholder?: string;
+  type?: string;
 }) => {
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setValue?.(e.target.value);
-  }
-
   return (
     <div className={styles.propertyItem}>
       <span className={styles.propertyItemLabel}>{label}</span>
-      <input
-        data-readonly={isReadOnly}
-        readOnly={isReadOnly}
-        className={styles.input}
+      <PrimitiveInput
         value={value}
-        onChange={handleChange}
+        onChange={setValue}
+        isReadOnly={isReadOnly}
         placeholder={placeholder}
+        type={type}
       />
     </div>
   );

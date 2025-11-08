@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { PrimitiveInput } from '../PrimitiveInput';
 import PrimitiveTooltip from '../PrimitiveTooltip/PrimitiveTooltip';
 import styles from './OrderDetailsItemsItem.module.css';
 
@@ -12,9 +13,9 @@ type OrderDetailsItemsItemProps = {
 const OrderDetailsItemsItem = ({ orderClips }: { orderClips: any }) => {
   if (!orderClips) return null;
 
-  const updateClipRef = (e: React.ChangeEvent<HTMLInputElement>) => {};
-  const updateTimecodeIn = (e: React.ChangeEvent<HTMLInputElement>) => {};
-  const updateTimecodeOut = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  const updateClipRef = (value: string) => {};
+  const updateTimecodeIn = (value: string) => {};
+  const updateTimecodeOut = (value: string) => {};
 
   return (
     <div className={styles.wrapper}>
@@ -24,37 +25,34 @@ const OrderDetailsItemsItem = ({ orderClips }: { orderClips: any }) => {
             <PrimitiveTooltip content="Clip Reference">
               <span className={styles.clipRef}>Clip Reference</span>
             </PrimitiveTooltip>
-            <input
-              type="text"
-              className={clsx(styles.input)}
+            <PrimitiveInput
               value={orderClip.clipRef}
               onChange={updateClipRef}
+              type="text"
             />
           </div>
 
           <div className={styles.itemContent}>
             <span className={styles.timecodeIn}>Timecode In</span>
-            <input
-              type="text"
-              className={styles.input}
+            <PrimitiveInput
               value={orderClip.timecodeIn}
               onChange={updateTimecodeIn}
+              type="text"
             />
           </div>
           <div className={styles.itemContent}>
             <span className={styles.timecodeOut}>Timecode Out</span>
-            <input
-              type="text"
-              className={styles.input}
+            <PrimitiveInput
               value={orderClip.timecodeOut}
               onChange={updateTimecodeOut}
+              type="text"
             />
           </div>
           <div className={styles.itemContent}>
             <PrimitiveTooltip content="Estimated Seconds">
               <span className={styles.timecodeOut}>Estimated Seconds</span>
             </PrimitiveTooltip>
-            <input type="text" className={styles.input} value={0} readOnly />
+            <PrimitiveInput type="text" value={0} isReadOnly={true} />
           </div>
         </div>
       ))}

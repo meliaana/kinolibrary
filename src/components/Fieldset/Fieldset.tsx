@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { useId } from 'react';
+import { PrimitiveInput } from '../PrimitiveInput';
 import styles from './Fieldset.module.css';
 
 const Fieldset = ({
@@ -24,12 +25,7 @@ const Fieldset = ({
       <label className={styles.label} htmlFor={id}>
         {label}
       </label>
-      <input
-        value={value}
-        onChange={handleChange}
-        className={styles.input}
-        id={id}
-      />
+      <PrimitiveInput value={value} onChange={handleChange} id={id} />
     </fieldset>
   );
 };

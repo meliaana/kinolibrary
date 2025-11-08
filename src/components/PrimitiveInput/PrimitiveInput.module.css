@@ -1,0 +1,26 @@
+.input {
+  width: 100%;
+  font-size: calc(14rem / 16);
+  color: var(--gray-12);
+  font-weight: 500;
+  padding: calc(10rem / 16) calc(16rem / 16);
+  background-color: var(--accent-1);
+  border: 1px solid var(--gray-7);
+  border-radius: 0.5rem;
+  min-height: calc(44rem / 16);
+  display: flex;
+  align-items: center;
+
+  &[data-readonly='true'] {
+    background-color: var(--gray-3);
+  }
+}
+
+.input:focus-visible {
+  &[data-readonly='true'] {
+    outline: none;
+    box-shadow: none;
+  }
+  outline: 2px solid var(--accent-8);
+  box-shadow: 0 0 0 2px var(--accent-8);
+}

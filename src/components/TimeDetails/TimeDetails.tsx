@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import { DatePicker } from '../DatePicker';
+import { PrimitiveInput } from '../PrimitiveInput';
 import { Select } from '../Select';
 import { addToDate, DurationUnit } from './TimeDetails.helpers';
 import styles from './TimeDetails.module.css';
@@ -33,8 +34,8 @@ const TimeDetails = ({
     timeDetailsState.durationType,
   ]);
 
-  function handleDurationChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const n = e.target.value === '' ? NaN : Number(e.target.value);
+  function handleDurationChange(value: string) {
+    const n = value === '' ? NaN : Number(value);
     setTimeDetailsState({
       ...timeDetailsState,
       duration: n,
@@ -54,7 +55,7 @@ const TimeDetails = ({
       <div className={styles.durationContainer}>
         <div className={styles.durationWrapper}>
           <label className={styles.durationLabel}>Duration</label>
-          <input
+          <PrimitiveInput
             type="number"
             inputMode="numeric"
             min="0"
@@ -65,7 +66,6 @@ const TimeDetails = ({
             }
             onChange={handleDurationChange}
             placeholder="Num"
-            className={styles.input}
             id="duration"
           />
         </div>
