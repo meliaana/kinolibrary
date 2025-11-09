@@ -24,6 +24,7 @@ const UserMenu = () => {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button className={styles.triggerButton} aria-label="Open user menu">
+          <div className={styles.username}>{data.user.firstName}</div>
           <ArrowIcon />
         </button>
       </DropdownMenu.Trigger>

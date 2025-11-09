@@ -10,10 +10,3 @@
   background-color: var(--color-background-secondary);
   padding: calc(12rem / 16) calc(24rem / 16);
 }
-
-.userInfo {
-  font-size: calc(12rem / 16);
-  color: var(--gray-10);
-  margin-left: auto;
-  align-self: center;
-}

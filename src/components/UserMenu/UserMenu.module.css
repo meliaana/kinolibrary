@@ -4,10 +4,21 @@
   cursor: pointer;
   color: var(--gray-10);
   padding: 0;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: calc(8rem / 16);
 
   &[data-state='open'] {
-    transform: rotate(180deg);
+    svg {
+      transform: rotate(180deg);
+    }
   }
+}
+
+.username {
+  font-size: calc(12rem / 16);
+  color: var(--gray-10);
 }
 
 .content {
