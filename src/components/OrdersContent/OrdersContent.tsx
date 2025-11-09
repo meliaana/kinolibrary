@@ -91,14 +91,16 @@ const OrdersContent = () => {
         ))}
       </ul>
 
-      <PrimitivePagination
-        currentPage={pageIndex}
-        totalPages={totalPages}
-        onPageChange={(page) => setPageIndex(page)}
-        prevLabel="❮"
-        nextLabel="❯"
-        className={styles.pagination}
-      />
+      {orders.length > 0 && (
+        <PrimitivePagination
+          currentPage={pageIndex}
+          totalPages={totalPages}
+          onPageChange={(page) => setPageIndex(page)}
+          prevLabel="❮"
+          nextLabel="❯"
+          className={styles.pagination}
+        />
+      )}
     </MainContent>
   );
 };
