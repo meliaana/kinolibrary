@@ -1,3 +1,4 @@
+import { useApiFetch } from '@/hooks/useApiFetch';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '../Button';
@@ -23,6 +24,8 @@ const DetailsContainer = ({
   setOrderDetails: (details: any) => void;
 }) => {
   if (!orderDetails) return null;
+
+  const apiFetch = useApiFetch();
 
   const baseRef = useRef({
     project: {
@@ -65,14 +68,15 @@ const DetailsContainer = ({
         ),
       };
 
-      const res = await fetch(`/api/orders/${orderDetails.orderId}/details`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      const res = await apiFetch(
+        `/api/orders/${orderDetails.orderId}/details`,
+        {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        },
+      );
 
-      if (!res.ok)
-        throw new Error(`Failed to save order details: ${res.status}`);
       const saved = await res.json();
 
       const nextProject = {

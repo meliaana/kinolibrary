@@ -1,3 +1,4 @@
+import { useApiFetch } from '@/hooks/useApiFetch';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '../Button';
@@ -13,13 +14,14 @@ const JobName = ({
   setJobName: (jobName: string) => void;
 }) => {
   const [innerValue, setInnerValue] = useState(jobName);
+  const apiFetch = useApiFetch();
 
   useEffect(() => {
     setInnerValue(jobName);
   }, [jobName]);
 
   async function handleSave() {
-    const res = await fetch(`/api/orders/${orderId}/project-name`, {
+    const res = await apiFetch(`/api/orders/${orderId}/project-name`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

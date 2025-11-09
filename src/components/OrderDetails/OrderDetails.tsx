@@ -1,3 +1,4 @@
+import { useApiFetch } from '@/hooks/useApiFetch';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { DetailsContainer } from '../DetailsContainer';
@@ -13,18 +14,25 @@ const OrderDetails = () => {
   const [jobName, setJobName] = useState<string>('');
   const location = useLocation();
   const orderId = location.pathname.split('/')[3];
+  const apiFetch = useApiFetch();
 
   useEffect(() => {
     const fetchOrder = async () => {
-      const projectResponse = await fetch(`/api/orders/${orderId}`);
+      const projectResponse = await apiFetch(`/api/orders/${orderId}`, {
+        method: 'GET',
+      });
       const projectData = await projectResponse.json();
       setJobName(projectData.projectName);
 
-      const response = await fetch(`/api/orders/${orderId}/clips`);
-      const data = await response.json();
-      setOrderClips(data);
+      const clipsResponse = await apiFetch(`/api/orders/${orderId}/clips`, {
+        method: 'GET',
+      });
+      const clipsData = await clipsResponse.json();
+      setOrderClips(clipsData);
 
-      const detailsResponse = await fetch(`/api/orders/${orderId}/details`);
+      const detailsResponse = await apiFetch(`/api/orders/${orderId}/details`, {
+        method: 'GET',
+      });
       const detailsData = await detailsResponse.json();
       setOrderDetails(detailsData);
     };
