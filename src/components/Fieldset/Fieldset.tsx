@@ -16,8 +16,8 @@ const Fieldset = ({
 }) => {
   const id = useId();
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    onChange?.(e.target.value);
+  function handleChange(value: string) {
+    onChange?.(value);
   }
 
   return (
