@@ -1,3 +1,4 @@
+import { useApiFetch } from '@/hooks/useApiFetch';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useState } from 'react';
 import { useNavigate, useRouteLoaderData } from 'react-router-dom';
@@ -10,6 +11,7 @@ import styles from './UserMenu.module.css';
 
 const UserMenu = () => {
   const navigate = useNavigate();
+  const apiFetch = useApiFetch();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const data = useRouteLoaderData('client-root') as {
     user: { firstName: string; lastName: string; email: string };
@@ -18,6 +20,14 @@ const UserMenu = () => {
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
     document.documentElement.classList.toggle('dark');
+  };
+
+  const handleSignOut = () => {
+    localStorage.removeItem('token');
+    apiFetch('/api/logout', {
+      method: 'POST',
+    });
+    navigate('/login');
   };
 
   return (
@@ -60,7 +70,10 @@ const UserMenu = () => {
           </DropdownMenu.Item>
 
           <DropdownMenu.Separator className={styles.separator} />
-          <DropdownMenu.Item className={styles.dropdownMenuItem}>
+          <DropdownMenu.Item
+            className={styles.dropdownMenuItem}
+            onSelect={handleSignOut}
+          >
             <SignOutIcon />
             <span className={styles.dropdownMenuItemText}>Sign out</span>
           </DropdownMenu.Item>
