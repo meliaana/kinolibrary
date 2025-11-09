@@ -16,6 +16,10 @@
   text-align: left;
 }
 
+.required {
+  color: var(--accent-9);
+}
+
 .input {
   width: 100%;
   flex: 1;

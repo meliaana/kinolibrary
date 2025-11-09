@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useApiFetch } from '../../hooks/useApiFetch';
 import { MainContent } from '../MainContent';
 import { OrderItem } from '../OrderItem';
 import { PrimitivePagination } from '../PrimitivePagination';
@@ -13,37 +14,42 @@ const OrdersContent = () => {
   const [pageIndex, setPageIndex] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+  const apiFetch = useApiFetch();
 
   const [search, setSearch] = useState('');
 
-  const fetchOrders = useCallback(async (page: number, keyword?: string) => {
-    setLoading(true);
-    const ctrl = new AbortController();
-    try {
-      const res = await fetch(
-        `/api/orders?page=${page}&pageSize=${PAGE_SIZE}${keyword ? `&keyword=${keyword}` : ''}`,
-        {
-          signal: ctrl.signal,
-        },
-      );
-      if (!res.ok) throw new Error(`Failed to fetch orders: ${res.status}`);
-      const data: any = await res.json();
+  const fetchOrders = useCallback(
+    async (page: number, keyword?: string) => {
+      setLoading(true);
 
-      setOrders(data.items ?? []);
-      setTotalPages(Math.max(1, data.totalPages ?? 1));
-      setTotalCount(data.totalCount ?? 0);
-    } catch (err) {
-      if ((err as any)?.name !== 'AbortError') {
+      try {
+        const url =
+          `/api/orders?page=${page}` +
+          `&pageSize=${PAGE_SIZE}` +
+          (keyword ? `&keyword=${encodeURIComponent(keyword)}` : '');
+
+        const response = await apiFetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
+
+        setOrders(data.items ?? []);
+        setTotalPages(Math.max(1, data.totalPages ?? 1));
+        setTotalCount(data.totalCount ?? 0);
+      } catch (err: any) {
         console.error(err);
         setOrders([]);
         setTotalPages(1);
         setTotalCount(0);
+      } finally {
+        setLoading(false);
       }
-    } finally {
-      setLoading(false);
-    }
-    return () => ctrl.abort();
-  }, []);
+    },
+    [apiFetch],
+  );
 
   useEffect(() => {
     fetchOrders(pageIndex, search);

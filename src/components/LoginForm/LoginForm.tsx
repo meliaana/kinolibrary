@@ -1,5 +1,7 @@
+import { useApiFetch } from '@/hooks/useApiFetch';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { toast } from 'sonner';
 import { Button } from '../Button';
 import { CheckBox } from '../CheckBox';
 import { Fieldset } from '../Fieldset';
@@ -10,6 +12,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
+  const apiFetch = useApiFetch();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -20,32 +23,45 @@ const LoginForm = () => {
     };
 
     try {
-      const response = await fetch('/api/login?useCookies=true', {
-        method: 'post',
-        headers: {
-          Accept: 'application/json, text/plain, */*',
-          'Content-Type': 'application/json',
+      const response = await apiFetch(
+        '/api/login?useCookies=true',
+        {
+          method: 'post',
+          headers: {
+            Accept: 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
         },
-        body: JSON.stringify(payload),
+        true, // suppress redirect
+      );
+
+      navigate('/client');
+    } catch (error) {
+      toast.error('Login failed', {
+        description: 'Please check your email and password',
       });
-
-      if (!response.ok) {
-        throw new Error('Login failed');
-      }
-
-      // const data = await response.json();
-      // console.log('Login success:', data);
-      navigate('/client/orders');
-      // optionally store token if rememberMe is true
-    } catch (err) {
-      console.error(err);
     }
   }
 
   return (
     <form className={styles.formFields} onSubmit={handleSubmit}>
-      <Fieldset label="Email" value={email} onChange={setEmail} />
-      <Fieldset label="Password" value={password} onChange={setPassword} />
+      <Fieldset
+        required
+        label="Email"
+        value={email}
+        onChange={setEmail}
+        type="email"
+        autoComplete="email"
+      />
+      <Fieldset
+        required
+        label="Password"
+        value={password}
+        onChange={setPassword}
+        type="password"
+        autoComplete="current-password"
+      />
       <div className={styles.rememberMeContainer}>
         <CheckBox
           label="Keep me logged in"

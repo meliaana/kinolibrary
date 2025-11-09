@@ -8,7 +8,7 @@ import { OrdersContent } from './components/OrdersContent';
 import { OrdersLayout } from './components/OrdersLayout';
 
 async function accountLoader() {
-  const res = await fetch('/api/Account');
+  const res = await fetch('/api/account');
   if (res.status === 401) throw redirect('/login');
   if (!res.ok) throw new Error('Failed to load account');
   const data = await res.json();
