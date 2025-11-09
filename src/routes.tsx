@@ -11,13 +11,13 @@ async function accountLoader() {
   const res = await fetch('/api/Account');
   if (res.status === 401) throw redirect('/login');
   if (!res.ok) throw new Error('Failed to load account');
-  const data = await res;
+  const data = await res.json();
   // console.log('data', data);
   return {
     user: {
-      firstName: 'Musharof',
-      lastName: 'Chowdhury',
-      email: 'developer@kinolibrary.com',
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
     },
   };
 }
