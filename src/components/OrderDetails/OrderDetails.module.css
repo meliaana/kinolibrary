@@ -25,3 +25,17 @@
     width: calc(3 / 5 * 100%);
   }
 }
+
+.addItemButton {
+  width: 100%;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--gray-7);
+  border-radius: 1rem;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-12);
+  box-sizing: border-box;
+}

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { OrderDetailsItemsDesc } from '../OrderDetailsItemsDesc';
 import { OrderDetailsItemsItem } from '../OrderDetailsItemsItem';
+import { PrimitiveButton } from '../PrimitiveButton';
 import styles from './OrderDetails.module.css';
 
 type OrderClip = {
@@ -71,6 +72,9 @@ const OrderDetailsItem = ({ orderClips }: { orderClips: OrderClip[] }) => {
             }
           />
         ))}
+        <PrimitiveButton className={styles.addItemButton} onClick={() => {}}>
+          + Add Item
+        </PrimitiveButton>
       </div>
       <OrderDetailsItemsDesc
         orderItemId={openedOrderId}
