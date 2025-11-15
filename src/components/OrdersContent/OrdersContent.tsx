@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useApiFetch } from '../../hooks/useApiFetch';
+import { AddNewOrderDialog } from '../AddNewOrderDialog';
 import { MainContent } from '../MainContent';
 import { OrderItem } from '../OrderItem';
 import { PrimitivePagination } from '../PrimitivePagination';
@@ -78,11 +79,14 @@ const OrdersContent = () => {
 
   return (
     <MainContent title="Orders">
-      <SearchInput
-        value={search}
-        onChange={setSearch}
-        onSubmit={handleSearch}
-      />
+      <div className={styles.header}>
+        <SearchInput
+          value={search}
+          onChange={setSearch}
+          onSubmit={handleSearch}
+        />
+        <AddNewOrderDialog />
+      </div>
       <ul className={styles.ordersList}>
         <li className={styles.ordersListHeader}>
           <span>Job Number</span>

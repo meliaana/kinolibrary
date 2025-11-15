@@ -10,15 +10,26 @@ const UpdateInfoDialog = ({
   title,
   description,
   children,
-}: PropsWithChildren<{ title: string; description: string }>) => (
+  trigger,
+  onSave,
+}: PropsWithChildren<{
+  title: string;
+  description: string;
+  trigger?: React.ReactNode;
+  onSave?: () => void;
+}>) => (
   <Dialog.Root>
     <Dialog.Trigger asChild>
-      <button className={styles.editButton}>
-        <div className={styles.editButtonContent}>
-          <EditIcon />
-          <span className={styles.editIcon}>Edit</span>
-        </div>
-      </button>
+      {trigger ? (
+        trigger
+      ) : (
+        <button className={styles.editButton}>
+          <div className={styles.editButtonContent}>
+            <EditIcon />
+            <span className={styles.editIcon}>Edit</span>
+          </div>
+        </button>
+      )}
     </Dialog.Trigger>
     <Dialog.Portal>
       <Dialog.Overlay className={styles.dialogOverlay} />
@@ -35,7 +46,9 @@ const UpdateInfoDialog = ({
             <Button className={styles.cancelButton}>Close</Button>
           </Dialog.Close>
           <Dialog.Close asChild>
-            <Button variant="colored">Save changes</Button>
+            <Button variant="colored" onClick={onSave}>
+              Save changes
+            </Button>
           </Dialog.Close>
         </div>
         <Dialog.Close asChild>
