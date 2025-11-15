@@ -15,6 +15,7 @@ const ToastShelf = () => {
             content: styles.content,
             success: styles.success,
             error: styles.error,
+            warning: styles.warning,
             description: styles.description,
           },
         }}

@@ -27,6 +27,8 @@ html {
   --gray-10: #80828d;
   --gray-11: #62636c;
   --gray-12: #1e1f24;
+
+  --warning-background-color: #fffaeb;
 }
 
 html.dark {
@@ -58,4 +60,6 @@ html.dark {
 
   --color-background: #101828;
   --color-background-secondary: #101828;
+
+  --warning-background-color: #393029;
 }
