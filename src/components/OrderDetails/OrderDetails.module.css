@@ -11,3 +11,17 @@
   display: flex;
   gap: calc(16rem / 16);
 }
+
+.orderDetailsItemsList {
+  display: flex;
+  flex-direction: column;
+  gap: calc(16rem / 16);
+  flex-shrink: 0;
+  overflow: auto;
+  max-height: 550px;
+  padding-inline-end: 10px;
+
+  @media (width >= 1024px) {
+    width: calc(3 / 5 * 100%);
+  }
+}

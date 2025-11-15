@@ -4,72 +4,99 @@ import { PrimitiveInput } from '../PrimitiveInput';
 import PrimitiveTooltip from '../PrimitiveTooltip/PrimitiveTooltip';
 import styles from './OrderDetailsItemsItem.module.css';
 
-type OrderDetailsItemsItemProps = {
+type OrderClip = {
   orderItemId: number;
   clipRef: string;
   timecodeIn: string;
   timecodeOut: string;
 };
 
-const OrderDetailsItemsItem = ({
-  openedOrderId,
-  setOpenedOrderId,
-  orderClips,
-}: {
-  openedOrderId: any;
-  setOpenedOrderId: (order: any) => void;
-  orderClips: any;
-}) => {
-  if (!orderClips) return null;
+type Props = {
+  clipItemData: OrderClip;
+  isOpen: boolean;
+  isDirty: boolean;
+  onClick: (orderId: number) => void;
+  setOrderClips: React.Dispatch<React.SetStateAction<OrderClip[]>>;
+};
 
-  const updateClipRef = (value: string) => {};
-  const updateTimecodeIn = (value: string) => {};
-  const updateTimecodeOut = (value: string) => {};
+const OrderDetailsItemsItem = ({
+  clipItemData,
+  isOpen,
+  isDirty,
+  onClick,
+  setOrderClips,
+}: Props) => {
+  const updateField = (
+    field: keyof Pick<OrderClip, 'clipRef' | 'timecodeIn' | 'timecodeOut'>,
+    value: string,
+  ) => {
+    setOrderClips((prev) =>
+      prev.map((clip) =>
+        clip.orderItemId === clipItemData.orderItemId
+          ? { ...clip, [field]: value }
+          : clip,
+      ),
+    );
+  };
+
+  const updateClipRef = (value: string) => {
+    updateField('clipRef', value);
+  };
+
+  const updateTimecodeIn = (value: string) => {
+    updateField('timecodeIn', value);
+  };
+
+  const updateTimecodeOut = (value: string) => {
+    updateField('timecodeOut', value);
+  };
+
+  const handleClick = () => {
+    onClick(clipItemData.orderItemId);
+  };
 
   const estimatedSeconds = 0;
 
   return (
-    <div className={styles.wrapper}>
-      {orderClips.map((orderClip: any) => (
-        <PrimitiveButton
-          key={orderClip.orderItemId}
-          className={styles.item}
-          onClick={() => setOpenedOrderId(orderClip.orderItemId)}
-          data-active={openedOrderId === orderClip.orderItemId}
-        >
-          <div className={clsx(styles.itemContent, styles.clipRefContent)}>
-            <PrimitiveTooltip content="Clip Reference">
-              <span className={styles.clipRef}>Clip Reference</span>
-            </PrimitiveTooltip>
-            <PrimitiveInput
-              value={orderClip.clipRef}
-              onChange={updateClipRef}
-              type="text"
-            />
-          </div>
+    <PrimitiveButton
+      className={styles.item}
+      onClick={handleClick}
+      data-active={isOpen}
+      data-dirty={isDirty}
+    >
+      <div className={clsx(styles.itemContent, styles.clipRefContent)}>
+        <PrimitiveTooltip content="Clip Reference">
+          <span className={styles.clipRef}>Clip Reference</span>
+        </PrimitiveTooltip>
+        <PrimitiveInput
+          value={clipItemData.clipRef}
+          onChange={updateClipRef}
+          type="text"
+        />
+      </div>
 
-          <div className={styles.itemContent}>
-            <span className={styles.timecodeIn}>Timecode In</span>
-            <PrimitiveInput
-              value={orderClip.timecodeIn}
-              onChange={updateTimecodeIn}
-              type="text"
-            />
-          </div>
-          <div className={styles.itemContent}>
-            <span className={styles.timecodeOut}>Timecode Out</span>
-            <PrimitiveInput
-              value={orderClip.timecodeOut}
-              onChange={updateTimecodeOut}
-              type="text"
-            />
-          </div>
-          <div className={styles.estimatedSeconds}>
-            <p>Estimated Seconds {estimatedSeconds} sec</p>
-          </div>
-        </PrimitiveButton>
-      ))}
-    </div>
+      <div className={styles.itemContent}>
+        <span className={styles.timecodeIn}>Timecode In</span>
+        <PrimitiveInput
+          value={clipItemData.timecodeIn}
+          onChange={updateTimecodeIn}
+          type="text"
+        />
+      </div>
+
+      <div className={styles.itemContent}>
+        <span className={styles.timecodeOut}>Timecode Out</span>
+        <PrimitiveInput
+          value={clipItemData.timecodeOut}
+          onChange={updateTimecodeOut}
+          type="text"
+        />
+      </div>
+
+      <div className={styles.estimatedSeconds}>
+        <p>Estimated Seconds {estimatedSeconds} sec</p>
+      </div>
+    </PrimitiveButton>
   );
 };
 

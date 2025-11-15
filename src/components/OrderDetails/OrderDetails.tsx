@@ -57,6 +57,7 @@ const OrderDetails = () => {
               <span>Details</span>
             </TabsTab>
           </TabsList>
+
           <TabsPanel value="items">
             <OrderDetailsItem
               orderClips={orderClips ? orderClips.orderItems : []}

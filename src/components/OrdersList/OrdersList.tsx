@@ -5,9 +5,9 @@ import { MainContent } from '../MainContent';
 import { OrderItem } from '../OrderItem';
 import { PrimitivePagination } from '../PrimitivePagination';
 import { SearchInput } from '../SearchInput';
-import styles from './OrdersContent.module.css';
+import styles from './OrdersList.module.css';
 
-const OrdersContent = () => {
+const OrdersList = () => {
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const PAGE_SIZE = 10;
@@ -115,4 +115,4 @@ const OrdersContent = () => {
   );
 };
 
-export default OrdersContent;
+export default OrdersList;

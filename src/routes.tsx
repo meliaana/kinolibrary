@@ -4,8 +4,8 @@ import { AccountContent } from './components/AccountContent';
 import { Layout } from './components/Layout';
 import { Login } from './components/Login';
 import { OrderDetails } from './components/OrderDetails';
-import { OrdersContent } from './components/OrdersContent';
 import { OrdersLayout } from './components/OrdersLayout';
+import { OrdersList } from './components/OrdersList';
 
 async function accountLoader() {
   const res = await fetch('/api/account/me');
@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
         element: <OrdersLayout />,
         handle: { crumb: () => 'Orders' },
         children: [
-          { index: true, element: <OrdersContent /> },
+          { index: true, element: <OrdersList /> },
           {
             path: ':id/details',
             element: <OrderDetails />,
