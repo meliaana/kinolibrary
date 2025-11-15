@@ -81,6 +81,7 @@ const OrderDetailsItem = ({ orderClips }: { orderClips: OrderClip[] }) => {
         isDirty={dirtyItemId === openedOrderId}
         onSave={() => {}}
         onCancel={() => {}}
+        onDelete={() => {}}
       />
     </div>
   );

@@ -9,11 +9,13 @@ const OrderDetailsItemsDesc = ({
   isDirty,
   onSave,
   onCancel,
+  onDelete,
 }: {
   orderItemId: any;
   isDirty: boolean;
   onSave: () => void;
   onCancel: () => void;
+  onDelete: () => void;
 }) => {
   if (!orderItemId) return null;
 
@@ -26,6 +28,9 @@ const OrderDetailsItemsDesc = ({
           </Button>
         )}
         {isDirty && <Button onClick={onCancel}>Cancel</Button>}
+        <Button className={styles.deleteItemButton} onClick={onCancel}>
+          Delete Item
+        </Button>
       </div>
       <div className={clsx(styles.itemContent, styles.clipRefContent)}>
         <PrimitiveTooltip content="Clip Name or Title">
