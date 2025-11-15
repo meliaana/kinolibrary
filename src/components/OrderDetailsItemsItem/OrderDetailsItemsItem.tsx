@@ -26,6 +26,8 @@ const OrderDetailsItemsItem = ({
   const updateTimecodeIn = (value: string) => {};
   const updateTimecodeOut = (value: string) => {};
 
+  const estimatedSeconds = 0;
+
   return (
     <div className={styles.wrapper}>
       {orderClips.map((orderClip: any) => (
@@ -62,11 +64,8 @@ const OrderDetailsItemsItem = ({
               type="text"
             />
           </div>
-          <div className={styles.itemContent}>
-            <PrimitiveTooltip content="Estimated Seconds">
-              <span className={styles.timecodeOut}>Estimated Seconds</span>
-            </PrimitiveTooltip>
-            <PrimitiveInput type="text" value={0} isReadOnly={true} />
+          <div className={styles.estimatedSeconds}>
+            <p>Estimated Seconds {estimatedSeconds} sec</p>
           </div>
         </PrimitiveButton>
       ))}

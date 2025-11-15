@@ -3,6 +3,8 @@
   flex-direction: column;
   gap: calc(16rem / 16);
   flex-shrink: 0;
+  overflow: auto;
+  max-height: 550px;
 
   @media (width >= 1024px) {
     width: calc(3 / 5 * 100%);
@@ -10,10 +12,13 @@
 }
 
 .item {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: calc(16rem / 16);
-  padding: calc(24rem / 16);
+  padding: calc(20rem / 16);
+  padding-block-end: calc(30rem / 16);
+
   border: 1px solid var(--gray-7);
   border-radius: 1rem;
 
@@ -37,5 +42,15 @@
   display: flex;
   flex-direction: column;
   gap: calc(8rem / 16);
+  font-size: calc(14rem / 16);
+  flex: 1;
+}
+
+.estimatedSeconds {
+  position: absolute;
+  bottom: 5px;
+  right: 30px;
+  font-size: calc(12rem / 16);
+  color: var(--gray-12);
   font-size: calc(14rem / 16);
 }
