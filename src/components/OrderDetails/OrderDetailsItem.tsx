@@ -52,6 +52,19 @@ const OrderDetailsItem = ({ orderClips }: { orderClips: OrderClip[] }) => {
     setOpenedOrderId(orderItemId);
   };
 
+  const handleCancel = () => {
+    if (openedOrderId == null) return;
+
+    const original = orderClips.find((c) => c.orderItemId === openedOrderId);
+    if (!original) return;
+
+    setLocalOrderClips((prev) =>
+      prev.map((clip) =>
+        clip.orderItemId === openedOrderId ? original : clip,
+      ),
+    );
+  };
+
   return (
     <div className={styles.orderDetailsItemsContainer}>
       <div className={styles.orderDetailsItemsList}>
@@ -80,7 +93,7 @@ const OrderDetailsItem = ({ orderClips }: { orderClips: OrderClip[] }) => {
         orderItemId={openedOrderId}
         isDirty={dirtyItemId === openedOrderId}
         onSave={() => {}}
-        onCancel={() => {}}
+        onCancel={handleCancel}
         onDelete={() => {}}
       />
     </div>
