@@ -124,6 +124,10 @@ const OrderDetailsItem = ({
     }
   };
 
+  const handleSaveDetails = async () => {
+    if (!openedOrderId) return;
+  };
+
   return (
     <>
       <div className={styles.orderDetailsItemsContainer}>
@@ -154,7 +158,7 @@ const OrderDetailsItem = ({
             (c) => c.orderItemId === openedOrderId,
           )}
           setOrderClips={setLocalOrderClips}
-          onSave={() => {}}
+          onSave={handleSaveDetails}
           onDelete={handleDelete}
         />
       </div>

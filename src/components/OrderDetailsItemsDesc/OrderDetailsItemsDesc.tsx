@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { Button } from '../Button';
 import { DeleteIcon } from '../DeleteIcon';
+import { updateField } from '../OrderDetails/OrderDetails.helpers';
 import { OrderClip } from '../OrderDetails/OrderDetailsItem';
 import { PrimitiveInput } from '../PrimitiveInput';
 import { PrimitiveTooltip } from '../PrimitiveTooltip';
@@ -19,29 +20,16 @@ const OrderDetailsItemsDesc = ({
 }) => {
   if (!orderClip) return null;
 
-  const updateField = (
-    field: keyof Pick<OrderClip, 'clipRef' | 'timecodeIn' | 'timecodeOut'>,
-    value: string,
-  ) => {
-    setOrderClips((prev) =>
-      prev.map((clip) =>
-        clip.orderItemId === orderClip.orderItemId
-          ? { ...clip, [field]: value }
-          : clip,
-      ),
-    );
-  };
-
   const updateClipRef = (value: string) => {
-    updateField('clipRef', value);
+    updateField('clipRef', value, setOrderClips, orderClip);
   };
 
   const updateSourceUrl = (value: string) => {
-    updateField('sourceUrl', value);
+    updateField('sourceUrl', value, setOrderClips, orderClip);
   };
 
   const updateDescription = (value: string) => {
-    updateField('description', value);
+    updateField('description', value, setOrderClips, orderClip);
   };
 
   return (
