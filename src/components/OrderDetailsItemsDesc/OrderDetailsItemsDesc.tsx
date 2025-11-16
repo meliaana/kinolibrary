@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import { useState } from 'react';
 import { Button } from '../Button';
 import { DeleteIcon } from '../DeleteIcon';
 import { OrderClip } from '../OrderDetails/OrderDetailsItem';
@@ -8,18 +7,42 @@ import { PrimitiveTooltip } from '../PrimitiveTooltip';
 import styles from './OrderDetailsItemsDesc.module.css';
 
 const OrderDetailsItemsDesc = ({
-  orderItemId,
   onSave,
   onDelete,
   orderClip,
+  setOrderClips,
 }: {
-  orderItemId: number;
-  orderClip: OrderClip;
+  orderClip: OrderClip | undefined;
+  setOrderClips: React.Dispatch<React.SetStateAction<OrderClip[]>>;
   onSave: () => void;
   onDelete: () => void;
 }) => {
-  if (!orderItemId) return null;
-  const [localOrderClip, setLocalOrderClip] = useState<OrderClip>(orderClip);
+  if (!orderClip) return null;
+
+  const updateField = (
+    field: keyof Pick<OrderClip, 'clipRef' | 'timecodeIn' | 'timecodeOut'>,
+    value: string,
+  ) => {
+    setOrderClips((prev) =>
+      prev.map((clip) =>
+        clip.orderItemId === orderClip.orderItemId
+          ? { ...clip, [field]: value }
+          : clip,
+      ),
+    );
+  };
+
+  const updateClipRef = (value: string) => {
+    updateField('clipRef', value);
+  };
+
+  const updateSourceUrl = (value: string) => {
+    updateField('sourceUrl', value);
+  };
+
+  const updateDescription = (value: string) => {
+    updateField('description', value);
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -40,8 +63,10 @@ const OrderDetailsItemsDesc = ({
           <span className={styles.clipRef}>Clip Name or Title</span>
         </PrimitiveTooltip>
         <PrimitiveInput
-          value={orderItemId}
-          onChange={(value) => {}}
+          value={orderClip.orderItemId}
+          onChange={(value) => {
+            updateClipRef(value);
+          }}
           type="text"
         />
       </div>
@@ -52,9 +77,9 @@ const OrderDetailsItemsDesc = ({
         </PrimitiveTooltip>
 
         <PrimitiveInput
-          value={localOrderClip.sourceUrl}
+          value={orderClip.sourceUrl}
           onChange={(value) => {
-            setLocalOrderClip({ ...localOrderClip, sourceUrl: value });
+            updateSourceUrl(value);
           }}
           type="text"
         />
@@ -63,9 +88,9 @@ const OrderDetailsItemsDesc = ({
       <div className={styles.itemContent}>
         <span className={styles.sourceUrl}>Description (optional)</span>
         <PrimitiveInput
-          value={localOrderClip.description}
+          value={orderClip.description}
           onChange={(value) => {
-            setLocalOrderClip({ ...localOrderClip, description: value });
+            updateDescription(value);
           }}
           type="text"
         />

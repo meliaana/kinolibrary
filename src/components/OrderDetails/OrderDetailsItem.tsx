@@ -40,7 +40,9 @@ const OrderDetailsItem = ({ orderClips }: { orderClips: OrderClip[] }) => {
     return (
       original.clipRef !== clip.clipRef ||
       original.timecodeIn !== clip.timecodeIn ||
-      original.timecodeOut !== clip.timecodeOut
+      original.timecodeOut !== clip.timecodeOut ||
+      original.sourceUrl !== clip.sourceUrl ||
+      original.description !== clip.description
     );
   };
 
@@ -120,7 +122,7 @@ const OrderDetailsItem = ({ orderClips }: { orderClips: OrderClip[] }) => {
           orderClip={localOrderClips.find(
             (c) => c.orderItemId === openedOrderId,
           )}
-          orderItemId={openedOrderId}
+          setOrderClips={setLocalOrderClips}
           onSave={() => {}}
           onDelete={() => {}}
         />
