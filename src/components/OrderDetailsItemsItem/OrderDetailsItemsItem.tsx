@@ -1,3 +1,4 @@
+import { calculateEstimatedSeconds } from '@/helpers/estimatedSeconds';
 import clsx from 'clsx';
 import { PrimitiveButton } from '../PrimitiveButton';
 import { PrimitiveInput } from '../PrimitiveInput';
@@ -55,7 +56,15 @@ const OrderDetailsItemsItem = ({
     onClick(clipItemData.orderItemId);
   };
 
-  const estimatedSeconds = 0;
+  const estimatedSeconds = calculateEstimatedSeconds(
+    clipItemData.timecodeIn,
+    clipItemData.timecodeOut,
+  );
+
+  const displayEstimatedSeconds =
+    estimatedSeconds == null || isNaN(estimatedSeconds) || estimatedSeconds < 0
+      ? '-'
+      : `${estimatedSeconds} sec`;
 
   return (
     <PrimitiveButton
@@ -94,7 +103,7 @@ const OrderDetailsItemsItem = ({
       </div>
 
       <div className={styles.estimatedSeconds}>
-        <p>Estimated Seconds {estimatedSeconds} sec</p>
+        <p>Estimated Seconds {displayEstimatedSeconds}</p>
       </div>
     </PrimitiveButton>
   );
