@@ -1,0 +1,70 @@
+import * as Dialog from '@radix-ui/react-dialog';
+import { PropsWithChildren } from 'react';
+import { Button } from '../Button';
+import { PrimitiveButton } from '../PrimitiveButton';
+import { XIcon } from '../XIcon';
+import styles from './PrimitiveDialog.module.css';
+
+const PrimitiveDialog = ({
+  title,
+  description,
+  children,
+  trigger,
+  onSave,
+  open,
+  onOpenChange,
+  onDiscard,
+  onClose,
+}: PropsWithChildren<{
+  title: string;
+  description: string;
+  trigger?: React.ReactNode;
+  onSave?: () => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  onDiscard?: () => void;
+  onClose?: () => void;
+}>) => (
+  <Dialog.Root open={open} onOpenChange={onOpenChange}>
+    {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
+    <Dialog.Portal>
+      <Dialog.Overlay className={styles.dialogOverlay} />
+      <Dialog.Content className={styles.dialogContent}>
+        <Dialog.Title className={styles.dialogTitle}>{title}</Dialog.Title>
+        <Dialog.Description className={styles.dialogDescription}>
+          {description}
+        </Dialog.Description>
+        {children}
+        <div
+          style={{
+            display: 'flex',
+            marginTop: 25,
+            justifyContent: 'flex-end',
+            gap: 10,
+          }}
+        >
+          <Dialog.Close asChild>
+            <Button className={styles.cancelButton} onClick={onClose}>
+              Close
+            </Button>
+          </Dialog.Close>
+          <Dialog.Close asChild>
+            <Button onClick={onDiscard}>Discard</Button>
+          </Dialog.Close>
+          <Dialog.Close asChild>
+            <Button variant="colored" onClick={onSave}>
+              Save changes
+            </Button>
+          </Dialog.Close>
+        </div>
+        <Dialog.Close asChild>
+          <PrimitiveButton className={styles.closeButton} aria-label="Close">
+            <XIcon />
+          </PrimitiveButton>
+        </Dialog.Close>
+      </Dialog.Content>
+    </Dialog.Portal>
+  </Dialog.Root>
+);
+
+export default PrimitiveDialog;

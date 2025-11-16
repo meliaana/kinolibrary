@@ -1,35 +1,38 @@
 import clsx from 'clsx';
+import { useState } from 'react';
 import { Button } from '../Button';
+import { DeleteIcon } from '../DeleteIcon';
+import { OrderClip } from '../OrderDetails/OrderDetailsItem';
 import { PrimitiveInput } from '../PrimitiveInput';
 import { PrimitiveTooltip } from '../PrimitiveTooltip';
 import styles from './OrderDetailsItemsDesc.module.css';
 
 const OrderDetailsItemsDesc = ({
   orderItemId,
-  isDirty,
   onSave,
-  onCancel,
   onDelete,
+  orderClip,
 }: {
-  orderItemId: any;
-  isDirty: boolean;
+  orderItemId: number;
+  orderClip: OrderClip;
   onSave: () => void;
-  onCancel: () => void;
   onDelete: () => void;
 }) => {
   if (!orderItemId) return null;
+  const [localOrderClip, setLocalOrderClip] = useState<OrderClip>(orderClip);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.buttonsContainer}>
-        {isDirty && (
-          <Button variant="colored" onClick={onSave}>
-            Save Changes
-          </Button>
-        )}
-        {isDirty && <Button onClick={onCancel}>Cancel</Button>}
-        <Button className={styles.deleteItemButton} onClick={onCancel}>
-          Delete Item
+        <Button
+          className={styles.saveChangesButton}
+          variant="colored"
+          onClick={onSave}
+        >
+          Save Changes
+        </Button>
+        <Button className={styles.deleteItemButton} onClick={onDelete}>
+          <DeleteIcon />
         </Button>
       </div>
       <div className={clsx(styles.itemContent, styles.clipRefContent)}>
@@ -49,8 +52,10 @@ const OrderDetailsItemsDesc = ({
         </PrimitiveTooltip>
 
         <PrimitiveInput
-          value={'URL (optional)'}
-          onChange={(value) => {}}
+          value={localOrderClip.sourceUrl}
+          onChange={(value) => {
+            setLocalOrderClip({ ...localOrderClip, sourceUrl: value });
+          }}
           type="text"
         />
       </div>
@@ -58,8 +63,10 @@ const OrderDetailsItemsDesc = ({
       <div className={styles.itemContent}>
         <span className={styles.sourceUrl}>Description (optional)</span>
         <PrimitiveInput
-          value={'Description (optional)'}
-          onChange={(value) => {}}
+          value={localOrderClip.description}
+          onChange={(value) => {
+            setLocalOrderClip({ ...localOrderClip, description: value });
+          }}
           type="text"
         />
       </div>

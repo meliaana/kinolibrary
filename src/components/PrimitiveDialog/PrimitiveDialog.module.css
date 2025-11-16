@@ -1,0 +1,125 @@
+.dialogOverlay {
+  background-color: color-mix(in oklab, var(--gray-8) 50%, transparent);
+  backdrop-filter: blur(32px);
+  position: fixed;
+  inset: 0;
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialogContent {
+  background-color: var(--gray-1);
+  border-radius: 0.5rem;
+  box-shadow:
+    0px 0px 0px 1px rgba(16, 24, 40, 0.05),
+    0px 1px 2px 0px rgba(16, 24, 40, 0.1),
+    0px 1px 3px 1px rgba(16, 24, 40, 0.1);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 700px;
+  max-height: 85vh;
+  padding: 44px;
+  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+.dialogContent:focus {
+  outline: none;
+}
+
+.dialogTitle {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--gray-12);
+}
+
+.dialogDescription {
+  margin-bottom: 1.5rem; /* mb-6 */
+  font-size: 0.875rem; /* text-sm */
+  color: var(--gray-10);
+}
+
+.closeButton {
+  position: absolute;
+  right: 1.25rem;
+  top: 1.25rem;
+  display: flex;
+  height: 2.75rem;
+  width: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  background-color: var(--gray-3);
+  color: var(--gray-8);
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid var(--gray-12);
+}
+
+.closeButton:hover {
+  color: var(--gray-11);
+  background-color: var(--gray-6);
+}
+
+.editButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: var(--gray-12);
+  font-size: 14px;
+  font-weight: 500;
+  height: 46px;
+  width: 84px;
+  border: 1px solid var(--gray-7);
+  background-color: var(--gray-1);
+  border-radius: 100px;
+  margin-left: auto;
+  padding: calc(12rem / 16) calc(16rem / 16);
+}
+
+.editButtonContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.editButton:hover {
+  background-color: var(--gray-2);
+}
+
+.cancelButton {
+  color: var(--gray-12);
+  border: 1px solid var(--gray-7);
+  height: 46px;
+  border-radius: 0.5rem;
+  margin-right: auto;
+}
+
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes contentShow {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

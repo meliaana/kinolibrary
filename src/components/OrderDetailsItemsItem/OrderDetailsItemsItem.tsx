@@ -1,16 +1,10 @@
 import { calculateEstimatedSeconds } from '@/helpers/estimatedSeconds';
 import clsx from 'clsx';
+import { OrderClip } from '../OrderDetails/OrderDetailsItem';
 import { PrimitiveButton } from '../PrimitiveButton';
 import { PrimitiveInput } from '../PrimitiveInput';
 import PrimitiveTooltip from '../PrimitiveTooltip/PrimitiveTooltip';
 import styles from './OrderDetailsItemsItem.module.css';
-
-type OrderClip = {
-  orderItemId: number;
-  clipRef: string;
-  timecodeIn: string;
-  timecodeOut: string;
-};
 
 type Props = {
   clipItemData: OrderClip;
@@ -90,6 +84,7 @@ const OrderDetailsItemsItem = ({
           value={clipItemData.timecodeIn}
           onChange={updateTimecodeIn}
           type="text"
+          placeholder="hh:mm:ss:fps"
         />
       </div>
 
@@ -99,6 +94,7 @@ const OrderDetailsItemsItem = ({
           value={clipItemData.timecodeOut}
           onChange={updateTimecodeOut}
           type="text"
+          placeholder="hh:mm:ss:fps"
         />
       </div>
 
