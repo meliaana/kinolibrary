@@ -60,6 +60,7 @@ const OrderDetails = () => {
 
           <TabsPanel value="items">
             <OrderDetailsItem
+              orderId={orderId}
               orderClips={orderClips ? orderClips.orderItems : []}
             />
           </TabsPanel>

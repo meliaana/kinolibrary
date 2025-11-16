@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { OrderDetailsItemsDesc } from '../OrderDetailsItemsDesc';
 import { OrderDetailsItemsItem } from '../OrderDetailsItemsItem';
 import { PrimitiveButton } from '../PrimitiveButton';
 import { PrimitiveDialog } from '../PrimitiveDialog';
+import { deleteClip } from './OrderDetails.helpers';
 import styles from './OrderDetails.module.css';
 
 export type OrderClip = {
@@ -14,7 +16,13 @@ export type OrderClip = {
   sourceUrl: string;
 };
 
-const OrderDetailsItem = ({ orderClips }: { orderClips: OrderClip[] }) => {
+const OrderDetailsItem = ({
+  orderClips,
+  orderId,
+}: {
+  orderClips: OrderClip[];
+  orderId: string;
+}) => {
   const [openedOrderId, setOpenedOrderId] = useState<number | null>(null);
   const [localOrderClips, setLocalOrderClips] = useState<OrderClip[]>(
     orderClips ?? [],
@@ -93,6 +101,29 @@ const OrderDetailsItem = ({ orderClips }: { orderClips: OrderClip[] }) => {
     setPendingOpenId(null);
   };
 
+  const handleDelete = async () => {
+    if (openedOrderId == null) return;
+    try {
+      await deleteClip(orderId, openedOrderId);
+
+      toast.success('Clip deleted successfully');
+
+      setLocalOrderClips((prev) =>
+        prev.filter((clip) => clip.orderItemId !== openedOrderId),
+      );
+
+      if (openedOrderId === openedOrderId) {
+        const remaining = localOrderClips.filter(
+          (clip) => clip.orderItemId !== openedOrderId,
+        );
+        setOpenedOrderId(remaining[0]?.orderItemId ?? null);
+      }
+    } catch (error) {
+      console.error('Error deleting clip:', error);
+      toast.error('Failed to delete clip');
+    }
+  };
+
   return (
     <>
       <div className={styles.orderDetailsItemsContainer}>
@@ -124,7 +155,7 @@ const OrderDetailsItem = ({ orderClips }: { orderClips: OrderClip[] }) => {
           )}
           setOrderClips={setLocalOrderClips}
           onSave={() => {}}
-          onDelete={() => {}}
+          onDelete={handleDelete}
         />
       </div>
       <PrimitiveDialog
