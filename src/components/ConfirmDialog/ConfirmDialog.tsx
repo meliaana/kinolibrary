@@ -2,7 +2,7 @@
 import { PrimitiveButton } from '../PrimitiveButton';
 import styles from './ConfirmDialog.module.css';
 
-export function ConfirmDialog({
+function ConfirmDialog({
   open,
   onConfirm,
   onCancel,
@@ -26,3 +26,5 @@ export function ConfirmDialog({
     </div>
   );
 }
+
+export default ConfirmDialog;
