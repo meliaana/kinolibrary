@@ -1,4 +1,7 @@
-import { calculateEstimatedSeconds } from '@/helpers/estimatedSeconds';
+import {
+  calculateEstimatedSeconds,
+  formatEstimatedSeconds,
+} from '@/helpers/estimatedSeconds';
 import clsx from 'clsx';
 import { OrderClip } from '../OrderDetails/OrderDetailsItem';
 import { PrimitiveButton } from '../PrimitiveButton';
@@ -50,15 +53,12 @@ const OrderDetailsItemsItem = ({
     onClick(clipItemData.orderItemId);
   };
 
-  const estimatedSeconds = calculateEstimatedSeconds(
-    clipItemData.timecodeIn,
-    clipItemData.timecodeOut,
+  const displayEstimatedSeconds = formatEstimatedSeconds(
+    calculateEstimatedSeconds(
+      clipItemData.timecodeIn,
+      clipItemData.timecodeOut,
+    ),
   );
-
-  const displayEstimatedSeconds =
-    estimatedSeconds == null || isNaN(estimatedSeconds) || estimatedSeconds < 0
-      ? '-'
-      : `${estimatedSeconds} sec`;
 
   return (
     <PrimitiveButton
