@@ -51,3 +51,11 @@ export function calculateEstimatedSeconds(
 
   return estimatedSeconds;
 }
+
+export function formatEstimatedSeconds(estimatedSeconds: number) {
+  return estimatedSeconds == null ||
+    isNaN(estimatedSeconds) ||
+    estimatedSeconds < 0
+    ? '-'
+    : `${estimatedSeconds} sec`;
+}
