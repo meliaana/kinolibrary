@@ -3,6 +3,7 @@ import {
   formatEstimatedSeconds,
 } from '@/helpers/estimatedSeconds';
 import clsx from 'clsx';
+import { updateField } from '../OrderDetails/OrderDetails.helpers';
 import { OrderClip } from '../OrderDetails/OrderDetailsItem';
 import { PrimitiveButton } from '../PrimitiveButton';
 import { PrimitiveInput } from '../PrimitiveInput';
@@ -24,29 +25,16 @@ const OrderDetailsItemsItem = ({
   onClick,
   setOrderClips,
 }: Props) => {
-  const updateField = (
-    field: keyof Pick<OrderClip, 'clipRef' | 'timecodeIn' | 'timecodeOut'>,
-    value: string,
-  ) => {
-    setOrderClips((prev) =>
-      prev.map((clip) =>
-        clip.orderItemId === clipItemData.orderItemId
-          ? { ...clip, [field]: value }
-          : clip,
-      ),
-    );
-  };
-
   const updateClipRef = (value: string) => {
-    updateField('clipRef', value);
+    updateField('clipRef', value, setOrderClips, clipItemData);
   };
 
   const updateTimecodeIn = (value: string) => {
-    updateField('timecodeIn', value);
+    updateField('timecodeIn', value, setOrderClips, clipItemData);
   };
 
   const updateTimecodeOut = (value: string) => {
-    updateField('timecodeOut', value);
+    updateField('timecodeOut', value, setOrderClips, clipItemData);
   };
 
   const handleClick = () => {
