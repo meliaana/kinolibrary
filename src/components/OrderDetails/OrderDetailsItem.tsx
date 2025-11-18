@@ -28,6 +28,7 @@ const OrderDetailsItem = ({
     orderClips ?? [],
   );
   const [showConfirm, setShowConfirm] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
   const [pendingOpenId, setPendingOpenId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -124,6 +125,15 @@ const OrderDetailsItem = ({
     }
   };
 
+  const handleConfirmDelete = async () => {
+    await handleDelete();
+    setShowDelete(false);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDelete(false);
+  };
+
   const handleSaveDetails = async () => {
     if (!openedOrderId) return;
   };
@@ -149,6 +159,7 @@ const OrderDetailsItem = ({
               }
             />
           ))}
+
           <PrimitiveButton className={styles.addItemButton} onClick={() => {}}>
             + Add Item
           </PrimitiveButton>
@@ -159,7 +170,7 @@ const OrderDetailsItem = ({
           )}
           setOrderClips={setLocalOrderClips}
           onSave={handleSaveDetails}
-          onDelete={handleDelete}
+          onDelete={() => setShowDelete(true)}
         />
       </div>
       <PrimitiveDialog
@@ -169,6 +180,15 @@ const OrderDetailsItem = ({
         description="You have unsaved changes. Do you want to discard or save them?"
         onSave={handleConfirm}
         onDiscard={handleDiscard}
+        onClose={handleCancel}
+      />
+      <PrimitiveDialog
+        open={showDelete}
+        onOpenChange={setShowDelete}
+        title="Delete Clip"
+        description="Are you sure you want to delete this clip?"
+        onSave={handleConfirmDelete}
+        onDiscard={handleCancelDelete}
         onClose={handleCancel}
       />
     </>
