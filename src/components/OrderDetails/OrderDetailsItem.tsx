@@ -64,9 +64,13 @@ const OrderDetailsItem = ({
   };
 
   const handleDiscard = () => {
+    setResetSignal(true);
+
+    if (pendingOpenId !== null) {
+      setOpenedOrderId(pendingOpenId);
+    }
     setShowConfirm(false);
     setPendingOpenId(null);
-    setResetSignal(true);
   };
 
   const handleDelete = async () => {
