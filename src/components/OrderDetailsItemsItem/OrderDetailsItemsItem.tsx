@@ -22,6 +22,7 @@ type Props = {
   setIsDirty: (isDirty: boolean) => void;
   resetSignal: boolean;
   setResetSignal: (resetSignal: boolean) => void;
+  onRemove: () => void;
 };
 
 type ClipFormValues = {
@@ -51,6 +52,7 @@ const OrderDetailsItemsItem = ({
   setIsDirty,
   resetSignal,
   setResetSignal,
+  onRemove,
 }: Props) => {
   const handleClick = () => {
     onClick(clipItemData.orderItemId);
@@ -179,7 +181,7 @@ const OrderDetailsItemsItem = ({
             >
               <OrderDetailsItemsFormButtons
                 onSave={() => {}}
-                onDelete={() => {}}
+                onDelete={onRemove}
               />
               <div className={styles.itemDescriptionContent}>
                 <PrimitiveTooltip content="Clip Name or Title">

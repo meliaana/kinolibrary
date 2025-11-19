@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 import { OrderDetailsItemsItem } from '../OrderDetailsItemsItem';
 import { PrimitiveButton } from '../PrimitiveButton';
 import { PrimitiveDialog } from '../PrimitiveDialog';
+import { deleteClip } from './OrderDetails.helpers';
 import styles from './OrderDetails.module.css';
 
 export type OrderClip = {
@@ -24,6 +26,8 @@ const OrderDetailsItem = ({
   const [isDirty, setIsDirty] = useState(false);
   const portalRef = useRef<HTMLDivElement>(null);
 
+  const [newOrderClip, setNewOrderClip] = useState<OrderClip | null>(null);
+
   const [showConfirm, setShowConfirm] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [pendingOpenId, setPendingOpenId] = useState<number | null>(null);
@@ -36,6 +40,7 @@ const OrderDetailsItem = ({
   }, [orderClips]);
 
   const handleItemClick = (orderItemId: number) => {
+    console.log('handleItemClick', isDirty, openedOrderId, orderItemId);
     if (isDirty && openedOrderId !== orderItemId) {
       setPendingOpenId(orderItemId);
       setShowConfirm(true);
@@ -64,6 +69,35 @@ const OrderDetailsItem = ({
     setResetSignal(true);
   };
 
+  const handleDelete = async () => {
+    if (openedOrderId == null) return;
+    try {
+      await deleteClip(orderId, openedOrderId);
+
+      toast.success('Clip deleted successfully');
+
+      if (openedOrderId === openedOrderId) {
+        const remaining = orderClips.filter(
+          (clip) => clip.orderItemId !== openedOrderId,
+        );
+        setOpenedOrderId(remaining[0]?.orderItemId ?? null);
+      }
+    } catch (error) {
+      console.error('Error deleting clip:', error);
+      toast.error('Failed to delete clip');
+    }
+  };
+
+  const handleConfirmDelete = async () => {
+    await handleDelete();
+    setShowDelete(false);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDelete(false);
+    setPendingOpenId(null);
+  };
+
   return (
     <>
       <div className={styles.orderDetailsItemsContainer}>
@@ -78,12 +112,43 @@ const OrderDetailsItem = ({
               setIsDirty={setIsDirty}
               resetSignal={resetSignal}
               setResetSignal={setResetSignal}
+              onRemove={() => setShowDelete(true)}
             />
           ))}
 
-          <PrimitiveButton className={styles.addItemButton} onClick={() => {}}>
-            + Add Item
-          </PrimitiveButton>
+          {newOrderClip ? (
+            <OrderDetailsItemsItem
+              clipItemData={newOrderClip}
+              isOpen={newOrderClip !== null}
+              onClick={handleItemClick}
+              portalRef={portalRef}
+              setIsDirty={() => setIsDirty(true)}
+              resetSignal={resetSignal}
+              setResetSignal={setResetSignal}
+              onRemove={() => {
+                setNewOrderClip(null);
+                setOpenedOrderId(orderClips[0]?.orderItemId ?? null);
+                setIsDirty(false);
+              }}
+            />
+          ) : (
+            <PrimitiveButton
+              className={styles.addItemButton}
+              onClick={() => {
+                setNewOrderClip({
+                  orderItemId: 0,
+                  clipRef: '',
+                  timecodeIn: '',
+                  timecodeOut: '',
+                  description: '',
+                  sourceUrl: '',
+                });
+                setOpenedOrderId(0);
+              }}
+            >
+              + Add Item
+            </PrimitiveButton>
+          )}
         </div>
         <div ref={portalRef} className={styles.portalContainer}></div>
         <PrimitiveDialog
@@ -93,6 +158,15 @@ const OrderDetailsItem = ({
           description="You have unsaved changes. Do you want to discard or save them?"
           onSave={handleConfirm}
           onDiscard={handleDiscard}
+          onClose={handleCancel}
+        />
+        <PrimitiveDialog
+          open={showDelete}
+          onOpenChange={setShowDelete}
+          title="Delete Clip"
+          description="Are you sure you want to delete this clip?"
+          onSave={handleConfirmDelete}
+          onDiscard={handleCancelDelete}
           onClose={handleCancel}
         />
       </div>
