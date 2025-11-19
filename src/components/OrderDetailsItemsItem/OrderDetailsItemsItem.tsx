@@ -2,10 +2,13 @@ import {
   calculateEstimatedSeconds,
   formatEstimatedSeconds,
 } from '@/helpers/estimatedSeconds';
+import * as Portal from '@radix-ui/react-portal';
 import clsx from 'clsx';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useEffect } from 'react';
 import * as Yup from 'yup';
 import { OrderClip } from '../OrderDetails/OrderDetailsItem';
+import { OrderDetailsItemsFormButtons } from '../OrderDetailsItemsFormButtons';
 import { PrimitiveButton } from '../PrimitiveButton';
 import { PrimitiveInput } from '../PrimitiveInput';
 import PrimitiveTooltip from '../PrimitiveTooltip/PrimitiveTooltip';
@@ -15,6 +18,19 @@ type Props = {
   clipItemData: OrderClip;
   isOpen: boolean;
   onClick: (orderId: number) => void;
+  portalRef: React.RefObject<HTMLDivElement>;
+  setIsDirty: (isDirty: boolean) => void;
+  resetSignal: boolean;
+  setResetSignal: (resetSignal: boolean) => void;
+};
+
+type ClipFormValues = {
+  clipRef: string;
+  timecodeIn: string;
+  timecodeOut: string;
+  orderItemId: number | '';
+  sourceUrl: string;
+  description: string;
 };
 
 const validationSchema = Yup.object({
@@ -27,35 +43,61 @@ const validationSchema = Yup.object({
     .required('Timecode Out is required'),
 });
 
-const OrderDetailsItemsItem = ({ clipItemData, isOpen, onClick }: Props) => {
+const OrderDetailsItemsItem = ({
+  clipItemData,
+  isOpen,
+  onClick,
+  portalRef,
+  setIsDirty,
+  resetSignal,
+  setResetSignal,
+}: Props) => {
   const handleClick = () => {
     onClick(clipItemData.orderItemId);
   };
 
+  const initialValues: ClipFormValues = {
+    clipRef: clipItemData.clipRef ?? '',
+    timecodeIn: clipItemData.timecodeIn ?? '',
+    timecodeOut: clipItemData.timecodeOut ?? '',
+    orderItemId: clipItemData.orderItemId ?? '',
+    sourceUrl: clipItemData.sourceUrl ?? '',
+    description: clipItemData.description ?? '',
+  };
+
   return (
-    <Formik
-      initialValues={{
-        clipRef: clipItemData.clipRef ?? '',
-        timecodeIn: clipItemData.timecodeIn ?? '',
-        timecodeOut: clipItemData.timecodeOut ?? '',
-      }}
+    <Formik<ClipFormValues>
+      initialValues={initialValues}
       enableReinitialize
       validationSchema={validationSchema}
       onSubmit={() => {}}
     >
-      {({ values }) => {
+      {({ values, dirty, resetForm }) => {
         const displayEstimatedSeconds = formatEstimatedSeconds(
           calculateEstimatedSeconds(values.timecodeIn, values.timecodeOut),
         );
 
+        useEffect(() => {
+          setIsDirty(dirty);
+        }, [dirty]);
+
+        useEffect(() => {
+          console.log('resetSignal', resetSignal);
+          if (resetSignal) {
+            resetForm();
+            setResetSignal(false);
+          }
+        }, [resetSignal]);
+
         return (
-          <Form /* no visible submit button, we just use Formik for validation/state */
-          >
+          <Form>
+            {/* Row button */}
             <PrimitiveButton
               className={styles.item}
               onClick={handleClick}
               type="button"
               data-active={isOpen}
+              data-dirty={dirty}
             >
               {/* Clip Ref */}
               <div className={clsx(styles.itemContent, styles.clipRefContent)}>
@@ -124,11 +166,71 @@ const OrderDetailsItemsItem = ({ clipItemData, isOpen, onClick }: Props) => {
                 </ErrorMessage>
               </div>
 
-              {/* Estimated seconds – uses Formik values, updates live */}
+              {/* Estimated seconds */}
               <div className={styles.estimatedSeconds}>
                 <p>Estimated Seconds {displayEstimatedSeconds}</p>
               </div>
             </PrimitiveButton>
+
+            <Portal.Root
+              container={portalRef.current ?? undefined}
+              className={styles.portalContainer}
+              data-open={isOpen}
+            >
+              <OrderDetailsItemsFormButtons
+                onSave={() => {}}
+                onDelete={() => {}}
+              />
+              <div className={styles.itemDescriptionContent}>
+                <PrimitiveTooltip content="Clip Name or Title">
+                  <span className={styles.clipRef}>Clip Name or Title</span>
+                </PrimitiveTooltip>
+                <Field name="orderItemId">
+                  {({ field, form }: any) => (
+                    <PrimitiveInput
+                      value={field.value}
+                      onChange={(value: string) => {
+                        form.setFieldValue(field.name, value);
+                      }}
+                      type="number"
+                    />
+                  )}
+                </Field>
+              </div>
+
+              <div className={styles.itemDescriptionContent}>
+                <PrimitiveTooltip content="Source URL">
+                  <span className={styles.sourceUrl}>Source URL</span>
+                </PrimitiveTooltip>
+
+                <Field name="sourceUrl">
+                  {({ field, form }: any) => (
+                    <PrimitiveInput
+                      value={field.value}
+                      onChange={(value: string) => {
+                        form.setFieldValue(field.name, value);
+                      }}
+                      type="text"
+                    />
+                  )}
+                </Field>
+              </div>
+
+              <div className={styles.itemDescriptionContent}>
+                <span className={styles.sourceUrl}>Description (optional)</span>
+                <Field name="description">
+                  {({ field, form }: any) => (
+                    <PrimitiveInput
+                      value={field.value}
+                      onChange={(value: string) => {
+                        form.setFieldValue(field.name, value);
+                      }}
+                      type="text"
+                    />
+                  )}
+                </Field>
+              </div>
+            </Portal.Root>
           </Form>
         );
       }}
