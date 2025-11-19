@@ -110,10 +110,8 @@ const OrderDetailsItemsItem = ({
                 <Field name="clipRef">
                   {({ field, form }: any) => (
                     <PrimitiveInput
-                      value={field.value}
-                      onChange={(value: string) => {
-                        form.setFieldValue(field.name, value);
-                      }}
+                      {...field}
+                      placeholder="Clip Reference"
                       type="text"
                     />
                   )}
@@ -129,14 +127,11 @@ const OrderDetailsItemsItem = ({
                 <span className={styles.timecodeIn}>Timecode In</span>
 
                 <Field name="timecodeIn">
-                  {({ field, form }: any) => (
+                  {({ field, meta, form }: any) => (
                     <PrimitiveInput
-                      value={field.value}
-                      onChange={(value: string) => {
-                        form.setFieldValue(field.name, value);
-                      }}
-                      type="text"
+                      {...field} // gives name, value, onChange, onBlur
                       placeholder="hh:mm:ss:fps"
+                      type="text"
                     />
                   )}
                 </Field>
@@ -153,10 +148,7 @@ const OrderDetailsItemsItem = ({
                 <Field name="timecodeOut">
                   {({ field, form }: any) => (
                     <PrimitiveInput
-                      value={field.value}
-                      onChange={(value: string) => {
-                        form.setFieldValue(field.name, value);
-                      }}
+                      {...field}
                       type="text"
                       placeholder="hh:mm:ss:fps"
                     />
@@ -190,11 +182,9 @@ const OrderDetailsItemsItem = ({
                 <Field name="orderItemId">
                   {({ field, form }: any) => (
                     <PrimitiveInput
-                      value={field.value}
-                      onChange={(value: string) => {
-                        form.setFieldValue(field.name, value);
-                      }}
-                      type="number"
+                      {...field}
+                      placeholder="Clip Name or Title"
+                      type="text"
                     />
                   )}
                 </Field>
@@ -208,10 +198,8 @@ const OrderDetailsItemsItem = ({
                 <Field name="sourceUrl">
                   {({ field, form }: any) => (
                     <PrimitiveInput
-                      value={field.value}
-                      onChange={(value: string) => {
-                        form.setFieldValue(field.name, value);
-                      }}
+                      {...field}
+                      placeholder="Source URL"
                       type="text"
                     />
                   )}
@@ -223,10 +211,8 @@ const OrderDetailsItemsItem = ({
                 <Field name="description">
                   {({ field, form }: any) => (
                     <PrimitiveInput
-                      value={field.value}
-                      onChange={(value: string) => {
-                        form.setFieldValue(field.name, value);
-                      }}
+                      {...field}
+                      placeholder="Description (optional)"
                       type="text"
                     />
                   )}
