@@ -7,10 +7,10 @@ import clsx from 'clsx';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useEffect } from 'react';
 import * as Yup from 'yup';
+import { FormInput } from '../FormInput';
 import { OrderClip } from '../OrderDetails/OrderDetailsItem';
 import { OrderDetailsItemsFormButtons } from '../OrderDetailsItemsFormButtons';
 import { PrimitiveButton } from '../PrimitiveButton';
-import { PrimitiveInput } from '../PrimitiveInput';
 import PrimitiveTooltip from '../PrimitiveTooltip/PrimitiveTooltip';
 import styles from './OrderDetailsItemsItem.module.css';
 
@@ -109,7 +109,7 @@ const OrderDetailsItemsItem = ({
 
                 <Field name="clipRef">
                   {({ field, form }: any) => (
-                    <PrimitiveInput
+                    <FormInput
                       {...field}
                       placeholder="Clip Reference"
                       type="text"
@@ -128,7 +128,7 @@ const OrderDetailsItemsItem = ({
 
                 <Field name="timecodeIn">
                   {({ field, meta, form }: any) => (
-                    <PrimitiveInput
+                    <FormInput
                       {...field} // gives name, value, onChange, onBlur
                       placeholder="hh:mm:ss:fps"
                       type="text"
@@ -147,7 +147,7 @@ const OrderDetailsItemsItem = ({
 
                 <Field name="timecodeOut">
                   {({ field, form }: any) => (
-                    <PrimitiveInput
+                    <FormInput
                       {...field}
                       type="text"
                       placeholder="hh:mm:ss:fps"
@@ -181,7 +181,7 @@ const OrderDetailsItemsItem = ({
                 </PrimitiveTooltip>
                 <Field name="orderItemId">
                   {({ field, form }: any) => (
-                    <PrimitiveInput
+                    <FormInput
                       {...field}
                       placeholder="Clip Name or Title"
                       type="text"
@@ -197,7 +197,7 @@ const OrderDetailsItemsItem = ({
 
                 <Field name="sourceUrl">
                   {({ field, form }: any) => (
-                    <PrimitiveInput
+                    <FormInput
                       {...field}
                       placeholder="Source URL"
                       type="text"
@@ -210,7 +210,7 @@ const OrderDetailsItemsItem = ({
                 <span className={styles.sourceUrl}>Description (optional)</span>
                 <Field name="description">
                   {({ field, form }: any) => (
-                    <PrimitiveInput
+                    <FormInput
                       {...field}
                       placeholder="Description (optional)"
                       type="text"
