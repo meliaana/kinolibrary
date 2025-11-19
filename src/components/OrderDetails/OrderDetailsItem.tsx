@@ -148,15 +148,6 @@ const OrderDetailsItem = ({
               clipItemData={orderClip}
               isOpen={openedOrderId === orderClip.orderItemId}
               onClick={handleItemClick}
-              setOrderClips={setLocalOrderClips}
-              isDirty={
-                orderClips.find((c) => c.orderItemId === orderClip.orderItemId)
-                  ?.clipRef !== orderClip.clipRef ||
-                orderClips.find((c) => c.orderItemId === orderClip.orderItemId)
-                  ?.timecodeIn !== orderClip.timecodeIn ||
-                orderClips.find((c) => c.orderItemId === orderClip.orderItemId)
-                  ?.timecodeOut !== orderClip.timecodeOut
-              }
             />
           ))}
 

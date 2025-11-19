@@ -3,7 +3,8 @@ import {
   formatEstimatedSeconds,
 } from '@/helpers/estimatedSeconds';
 import clsx from 'clsx';
-import { updateField } from '../OrderDetails/OrderDetails.helpers';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import * as Yup from 'yup';
 import { OrderClip } from '../OrderDetails/OrderDetailsItem';
 import { PrimitiveButton } from '../PrimitiveButton';
 import { PrimitiveInput } from '../PrimitiveInput';
@@ -13,83 +14,125 @@ import styles from './OrderDetailsItemsItem.module.css';
 type Props = {
   clipItemData: OrderClip;
   isOpen: boolean;
-  isDirty: boolean;
   onClick: (orderId: number) => void;
-  setOrderClips: React.Dispatch<React.SetStateAction<OrderClip[]>>;
 };
 
-const OrderDetailsItemsItem = ({
-  clipItemData,
-  isOpen,
-  isDirty,
-  onClick,
-  setOrderClips,
-}: Props) => {
-  const updateClipRef = (value: string) => {
-    updateField('clipRef', value, setOrderClips, clipItemData);
-  };
+const validationSchema = Yup.object({
+  clipRef: Yup.string().required('Clip reference is required'),
+  timecodeIn: Yup.string()
+    .matches(/^\d{2}:\d{2}:\d{2}:\d{2}$/, 'Use hh:mm:ss:ff')
+    .required('Timecode In is required'),
+  timecodeOut: Yup.string()
+    .matches(/^\d{2}:\d{2}:\d{2}:\d{2}$/, 'Use hh:mm:ss:ff')
+    .required('Timecode Out is required'),
+});
 
-  const updateTimecodeIn = (value: string) => {
-    updateField('timecodeIn', value, setOrderClips, clipItemData);
-  };
-
-  const updateTimecodeOut = (value: string) => {
-    updateField('timecodeOut', value, setOrderClips, clipItemData);
-  };
-
+const OrderDetailsItemsItem = ({ clipItemData, isOpen, onClick }: Props) => {
   const handleClick = () => {
     onClick(clipItemData.orderItemId);
   };
 
-  const displayEstimatedSeconds = formatEstimatedSeconds(
-    calculateEstimatedSeconds(
-      clipItemData.timecodeIn,
-      clipItemData.timecodeOut,
-    ),
-  );
-
   return (
-    <PrimitiveButton
-      className={styles.item}
-      onClick={handleClick}
-      data-active={isOpen}
-      data-dirty={isDirty}
+    <Formik
+      initialValues={{
+        clipRef: clipItemData.clipRef ?? '',
+        timecodeIn: clipItemData.timecodeIn ?? '',
+        timecodeOut: clipItemData.timecodeOut ?? '',
+      }}
+      enableReinitialize
+      validationSchema={validationSchema}
+      onSubmit={() => {}}
     >
-      <div className={clsx(styles.itemContent, styles.clipRefContent)}>
-        <PrimitiveTooltip content="Clip Reference">
-          <span className={styles.clipRef}>Clip Reference</span>
-        </PrimitiveTooltip>
-        <PrimitiveInput
-          value={clipItemData.clipRef}
-          onChange={updateClipRef}
-          type="text"
-        />
-      </div>
+      {({ values }) => {
+        const displayEstimatedSeconds = formatEstimatedSeconds(
+          calculateEstimatedSeconds(values.timecodeIn, values.timecodeOut),
+        );
 
-      <div className={styles.itemContent}>
-        <span className={styles.timecodeIn}>Timecode In</span>
-        <PrimitiveInput
-          value={clipItemData.timecodeIn}
-          onChange={updateTimecodeIn}
-          type="text"
-          placeholder="hh:mm:ss:fps"
-        />
-      </div>
+        return (
+          <Form /* no visible submit button, we just use Formik for validation/state */
+          >
+            <PrimitiveButton
+              className={styles.item}
+              onClick={handleClick}
+              type="button"
+              data-active={isOpen}
+            >
+              {/* Clip Ref */}
+              <div className={clsx(styles.itemContent, styles.clipRefContent)}>
+                <PrimitiveTooltip content="Clip Reference">
+                  <span className={styles.clipRef}>Clip Reference</span>
+                </PrimitiveTooltip>
 
-      <div className={styles.itemContent}>
-        <span className={styles.timecodeOut}>Timecode Out</span>
-        <PrimitiveInput
-          value={clipItemData.timecodeOut}
-          onChange={updateTimecodeOut}
-          type="text"
-          placeholder="hh:mm:ss:fps"
-        />
-      </div>
+                <Field name="clipRef">
+                  {({ field, form }: any) => (
+                    <PrimitiveInput
+                      value={field.value}
+                      onChange={(value: string) => {
+                        form.setFieldValue(field.name, value);
+                      }}
+                      type="text"
+                    />
+                  )}
+                </Field>
 
-      <div className={styles.estimatedSeconds}>
-        <p>Estimated Seconds {displayEstimatedSeconds}</p>
-      </div>
-    </PrimitiveButton>
+                <ErrorMessage name="clipRef">
+                  {(msg) => <span className={styles.error}>{msg}</span>}
+                </ErrorMessage>
+              </div>
+
+              {/* Timecode In */}
+              <div className={styles.itemContent}>
+                <span className={styles.timecodeIn}>Timecode In</span>
+
+                <Field name="timecodeIn">
+                  {({ field, form }: any) => (
+                    <PrimitiveInput
+                      value={field.value}
+                      onChange={(value: string) => {
+                        form.setFieldValue(field.name, value);
+                      }}
+                      type="text"
+                      placeholder="hh:mm:ss:fps"
+                    />
+                  )}
+                </Field>
+
+                <ErrorMessage name="timecodeIn">
+                  {(msg) => <span className={styles.error}>{msg}</span>}
+                </ErrorMessage>
+              </div>
+
+              {/* Timecode Out */}
+              <div className={styles.itemContent}>
+                <span className={styles.timecodeOut}>Timecode Out</span>
+
+                <Field name="timecodeOut">
+                  {({ field, form }: any) => (
+                    <PrimitiveInput
+                      value={field.value}
+                      onChange={(value: string) => {
+                        form.setFieldValue(field.name, value);
+                      }}
+                      type="text"
+                      placeholder="hh:mm:ss:fps"
+                    />
+                  )}
+                </Field>
+
+                <ErrorMessage name="timecodeOut">
+                  {(msg) => <span className={styles.error}>{msg}</span>}
+                </ErrorMessage>
+              </div>
+
+              {/* Estimated seconds – uses Formik values, updates live */}
+              <div className={styles.estimatedSeconds}>
+                <p>Estimated Seconds {displayEstimatedSeconds}</p>
+              </div>
+            </PrimitiveButton>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 };
 
