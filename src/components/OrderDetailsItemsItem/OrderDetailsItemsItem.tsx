@@ -84,7 +84,6 @@ const OrderDetailsItemsItem = ({
         }, [dirty]);
 
         useEffect(() => {
-          console.log('resetSignal', resetSignal);
           if (resetSignal) {
             resetForm();
             setResetSignal(false);

@@ -40,7 +40,6 @@ const OrderDetailsItem = ({
   }, [orderClips]);
 
   const handleItemClick = (orderItemId: number) => {
-    console.log('handleItemClick', isDirty, openedOrderId, orderItemId);
     if (isDirty && openedOrderId !== orderItemId) {
       setPendingOpenId(orderItemId);
       setShowConfirm(true);
