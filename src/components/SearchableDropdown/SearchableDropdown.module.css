@@ -2,6 +2,7 @@
   border-radius: 4px;
   padding: 10px;
   width: 260px;
+  min-height: 40px;
   background-color: var(--gray-1);
   box-shadow:
     hsl(206 22% 7% / 35%) 0px 10px 38px -10px,

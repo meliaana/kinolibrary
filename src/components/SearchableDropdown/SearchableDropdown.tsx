@@ -1,7 +1,7 @@
 import { throttle } from '@/helpers/throttle';
 import { useApiFetch } from '@/hooks/useApiFetch';
 import * as Popover from '@radix-ui/react-popover';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormInput } from '../FormInput';
 import { PrimitiveButton } from '../PrimitiveButton';
 import styles from './SearchableDropdown.module.css';
@@ -15,6 +15,7 @@ type Props = {
     name: string;
   }) => void;
   placeholder?: string;
+  isActive?: boolean;
 };
 
 export const SearchableDropdown = ({
@@ -22,6 +23,7 @@ export const SearchableDropdown = ({
   onChange,
   onSubmitSelected,
   placeholder,
+  isActive = false,
 }: Props) => {
   const apiFetch = useApiFetch();
   const [open, setOpen] = useState(false);
@@ -32,6 +34,12 @@ export const SearchableDropdown = ({
       name: string;
     }[]
   >([]);
+
+  useEffect(() => {
+    if (value && isActive) {
+      getClipData(value);
+    }
+  }, [value, isActive]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     onChange(e.target.value);
@@ -68,29 +76,27 @@ export const SearchableDropdown = ({
         />
       </Popover.Anchor>
       <Popover.Portal>
-        {options.length > 0 && (
-          <Popover.Content
-            align="start"
-            sideOffset={4}
-            className={styles.popoverContent}
-            onOpenAutoFocus={(e) => e.preventDefault()}
-          >
-            <ul className={styles.optionsList}>
-              {options.map((opt) => (
-                <PrimitiveButton
-                  className={styles.optionButton}
-                  key={opt.clipId || opt.masterClipId}
-                  onClick={() => {
-                    setOpen(false);
-                    onSubmitSelected(opt);
-                  }}
-                >
-                  {opt.name}
-                </PrimitiveButton>
-              ))}
-            </ul>
-          </Popover.Content>
-        )}
+        <Popover.Content
+          align="start"
+          sideOffset={4}
+          className={styles.popoverContent}
+          onOpenAutoFocus={(e) => e.preventDefault()}
+        >
+          <ul className={styles.optionsList}>
+            {options.map((opt) => (
+              <PrimitiveButton
+                className={styles.optionButton}
+                key={opt.clipId || opt.masterClipId}
+                onClick={() => {
+                  setOpen(false);
+                  onSubmitSelected(opt);
+                }}
+              >
+                {opt.name}
+              </PrimitiveButton>
+            ))}
+          </ul>
+        </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
   );

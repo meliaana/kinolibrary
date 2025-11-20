@@ -177,6 +177,7 @@ const OrderDetailsItemsItem = ({
                         form.setFieldValue(field.name, val.name);
                         fetchTitle(val);
                       }}
+                      isActive={isOpen}
                     />
                   )}
                 </Field>
