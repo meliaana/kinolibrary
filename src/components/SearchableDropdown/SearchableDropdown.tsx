@@ -36,10 +36,13 @@ export const SearchableDropdown = ({
   >([]);
 
   useEffect(() => {
-    if (value && isActive) {
-      getClipData(value);
+    if (!isActive) {
+      setOpen(false);
+      return;
     }
-  }, [value, isActive]);
+
+    getClipData(value);
+  }, [isActive]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     onChange(e.target.value);
