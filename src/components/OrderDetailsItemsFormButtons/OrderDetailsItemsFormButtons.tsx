@@ -5,12 +5,16 @@ import styles from './OrderDetailsItemsFormButtons.module.css';
 const OrderDetailsItemsFormButtons = ({
   onSave,
   onDelete,
+  title,
 }: {
   onSave: () => void;
   onDelete: () => void;
+  title: string;
 }) => {
   return (
     <div className={styles.buttonsContainer}>
+      <h4 className={styles.title}>{title}</h4>
+
       <Button
         className={styles.saveChangesButton}
         variant="colored"

@@ -16,6 +16,7 @@ import styles from './OrderDetailsItemsItem.module.css';
 
 type Props = {
   clipItemData: OrderClip;
+  title: string;
   isOpen: boolean;
   onClick: (orderId: number) => void;
   portalRef: React.RefObject<HTMLDivElement>;
@@ -46,6 +47,7 @@ const validationSchema = Yup.object({
 
 const OrderDetailsItemsItem = ({
   clipItemData,
+  title,
   isOpen,
   onClick,
   portalRef,
@@ -55,7 +57,7 @@ const OrderDetailsItemsItem = ({
   onRemove,
 }: Props) => {
   const handleClick = () => {
-    onClick(clipItemData.orderItemId);
+    onClick(clipItemData.orderItemId ?? 0);
   };
 
   const initialValues: ClipFormValues = {
@@ -173,6 +175,7 @@ const OrderDetailsItemsItem = ({
               <OrderDetailsItemsFormButtons
                 onSave={() => {}}
                 onDelete={onRemove}
+                title={title}
               />
               <div className={styles.itemDescriptionContent}>
                 <PrimitiveTooltip content="Clip Name or Title">

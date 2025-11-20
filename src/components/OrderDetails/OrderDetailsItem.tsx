@@ -1,3 +1,4 @@
+import { useApiFetch } from '@/hooks/useApiFetch';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { OrderDetailsItemsItem } from '../OrderDetailsItemsItem';
@@ -7,8 +8,10 @@ import { deleteClip } from './OrderDetails.helpers';
 import styles from './OrderDetails.module.css';
 
 export type OrderClip = {
-  orderItemId: number;
+  orderItemId: number | null;
+  clipId: string | null;
   clipRef: string;
+  masterClipId: string | null;
   timecodeIn: string;
   timecodeOut: string;
   description: string;
@@ -25,6 +28,7 @@ const OrderDetailsItem = ({
   const [openedOrderId, setOpenedOrderId] = useState<number | null>(null);
   const [isDirty, setIsDirty] = useState(false);
   const portalRef = useRef<HTMLDivElement>(null);
+  const [title, setTitle] = useState<string>('');
 
   const [newOrderClip, setNewOrderClip] = useState<OrderClip | null>(null);
 
@@ -33,11 +37,57 @@ const OrderDetailsItem = ({
   const [pendingOpenId, setPendingOpenId] = useState<number | null>(null);
   const [resetSignal, setResetSignal] = useState(false);
 
+  const apiFetch = useApiFetch();
+
   if (!orderClips) return null;
 
   useEffect(() => {
     setOpenedOrderId(orderClips[0]?.orderItemId ?? null);
   }, [orderClips]);
+
+  useEffect(() => {
+    const fetchClipData = async () => {
+      const clip = orderClips.find(
+        (clip) => clip.orderItemId === openedOrderId,
+      );
+      if (!clip) return;
+
+      try {
+        if (clip.masterClipId) {
+          const masterClipResponse = await apiFetch(
+            `/api/Clips/masterclip/${clip.masterClipId}`,
+            {
+              method: 'GET',
+            },
+          );
+          if (!masterClipResponse.ok) {
+            console.error(
+              'Failed to fetch master clip:',
+              masterClipResponse.status,
+            );
+            return;
+          }
+
+          const masterClipData = await masterClipResponse.json();
+          setTitle(masterClipData.name);
+        } else if (clip.clipId) {
+          const clipResponse = await fetch(`/api/Clips/clip/${clip.clipId}`);
+
+          if (!clipResponse.ok) {
+            console.error('Failed to fetch clip:', clipResponse.status);
+            return;
+          }
+
+          const clipData = await clipResponse.json();
+          setTitle(clipData.name);
+        }
+      } catch (error) {
+        console.error('Error fetching clip data:', error);
+      }
+    };
+
+    fetchClipData();
+  }, [openedOrderId, orderClips]);
 
   const handleItemClick = (orderItemId: number) => {
     if (isDirty && openedOrderId !== orderItemId) {
@@ -116,6 +166,7 @@ const OrderDetailsItem = ({
               resetSignal={resetSignal}
               setResetSignal={setResetSignal}
               onRemove={() => setShowDelete(true)}
+              title={title}
             />
           ))}
 
@@ -143,8 +194,10 @@ const OrderDetailsItem = ({
                   clipRef: '',
                   timecodeIn: '',
                   timecodeOut: '',
+                  masterClipId: null,
                   description: '',
                   sourceUrl: '',
+                  clipId: null,
                 });
                 setOpenedOrderId(0);
               }}
