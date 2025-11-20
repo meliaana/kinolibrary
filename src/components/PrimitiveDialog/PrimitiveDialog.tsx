@@ -10,20 +10,14 @@ const PrimitiveDialog = ({
   description,
   children,
   trigger,
-  onSave,
   open,
   onOpenChange,
-  onDiscard,
-  onClose,
 }: PropsWithChildren<{
   title: string;
   description: string;
   trigger?: React.ReactNode;
-  onSave?: () => void;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  onDiscard?: () => void;
-  onClose?: () => void;
 }>) => (
   <Dialog.Root open={open} onOpenChange={onOpenChange}>
     {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
@@ -34,7 +28,6 @@ const PrimitiveDialog = ({
         <Dialog.Description className={styles.dialogDescription}>
           {description}
         </Dialog.Description>
-        {children}
         <div
           style={{
             display: 'flex',
@@ -44,18 +37,10 @@ const PrimitiveDialog = ({
           }}
         >
           <Dialog.Close asChild>
-            <Button className={styles.cancelButton} onClick={onClose}>
-              Close
-            </Button>
+            <Button className={styles.cancelButton}>Close</Button>
           </Dialog.Close>
-          <Dialog.Close asChild>
-            <Button onClick={onDiscard}>Discard</Button>
-          </Dialog.Close>
-          <Dialog.Close asChild>
-            <Button variant="colored" onClick={onSave}>
-              Save changes
-            </Button>
-          </Dialog.Close>
+
+          {children}
         </div>
         <Dialog.Close asChild>
           <PrimitiveButton className={styles.closeButton} aria-label="Close">
