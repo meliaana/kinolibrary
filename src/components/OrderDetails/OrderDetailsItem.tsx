@@ -52,50 +52,6 @@ const OrderDetailsItem = ({
     setOpenedOrderId(localOrderClips[0]?.orderItemId ?? null);
   }, [localOrderClips]);
 
-  useEffect(() => {
-    const fetchClipData = async () => {
-      const clip = localOrderClips.find(
-        (clip) => clip.orderItemId === openedOrderId,
-      );
-      if (!clip) return;
-
-      try {
-        if (clip.masterClipId) {
-          const masterClipResponse = await apiFetch(
-            `/api/Clips/masterclip/${clip.masterClipId}`,
-            {
-              method: 'GET',
-            },
-          );
-          if (!masterClipResponse.ok) {
-            console.error(
-              'Failed to fetch master clip:',
-              masterClipResponse.status,
-            );
-            return;
-          }
-
-          const masterClipData = await masterClipResponse.json();
-          setTitle(masterClipData.name);
-        } else if (clip.clipId) {
-          const clipResponse = await fetch(`/api/Clips/clip/${clip.clipId}`);
-
-          if (!clipResponse.ok) {
-            console.error('Failed to fetch clip:', clipResponse.status);
-            return;
-          }
-
-          const clipData = await clipResponse.json();
-          setTitle(clipData.name);
-        }
-      } catch (error) {
-        console.error('Error fetching clip data:', error);
-      }
-    };
-
-    fetchClipData();
-  }, [openedOrderId, localOrderClips]);
-
   const handleItemClick = (orderItemId: number) => {
     if (isDirty && openedOrderId !== orderItemId) {
       setPendingOpenId(orderItemId);
@@ -159,7 +115,6 @@ const OrderDetailsItem = ({
               resetSignal={resetSignal}
               setResetSignal={setResetSignal}
               onRemove={() => setShowDelete(true)}
-              title={title}
             />
           ))}
         </div>

@@ -2,21 +2,22 @@ import {
   calculateEstimatedSeconds,
   formatEstimatedSeconds,
 } from '@/helpers/estimatedSeconds';
+import { useApiFetch } from '@/hooks/useApiFetch';
 import * as Portal from '@radix-ui/react-portal';
 import clsx from 'clsx';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { FormInput } from '../FormInput';
 import { OrderClip } from '../OrderDetails/OrderDetailsItem';
 import { OrderDetailsItemsFormButtons } from '../OrderDetailsItemsFormButtons';
 import { PrimitiveButton } from '../PrimitiveButton';
 import PrimitiveTooltip from '../PrimitiveTooltip/PrimitiveTooltip';
+import { SearchableDropdown } from '../SearchableDropdown';
 import styles from './OrderDetailsItemsItem.module.css';
 
 type Props = {
   clipItemData: OrderClip;
-  title: string;
   isOpen: boolean;
   onClick: (orderId: number) => void;
   portalRef: React.RefObject<HTMLDivElement>;
@@ -47,7 +48,6 @@ const validationSchema = Yup.object({
 
 const OrderDetailsItemsItem = ({
   clipItemData,
-  title,
   isOpen,
   onClick,
   portalRef,
@@ -56,6 +56,63 @@ const OrderDetailsItemsItem = ({
   setResetSignal,
   onRemove,
 }: Props) => {
+  const [title, setTitle] = useState<string>('');
+
+  const apiFetch = useApiFetch();
+  const fetchTitle = async ({
+    clipId,
+    masterClipId,
+    name,
+  }: {
+    clipId: string | null;
+    masterClipId: string | null;
+    name: string;
+  }) => {
+    try {
+      if (masterClipId) {
+        const masterClipResponse = await apiFetch(
+          `/api/Clips/masterclip/${masterClipId}`,
+          {
+            method: 'GET',
+          },
+        );
+        if (!masterClipResponse.ok) {
+          console.error(
+            'Failed to fetch master clip:',
+            masterClipResponse.status,
+          );
+          return;
+        }
+
+        const masterClipData = await masterClipResponse.json();
+        setTitle(masterClipData.name);
+      } else if (clipId) {
+        const clipResponse = await apiFetch(`/api/Clips/clip/${clipId}`, {
+          method: 'GET',
+        });
+
+        if (!clipResponse.ok) {
+          console.error('Failed to fetch clip:', clipResponse.status);
+          return;
+        }
+
+        const clipData = await clipResponse.json();
+        setTitle(clipData.name);
+      }
+    } catch (error) {
+      console.error('Error fetching clip data:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+    fetchTitle({
+      clipId: clipItemData.clipId,
+      masterClipId: clipItemData.masterClipId,
+      name: clipItemData.clipRef,
+    });
+  }, [isOpen]);
+
   const handleClick = () => {
     onClick(clipItemData.orderItemId ?? 0);
   };
@@ -110,10 +167,16 @@ const OrderDetailsItemsItem = ({
 
                 <Field name="clipRef">
                   {({ field, form }: any) => (
-                    <FormInput
-                      {...field}
+                    <SearchableDropdown
+                      value={field.value}
+                      onChange={(val) => {
+                        form.setFieldValue(field.name, val);
+                      }}
                       placeholder="Clip Reference"
-                      type="text"
+                      onSubmitSelected={(val) => {
+                        form.setFieldValue(field.name, val.name);
+                        fetchTitle(val);
+                      }}
                     />
                   )}
                 </Field>
