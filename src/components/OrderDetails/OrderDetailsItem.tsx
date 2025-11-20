@@ -1,9 +1,9 @@
 import { useApiFetch } from '@/hooks/useApiFetch';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
+import { ConfirmChangesDialog } from '../ConfirmChangesDialog';
+import { ConfirmRemoveItemDialog } from '../ConfirmRemoveItemDialog';
 import { OrderDetailsItemsItem } from '../OrderDetailsItemsItem';
-import { PrimitiveButton } from '../PrimitiveButton';
-import { PrimitiveDialog } from '../PrimitiveDialog';
 import { deleteClip } from './OrderDetails.helpers';
 import styles from './OrderDetails.module.css';
 
@@ -25,6 +25,9 @@ const OrderDetailsItem = ({
   orderClips: OrderClip[];
   orderId: string;
 }) => {
+  const [localOrderClips, setLocalOrderClips] =
+    useState<OrderClip[]>(orderClips);
+
   const [openedOrderId, setOpenedOrderId] = useState<number | null>(null);
   const [isDirty, setIsDirty] = useState(false);
   const portalRef = useRef<HTMLDivElement>(null);
@@ -42,12 +45,16 @@ const OrderDetailsItem = ({
   if (!orderClips) return null;
 
   useEffect(() => {
-    setOpenedOrderId(orderClips[0]?.orderItemId ?? null);
+    setLocalOrderClips(orderClips);
   }, [orderClips]);
 
   useEffect(() => {
+    setOpenedOrderId(localOrderClips[0]?.orderItemId ?? null);
+  }, [localOrderClips]);
+
+  useEffect(() => {
     const fetchClipData = async () => {
-      const clip = orderClips.find(
+      const clip = localOrderClips.find(
         (clip) => clip.orderItemId === openedOrderId,
       );
       if (!clip) return;
@@ -87,7 +94,7 @@ const OrderDetailsItem = ({
     };
 
     fetchClipData();
-  }, [openedOrderId, orderClips]);
+  }, [openedOrderId, localOrderClips]);
 
   const handleItemClick = (orderItemId: number) => {
     if (isDirty && openedOrderId !== orderItemId) {
@@ -97,19 +104,6 @@ const OrderDetailsItem = ({
     }
 
     setOpenedOrderId(orderItemId);
-  };
-
-  const handleConfirm = () => {
-    if (pendingOpenId !== null) {
-      setOpenedOrderId(pendingOpenId);
-    }
-    setShowConfirm(false);
-    setPendingOpenId(null);
-  };
-
-  const handleCancel = () => {
-    setShowConfirm(false);
-    setPendingOpenId(null);
   };
 
   const handleDiscard = () => {
@@ -130,10 +124,10 @@ const OrderDetailsItem = ({
       toast.success('Clip deleted successfully');
 
       if (openedOrderId === openedOrderId) {
-        const remaining = orderClips.filter(
+        const remaining = localOrderClips.filter(
           (clip) => clip.orderItemId !== openedOrderId,
         );
-        setOpenedOrderId(remaining[0]?.orderItemId ?? null);
+        setLocalOrderClips(remaining);
       }
     } catch (error) {
       console.error('Error deleting clip:', error);
@@ -146,16 +140,15 @@ const OrderDetailsItem = ({
     setShowDelete(false);
   };
 
-  const handleCancelDelete = () => {
-    setShowDelete(false);
-    setPendingOpenId(null);
+  const handleConfirmSaveChanges = () => {
+    console.log('handleConfirmSaveChanges');
   };
 
   return (
     <>
       <div className={styles.orderDetailsItemsContainer}>
         <div className={styles.orderDetailsItemsList}>
-          {orderClips.map((orderClip) => (
+          {localOrderClips.map((orderClip) => (
             <OrderDetailsItemsItem
               key={orderClip.orderItemId}
               clipItemData={orderClip}
@@ -169,61 +162,18 @@ const OrderDetailsItem = ({
               title={title}
             />
           ))}
-
-          {newOrderClip ? (
-            <OrderDetailsItemsItem
-              clipItemData={newOrderClip}
-              isOpen={newOrderClip !== null}
-              onClick={handleItemClick}
-              portalRef={portalRef}
-              setIsDirty={() => setIsDirty(true)}
-              resetSignal={resetSignal}
-              setResetSignal={setResetSignal}
-              onRemove={() => {
-                setNewOrderClip(null);
-                setOpenedOrderId(orderClips[0]?.orderItemId ?? null);
-                setIsDirty(false);
-              }}
-            />
-          ) : (
-            <PrimitiveButton
-              className={styles.addItemButton}
-              onClick={() => {
-                setNewOrderClip({
-                  orderItemId: 0,
-                  clipRef: '',
-                  timecodeIn: '',
-                  timecodeOut: '',
-                  masterClipId: null,
-                  description: '',
-                  sourceUrl: '',
-                  clipId: null,
-                });
-                setOpenedOrderId(0);
-              }}
-            >
-              + Add Item
-            </PrimitiveButton>
-          )}
         </div>
         <div ref={portalRef} className={styles.portalContainer}></div>
-        <PrimitiveDialog
+        <ConfirmChangesDialog
           open={showConfirm}
           onOpenChange={setShowConfirm}
-          title="Unsaved Changes"
-          description="You have unsaved changes. Do you want to discard or save them?"
-          onSave={handleConfirm}
+          onConfirm={handleConfirmSaveChanges}
           onDiscard={handleDiscard}
-          onClose={handleCancel}
         />
-        <PrimitiveDialog
+        <ConfirmRemoveItemDialog
           open={showDelete}
           onOpenChange={setShowDelete}
-          title="Delete Clip"
-          description="Are you sure you want to delete this clip?"
-          onSave={handleConfirmDelete}
-          onDiscard={handleCancelDelete}
-          onClose={handleCancel}
+          onConfirm={handleConfirmDelete}
         />
       </div>
     </>
