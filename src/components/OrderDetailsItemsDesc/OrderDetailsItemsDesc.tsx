@@ -1,8 +1,7 @@
-import { deleteClip, fetchTitle } from '@/helpers/OrderItemsHelpers';
-import { useApiFetch } from '@/hooks/useApiFetch';
+import { deleteClip } from '@/helpers/OrderItemsHelpers';
 import * as Portal from '@radix-ui/react-portal';
 import { Field } from 'formik';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'sonner';
 import { ConfirmRemoveItemDialog } from '../ConfirmRemoveItemDialog';
 import { FormInput } from '../FormInput';
@@ -12,6 +11,7 @@ import PrimitiveTooltip from '../PrimitiveTooltip/PrimitiveTooltip';
 import styles from './OrderDetailsItemsDesc.module.css';
 
 type Props = {
+  title: string;
   orderId: string;
   onSave: () => void;
   onDelete: (orderItemId: number) => void;
@@ -20,24 +20,14 @@ type Props = {
 };
 
 const OrderDetailsItemsDesc = ({
+  title,
   onSave,
   onDelete,
   orderId,
   clipItemData,
   portalRef,
 }: Props) => {
-  const [title, setTitle] = useState<string>('');
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-
-  const apiFetch = useApiFetch();
-
-  useEffect(() => {
-    fetchTitle({
-      clipId: clipItemData.clipId,
-      masterClipId: clipItemData.masterClipId,
-      apiFetch,
-    }).then((title) => setTitle(title));
-  }, []);
 
   const handleDelete = async () => {
     if (!clipItemData.orderItemId) throw new Error('Order item ID is required');

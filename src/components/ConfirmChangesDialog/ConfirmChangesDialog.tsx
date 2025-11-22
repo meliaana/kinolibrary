@@ -23,7 +23,7 @@ const ConfirmChangesDialog = ({
     >
       <>
         <Button onClick={onDiscard}>Discard</Button>
-        <Button variant="colored" onClick={onConfirm}>
+        <Button type="submit" variant="colored" onClick={onConfirm}>
           Save changes
         </Button>
       </>

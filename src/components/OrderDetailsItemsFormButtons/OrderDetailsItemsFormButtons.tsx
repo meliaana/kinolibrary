@@ -19,6 +19,7 @@ const OrderDetailsItemsFormButtons = ({
         className={styles.saveChangesButton}
         variant="colored"
         onClick={onSave}
+        type="submit"
       >
         Save Changes
       </Button>
