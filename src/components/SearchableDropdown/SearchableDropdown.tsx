@@ -50,6 +50,7 @@ export const SearchableDropdown = ({
   }
 
   const getClipData = throttle(async (clipRef: string) => {
+    if (!clipRef) return;
     try {
       const fetchData = await apiFetch(
         `/api/Clips/autocomplete?term=${encodeURIComponent(clipRef)}`,

@@ -30,7 +30,7 @@ const OrderDetailsItemsDesc = ({
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const handleDelete = async () => {
-    if (!clipItemData.orderItemId) throw new Error('Order item ID is required');
+    if (!clipItemData.orderItemId) return;
 
     try {
       await deleteClip(orderId, clipItemData.orderItemId);

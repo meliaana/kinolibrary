@@ -24,6 +24,8 @@ const OrderDetailsItem = ({
   const [localOrderClips, setLocalOrderClips] =
     useState<OrderClip[]>(orderClips);
 
+  const [newOrderClip, setNewOrderClip] = useState<OrderClip | null>(null);
+
   const [openedOrderId, setOpenedOrderId] = useState<number | null>(null);
   const portalRef = useRef<HTMLDivElement>(null);
 
@@ -37,7 +39,7 @@ const OrderDetailsItem = ({
     setOpenedOrderId(localOrderClips[0]?.orderItemId ?? null);
   }, [localOrderClips]);
 
-  const handleItemClick = (orderItemId: number) => {
+  const handleItemClick = (orderItemId: number | null) => {
     setOpenedOrderId(orderItemId);
   };
 
@@ -63,9 +65,39 @@ const OrderDetailsItem = ({
               onItemDelete={handleItemDelete}
             />
           ))}
-          <PrimitiveButton className={styles.addItemButton}>
-            + Add Clip
-          </PrimitiveButton>
+          {newOrderClip ? (
+            <OrderDetailsItemsItem
+              clipItemData={newOrderClip}
+              isOpen={openedOrderId === null}
+              setOpenedOrderId={setOpenedOrderId}
+              onClick={handleItemClick}
+              portalRef={portalRef}
+              orderId={orderId}
+              onItemDelete={() => {
+                setNewOrderClip(null);
+                setOpenedOrderId(localOrderClips[0]?.orderItemId ?? null);
+              }}
+            />
+          ) : (
+            <PrimitiveButton
+              className={styles.addItemButton}
+              onClick={() => {
+                setNewOrderClip({
+                  orderItemId: null,
+                  clipId: null,
+                  clipRef: '',
+                  masterClipId: null,
+                  timecodeIn: '',
+                  timecodeOut: '',
+                  description: '',
+                  sourceUrl: '',
+                });
+                setOpenedOrderId(null);
+              }}
+            >
+              + Add Clip
+            </PrimitiveButton>
+          )}
         </div>
         <div ref={portalRef} className={styles.portalContainer}></div>
       </div>

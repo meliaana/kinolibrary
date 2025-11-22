@@ -20,8 +20,8 @@ type Props = {
   orderId: string;
   clipItemData: OrderClip;
   isOpen: boolean;
-  setOpenedOrderId: (orderId: number) => void;
-  onClick: (orderId: number) => void;
+  setOpenedOrderId: (orderId: number | null) => void;
+  onClick: (orderId: number | null) => void;
   portalRef: React.RefObject<HTMLDivElement>;
   onItemDelete: (orderItemId: number) => void;
 };
@@ -45,7 +45,7 @@ const OrderDetailsItemsItem = ({
   onItemDelete,
 }: Props) => {
   const handleClick = () => {
-    onClick(clipItemData.orderItemId ?? 0);
+    onClick(clipItemData.orderItemId);
   };
   const [showUnsavedChanges, setShowUnsavedChanges] = useState(false);
   const [title, setTitle] = useState<string>('');
@@ -95,7 +95,8 @@ const OrderDetailsItemsItem = ({
   };
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !clipItemData.orderItemId) return;
+
     fetchTitle({
       clipId: clipItemData.clipId,
       masterClipId: clipItemData.masterClipId,
@@ -128,7 +129,7 @@ const OrderDetailsItemsItem = ({
 
   useEffect(() => {
     if (!showUnsavedChanges && dirty) {
-      setOpenedOrderId(clipItemData.orderItemId ?? 0);
+      setOpenedOrderId(clipItemData.orderItemId);
     }
   }, [showUnsavedChanges, dirty]);
 

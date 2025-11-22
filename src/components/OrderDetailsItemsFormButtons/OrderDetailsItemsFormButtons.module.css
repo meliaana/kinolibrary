@@ -26,6 +26,7 @@
   height: 40px;
   padding: 0;
   color: var(--gray-11);
+  flex-shrink: 0;
 }
 
 .deleteItemButton:hover {
