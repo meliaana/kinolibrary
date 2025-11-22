@@ -2,6 +2,7 @@ import {
   calculateEstimatedSeconds,
   formatEstimatedSeconds,
 } from '@/helpers/estimatedSeconds';
+import { useApiFetch } from '@/hooks/useApiFetch';
 import clsx from 'clsx';
 import { ErrorMessage, Field, FormikProvider, useFormik } from 'formik';
 import { useEffect, useState } from 'react';
@@ -49,6 +50,58 @@ const OrderDetailsItemsItem = ({
   const [showUnsavedChanges, setShowUnsavedChanges] = useState(false);
   const [title, setTitle] = useState<string>('');
 
+  const apiFetch = useApiFetch();
+  const fetchTitle = async ({
+    clipId,
+    masterClipId,
+  }: {
+    clipId: string | null;
+    masterClipId: string | null;
+  }) => {
+    try {
+      if (masterClipId) {
+        const masterClipResponse = await apiFetch(
+          `/api/Clips/masterclip/${masterClipId}`,
+          {
+            method: 'GET',
+          },
+        );
+        if (!masterClipResponse.ok) {
+          console.error(
+            'Failed to fetch master clip:',
+            masterClipResponse.status,
+          );
+          return;
+        }
+
+        const masterClipData = await masterClipResponse.json();
+        setTitle(masterClipData.name);
+      } else if (clipId) {
+        const clipResponse = await apiFetch(`/api/Clips/clip/${clipId}`, {
+          method: 'GET',
+        });
+
+        if (!clipResponse.ok) {
+          console.error('Failed to fetch clip:', clipResponse.status);
+          return;
+        }
+
+        const clipData = await clipResponse.json();
+        setTitle(clipData.name);
+      }
+    } catch (error) {
+      console.error('Error fetching clip data:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+    fetchTitle({
+      clipId: clipItemData.clipId,
+      masterClipId: clipItemData.masterClipId,
+    });
+  }, [isOpen]);
+
   const initialValues: ClipFormValues = {
     clipRef: clipItemData.clipRef ?? '',
     timecodeIn: clipItemData.timecodeIn ?? '',
@@ -66,6 +119,7 @@ const OrderDetailsItemsItem = ({
       setShowUnsavedChanges(false);
     },
   });
+
   const { values, dirty, resetForm } = formik;
 
   const displayEstimatedSeconds = formatEstimatedSeconds(
@@ -116,6 +170,10 @@ const OrderDetailsItemsItem = ({
                     placeholder="Clip Reference"
                     onSubmitSelected={(val) => {
                       form.setFieldValue(field.name, val.name);
+                      fetchTitle({
+                        clipId: val.clipId,
+                        masterClipId: val.masterClipId,
+                      });
                     }}
                     isActive={isOpen}
                   />
