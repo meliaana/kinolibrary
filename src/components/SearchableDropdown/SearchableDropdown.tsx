@@ -26,7 +26,7 @@ export const SearchableDropdown = ({
   isActive = false,
 }: Props) => {
   const apiFetch = useApiFetch();
-  const [open, setOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [options, setOptions] = useState<
     {
       clipId: string | null;
@@ -37,7 +37,7 @@ export const SearchableDropdown = ({
 
   useEffect(() => {
     if (!isActive) {
-      setOpen(false);
+      setIsDropdownOpen(false);
       return;
     }
 
@@ -69,13 +69,14 @@ export const SearchableDropdown = ({
   }, 200);
 
   return (
-    <Popover.Root open={open}>
+    <Popover.Root open={isDropdownOpen}>
       <Popover.Anchor asChild>
         <FormInput
           value={value}
           placeholder={placeholder}
           onChange={handleChange}
-          onFocus={() => setOpen(true)}
+          onFocus={() => setIsDropdownOpen(true)}
+          onBlur={() => setIsDropdownOpen(false)}
         />
       </Popover.Anchor>
       <Popover.Portal>
@@ -86,18 +87,21 @@ export const SearchableDropdown = ({
           onOpenAutoFocus={(e) => e.preventDefault()}
         >
           <ul className={styles.optionsList}>
-            {options.map((opt) => (
-              <PrimitiveButton
-                className={styles.optionButton}
-                key={opt.clipId || opt.masterClipId}
-                onClick={() => {
-                  setOpen(false);
-                  onSubmitSelected(opt);
-                }}
-              >
-                {opt.name}
-              </PrimitiveButton>
-            ))}
+            {options.length > 0 ? (
+              options.map((opt) => (
+                <PrimitiveButton
+                  className={styles.optionButton}
+                  key={opt.clipId || opt.masterClipId}
+                  onMouseDown={() => {
+                    onSubmitSelected(opt);
+                  }}
+                >
+                  {opt.name}
+                </PrimitiveButton>
+              ))
+            ) : (
+              <p className={styles.noOptionsFound}>No options found</p>
+            )}
           </ul>
         </Popover.Content>
       </Popover.Portal>
