@@ -18,6 +18,7 @@
 .saveChangesButton {
   margin-left: auto;
   flex-shrink: 0;
+  height: 40px;
 }
 
 .deleteItemButton {

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { OrderDetailsItemsItem } from '../OrderDetailsItemsItem';
+import { PrimitiveButton } from '../PrimitiveButton';
 import styles from './OrderDetails.module.css';
 
 export type OrderClip = {
@@ -62,6 +63,9 @@ const OrderDetailsItem = ({
               onItemDelete={handleItemDelete}
             />
           ))}
+          <PrimitiveButton className={styles.addItemButton}>
+            + Add Clip
+          </PrimitiveButton>
         </div>
         <div ref={portalRef} className={styles.portalContainer}></div>
       </div>
