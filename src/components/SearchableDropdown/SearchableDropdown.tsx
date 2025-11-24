@@ -10,8 +10,8 @@ type Props = {
   value: string;
   onChange: (value: string) => void;
   onSubmitSelected: (value: {
-    clipId: string | null;
-    masterClipId: string | null;
+    clipId: number | null;
+    masterClipId: number | null;
     name: string;
   }) => void;
   placeholder?: string;
@@ -29,8 +29,8 @@ export const SearchableDropdown = ({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [options, setOptions] = useState<
     {
-      clipId: string | null;
-      masterClipId: string | null;
+      clipId: number | null;
+      masterClipId: number | null;
       name: string;
     }[]
   >([]);
