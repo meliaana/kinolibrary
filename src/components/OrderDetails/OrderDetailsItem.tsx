@@ -5,9 +5,9 @@ import styles from './OrderDetails.module.css';
 
 export type OrderClip = {
   orderItemId: number | null;
-  clipId: string | null;
+  clipId: number | null;
   clipRef: string;
-  masterClipId: string | null;
+  masterClipId: number | null;
   timecodeIn: string;
   timecodeOut: string;
   description: string;

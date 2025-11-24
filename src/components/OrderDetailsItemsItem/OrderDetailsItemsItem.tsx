@@ -6,6 +6,7 @@ import { useApiFetch } from '@/hooks/useApiFetch';
 import clsx from 'clsx';
 import { ErrorMessage, Field, FormikProvider, useFormik } from 'formik';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { ConfirmChangesDialog } from '../ConfirmChangesDialog';
 import { FormInput } from '../FormInput';
 import { OrderClip } from '../OrderDetails/OrderDetailsItem';
@@ -27,10 +28,14 @@ type Props = {
 };
 
 type ClipFormValues = {
-  clipRef: string;
+  clipRef: {
+    name: string;
+    masterClipId: number | null;
+    clipId: number | null;
+  };
   timecodeIn: string;
   timecodeOut: string;
-  orderItemId: number | '';
+  orderNameOrTitle: string;
   sourceUrl: string;
   description: string;
 };
@@ -55,8 +60,8 @@ const OrderDetailsItemsItem = ({
     clipId,
     masterClipId,
   }: {
-    clipId: string | null;
-    masterClipId: string | null;
+    clipId: number | null;
+    masterClipId: number | null;
   }) => {
     try {
       if (masterClipId) {
@@ -104,10 +109,14 @@ const OrderDetailsItemsItem = ({
   }, [isOpen]);
 
   const initialValues: ClipFormValues = {
-    clipRef: clipItemData.clipRef ?? '',
+    clipRef: {
+      name: clipItemData.clipRef ?? '',
+      masterClipId: clipItemData.masterClipId ?? null,
+      clipId: clipItemData.clipId ?? null,
+    },
     timecodeIn: clipItemData.timecodeIn ?? '',
     timecodeOut: clipItemData.timecodeOut ?? '',
-    orderItemId: clipItemData.orderItemId ?? '',
+    orderNameOrTitle: '',
     sourceUrl: clipItemData.sourceUrl ?? '',
     description: clipItemData.description ?? '',
   };
@@ -115,8 +124,33 @@ const OrderDetailsItemsItem = ({
   const formik = useFormik<ClipFormValues>({
     initialValues,
     validationSchema,
-    onSubmit: () => {
-      console.log('submit');
+    onSubmit: async (values) => {
+      try {
+        const clipsResponse = await apiFetch(`/api/orders/${orderId}/clips`, {
+          method: 'post',
+          headers: {
+            Accept: 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            masterClipId: values.clipRef.masterClipId ?? 0,
+            clipId: values.clipRef.clipId ?? 0,
+            timecodeIn: values.timecodeIn,
+            timecodeOut: values.timecodeOut,
+            description: values.description,
+            name: values.orderNameOrTitle,
+          }),
+        });
+        if (!clipsResponse.ok) {
+          throw new Error('Failed to submit clip');
+        }
+        const clipsData = await clipsResponse.json();
+        console.log('clipsData', clipsData);
+      } catch (error) {
+        console.error('Error submitting clip:', error);
+        toast.error('Failed to submit clip');
+        throw new Error('Failed to submit clip', { cause: error });
+      }
       setShowUnsavedChanges(false);
     },
   });
@@ -164,13 +198,21 @@ const OrderDetailsItemsItem = ({
               <Field name="clipRef">
                 {({ field, form }: any) => (
                   <SearchableDropdown
-                    value={field.value}
+                    value={field.value.name}
                     onChange={(val) => {
-                      form.setFieldValue(field.name, val);
+                      form.setFieldValue(field.name, {
+                        ...field.value,
+                        name: val,
+                      });
                     }}
                     placeholder="Clip Reference"
                     onSubmitSelected={(val) => {
-                      form.setFieldValue(field.name, val.name);
+                      form.setFieldValue(field.name, {
+                        ...field.value,
+                        name: val.name,
+                        masterClipId: val.masterClipId,
+                        clipId: val.clipId,
+                      });
                       fetchTitle({
                         clipId: val.clipId,
                         masterClipId: val.masterClipId,

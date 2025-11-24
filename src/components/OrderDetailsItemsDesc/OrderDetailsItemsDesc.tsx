@@ -56,7 +56,7 @@ const OrderDetailsItemsDesc = ({
           <PrimitiveTooltip content="Clip Name or Title">
             <span className={styles.clipRef}>Clip Name or Title</span>
           </PrimitiveTooltip>
-          <Field name="orderItemId">
+          <Field name="orderNameOrTitle">
             {({ field, form }: any) => (
               <FormInput
                 {...field}
