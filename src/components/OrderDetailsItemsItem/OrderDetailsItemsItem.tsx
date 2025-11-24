@@ -25,6 +25,7 @@ type Props = {
   onClick: (orderId: number | null) => void;
   portalRef: React.RefObject<HTMLDivElement>;
   onItemDelete: (orderItemId: number) => void;
+  onSave: (clipItemData: OrderClip) => void;
 };
 
 type ClipFormValues = {
@@ -48,6 +49,7 @@ const OrderDetailsItemsItem = ({
   onClick,
   portalRef,
   onItemDelete,
+  onSave,
 }: Props) => {
   const handleClick = () => {
     onClick(clipItemData.orderItemId);
@@ -124,13 +126,14 @@ const OrderDetailsItemsItem = ({
   const formik = useFormik<ClipFormValues>({
     initialValues,
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, helpers) => {
       let clipsResponse: Response;
 
       try {
         if (!clipItemData.orderItemId) {
+          // CREATE
           clipsResponse = await apiFetch(`/api/orders/${orderId}/clips`, {
-            method: 'post',
+            method: 'POST',
             headers: {
               Accept: 'application/json, text/plain, */*',
               'Content-Type': 'application/json',
@@ -145,6 +148,7 @@ const OrderDetailsItemsItem = ({
             }),
           });
         } else {
+          // UPDATE
           clipsResponse = await fetch(
             `/api/orders/${orderId}/clips/${clipItemData.orderItemId}`,
             {
@@ -170,18 +174,44 @@ const OrderDetailsItemsItem = ({
         if (!clipsResponse.ok) {
           throw new Error('Failed to submit clip');
         }
-        const clipsData = await clipsResponse.json();
-        console.log('clipsData', clipsData);
+
+        const clipsData: OrderClip = await clipsResponse.json();
+
+        // Send normalized data back up
+        onSave(clipsData);
+
+        // Mark form as clean (so dirty === false)
+        helpers.resetForm({
+          values: {
+            ...values,
+            clipRef: {
+              name: clipsData.clipRef ?? values.clipRef.name,
+              masterClipId: clipsData.masterClipId,
+              clipId: clipsData.clipId,
+            },
+            timecodeIn: clipsData.timecodeIn,
+            timecodeOut: clipsData.timecodeOut,
+            sourceUrl: clipsData.sourceUrl,
+            description: clipsData.description,
+          },
+        });
+
+        // Close unsaved dialog
+        setShowUnsavedChanges(false);
+
+        // Ensure the saved item stays open
+        if (clipsData.orderItemId != null) {
+          setOpenedOrderId(clipsData.orderItemId);
+        }
+
         toast.success('Clip submitted successfully');
       } catch (error) {
         console.error('Error submitting clip:', error);
         toast.error('Failed to submit clip');
         throw new Error('Failed to submit clip', { cause: error });
       }
-      setShowUnsavedChanges(false);
     },
   });
-
   const { values, dirty, resetForm } = formik;
 
   const displayEstimatedSeconds = formatEstimatedSeconds(

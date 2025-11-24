@@ -63,6 +63,14 @@ const OrderDetailsItem = ({
               portalRef={portalRef}
               orderId={orderId}
               onItemDelete={handleItemDelete}
+              onSave={(clipItemData: OrderClip) => {
+                const updatedClips = localOrderClips.map((clip) =>
+                  clip.orderItemId === clipItemData.orderItemId
+                    ? clipItemData
+                    : clip,
+                );
+                setLocalOrderClips(updatedClips);
+              }}
             />
           ))}
           {newOrderClip ? (
@@ -76,6 +84,15 @@ const OrderDetailsItem = ({
               onItemDelete={() => {
                 setNewOrderClip(null);
                 setOpenedOrderId(localOrderClips[0]?.orderItemId ?? null);
+              }}
+              onSave={(savedClip: OrderClip) => {
+                setLocalOrderClips((prev) => [...prev, savedClip]);
+                setNewOrderClip(null);
+                if (savedClip.orderItemId != null) {
+                  setOpenedOrderId(savedClip.orderItemId);
+                } else {
+                  setOpenedOrderId(localOrderClips[0]?.orderItemId ?? null);
+                }
               }}
             />
           ) : (
