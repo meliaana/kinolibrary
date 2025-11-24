@@ -125,27 +125,54 @@ const OrderDetailsItemsItem = ({
     initialValues,
     validationSchema,
     onSubmit: async (values) => {
+      let clipsResponse: Response;
+
       try {
-        const clipsResponse = await apiFetch(`/api/orders/${orderId}/clips`, {
-          method: 'post',
-          headers: {
-            Accept: 'application/json, text/plain, */*',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            masterClipId: values.clipRef.masterClipId ?? 0,
-            clipId: values.clipRef.clipId ?? 0,
-            timecodeIn: values.timecodeIn,
-            timecodeOut: values.timecodeOut,
-            description: values.description,
-            name: values.orderNameOrTitle,
-          }),
-        });
+        if (!clipItemData.orderItemId) {
+          clipsResponse = await apiFetch(`/api/orders/${orderId}/clips`, {
+            method: 'post',
+            headers: {
+              Accept: 'application/json, text/plain, */*',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              masterClipId: values.clipRef.masterClipId,
+              clipId: values.clipRef.clipId,
+              timecodeIn: values.timecodeIn,
+              timecodeOut: values.timecodeOut,
+              description: values.description,
+              name: values.orderNameOrTitle,
+            }),
+          });
+        } else {
+          clipsResponse = await fetch(
+            `/api/orders/${orderId}/clips/${clipItemData.orderItemId}`,
+            {
+              method: 'PUT',
+              headers: {
+                Accept: 'application/json, text/plain, */*',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                orderItemId: clipItemData.orderItemId,
+                masterClipId: values.clipRef.masterClipId,
+                clipId: values.clipRef.clipId,
+                clipRef: values.clipRef.name,
+                timecodeIn: values.timecodeIn,
+                timecodeOut: values.timecodeOut,
+                description: values.description,
+                sourceUrl: values.sourceUrl,
+              }),
+            },
+          );
+        }
+
         if (!clipsResponse.ok) {
           throw new Error('Failed to submit clip');
         }
         const clipsData = await clipsResponse.json();
         console.log('clipsData', clipsData);
+        toast.success('Clip submitted successfully');
       } catch (error) {
         console.error('Error submitting clip:', error);
         toast.error('Failed to submit clip');
